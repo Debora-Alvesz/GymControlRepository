@@ -16,11 +16,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import jakarta.persistence.FetchType;
+import lombok.EqualsAndHashCode;
 
 /**
  *
  * @author ETM-00168
  */
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)//ignora todos os campos, exceto os marcados
 @Getter //gera automaticamente os métodos get
 @Setter //gera automaticamente os métodos set
 @Entity // Diz ao JPA que esta classe é uma tabela no banco de dados
@@ -29,6 +32,7 @@ import lombok.Setter;
 @Table(name = "Pessoa") // Define o nome da tabela como "Pessoa"
 public class Pessoa{
     
+    @EqualsAndHashCode.Include
     // Nome da pessoa, obrigatório (não pode ser nulo no banco)
     @Column(name = "Nome", nullable = false)
     private String nome;
@@ -55,5 +59,11 @@ public class Pessoa{
     // Cria a chave estrangeira "endereco_id" na tabela Pessoa
     @JoinColumn(name = "endereco_id", nullable = false)
     private Endereco endereco;
+    
+    //Relação 1:1 com Usuario
+    @OneToOne(mappedBy = "pessoa",  //'pessoa' é o nome do atributo na classe Usuario
+            cascade = CascadeType.ALL, //Persistir o Usuario ao persistir a Pessoa
+            fetch = FetchType.LAZY)//melhora o desemprenho e a memória
+    private Usuario dadosLogin;
     
 }
