@@ -5,11 +5,9 @@
 package br.com.ifba.gym.entity;
 
 import lombok.EqualsAndHashCode;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -18,45 +16,40 @@ import jakarta.persistence.Table;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
  * @author ketli
  */
 
-@Data//Anotação do Lombok para getters, setters, toString, etc.
-@NoArgsConstructor //Construtor sem argumentos
-@AllArgsConstructor// Gera um construtor que recebe todos os atributos
 @Entity
-@Table(name = "usuarios")
-@EqualsAndHashCode(callSuper = true,onlyExplicitlyIncluded = true)// Indica ao Lombok para chamar a implementação equals/hashCode da superclasse (Pessoa)
-public class Usuario extends Pessoa{
-    
-    @Id //Marca o campo como a Chave Primária (Primary Key)
+@Table(name = "usuario")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class Usuario {
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include // Marca o campo 'id' como o ÚNICO a ser usado para equals e hashCode
-    @Column(name= "id_usuario")
+    @EqualsAndHashCode.Include
+    @Column(name = "id_usuario")
     private Long id;
-    
-     @Column(name = "login", nullable = false, unique = true, length = 50)//Configura detalhes da coluna (não nulo, tamanho máximo)
+
+    @Column(name = "login", nullable = false, unique = true, length = 50)
     private String login;
-    
-     @Column(name = "senha", nullable = false, length= 100)
+
+    @Column(name = "senha", nullable = false, length = 100)
     private String senha;
-    
-     @Column(name = "funcao", nullable = false, length = 100)
+
+    @Column(name = "funcao", nullable = false, length = 100)
     private String funcao;
-    
+
+    // Relação 1:1 com Pessoa (dono da FK)
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pessoa_id") // Coluna na tabela 'usuarios' que armazena a chave de 'Pessoa'
+    @JoinColumn(name = "pessoa_cpf", nullable = false, unique = true)
     private Pessoa pessoa;
-    
-    //relação 1:1 com PerfilUsuario
-    @OneToOne(mappedBy = "usuario", //'usuario' é o nome do atributo na classe Usuario
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    private PerfilUsuario perfil;
-  
-    
-    
 }
