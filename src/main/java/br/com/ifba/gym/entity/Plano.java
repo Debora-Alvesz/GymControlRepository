@@ -6,8 +6,6 @@ package br.com.ifba.gym.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -19,6 +17,7 @@ import lombok.Setter;
  *
  * @author João Victor
  */
+
 //Gera metodos getters e setters
 @Getter
 @Setter
@@ -30,17 +29,30 @@ import lombok.Setter;
 //Torna a classe "persistível" no BD
 @Entity
 //Altera o nome da tabela
-@Table(name = "alunos")
-//Define que a chave primaria de Aluno é a pk de Pessoa
-@PrimaryKeyJoinColumn(name = "pessoa_id")
-public class Aluno extends Pessoa{
+@Table(name = "planos")
+public class Plano {
+    @Id
+    @Column(name = "id", nullable = false, unique = true, length = 20)
+    private String id;//Define o id do plano como unico
     
-    @Column(name = "id_aluno", nullable = false, unique = true)
-    private int id_aluno;//Define o id do aluno como unico
-    
-    @Column(name = "matricula", nullable =  false, length = 20)
-    private String matricula;
+    @Column(name = "nome", nullable =  false, length = 100)
+    private String nome;
 
-    @Column(name = "requisitos", nullable = false, length = 100)
-    private String requisitos; 
+    @Column(name = "duração", nullable = false)
+    private int duracao;
+    
+    @Column(name = "valor", nullable = false, unique = true)
+    private float valor;
+    
+    @Column(name = "benefícios", nullable =  false, length = 100)
+    private String beneficios;
+
+    @Column(name = "valor_matricula", nullable = false)
+    private float valorMatricula;
+    
+    @Column(name = "data_criação", nullable = false)
+    private LocalDate dataCriacao;
+    
+    @Column(name = "status", nullable = false)
+    private boolean status;
 }
