@@ -4,8 +4,12 @@
  */
 package br.com.ifba.gym.repository;
 
+import br.com.ifba.gym.entity.Plano;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  *

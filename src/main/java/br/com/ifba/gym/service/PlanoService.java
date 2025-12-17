@@ -4,6 +4,8 @@
  */
 package br.com.ifba.gym.service;
 
+import br.com.ifba.gym.entity.Plano;
+import br.com.ifba.gym.repository.PlanoRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

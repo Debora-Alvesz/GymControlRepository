@@ -4,6 +4,7 @@
  */
 package br.com.ifba.gym.service;
 
+import br.com.ifba.gym.entity.Plano;
 import java.util.List;
 import java.util.Optional;
 
