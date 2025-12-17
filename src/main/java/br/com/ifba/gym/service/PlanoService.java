@@ -25,8 +25,8 @@ public class PlanoService implements PlanoIService{
     @Override
     public Plano save(Plano plano) {
        //Verifica se já existe esse ID no banco
-        if (planoRepository.existsById(plano.getPlano().getId())) {
-            throw new RuntimeException("Erro: Já existe um plano com o ID " + plano.getPlano().getId());
+        if (planoRepository.existsById(plano.getId())) {
+            throw new RuntimeException("Erro: Já existe um plano com o ID " + plano.getId());
         }
         //Se passou pelas regras, chama o repository para salvar de fato
         return planoRepository.save(plano);

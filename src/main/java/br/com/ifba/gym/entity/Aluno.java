@@ -7,6 +7,8 @@ package br.com.ifba.gym.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -36,11 +38,16 @@ import lombok.Setter;
 public class Aluno extends Pessoa{
     
     @Column(name = "id_aluno", nullable = false, unique = true)
-    private int id_aluno;//Define o id do aluno como unico
+    private Long id_aluno;//Define o id do aluno como unico
     
     @Column(name = "matricula", nullable =  false, length = 20)
     private String matricula;
 
     @Column(name = "requisitos", nullable = false, length = 100)
     private String requisitos; 
+    
+    //Relacionamento com Plano
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "plano_id", nullable = false)
+    private Plano plano;
 }

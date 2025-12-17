@@ -7,8 +7,10 @@ package br.com.ifba.gym.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -27,7 +29,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 //Cria os metodos Equals e HashCode
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 //Torna a classe "persistível" no BD
 @Entity
 //Altera o nome da tabela
@@ -35,7 +37,7 @@ import lombok.Setter;
 public class Plano {
     @Id
     @Column(name = "id", nullable = false, unique = true, length = 20)
-    private String id;//Define o id do plano como unico
+    private Long id;//Define o id do plano como unico
     
     @Column(name = "nome", nullable =  false, length = 100)
     private String nome;
@@ -57,4 +59,8 @@ public class Plano {
     
     @Column(name = "status", nullable = false)
     private boolean status;
+    
+    //Relacionamento com Aluno
+    @OneToMany(mappedBy = "plano")
+    private List<Aluno> aluno;
 }
