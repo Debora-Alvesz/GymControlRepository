@@ -1,4 +1,5 @@
-package br.com.ifba.gym.service;
+
+package br.com.ifba.usuario.service;
 
 import br.com.ifba.gym.entity.Usuario;
 import java.util.List;

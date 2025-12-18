@@ -1,9 +1,10 @@
-package br.com.ifba.gym.service;
+
+package br.com.ifba.usuario.service;
 
 import br.com.ifba.exception.BusinessException;
 import br.com.ifba.exception.ResourceNotFoundException;
 import br.com.ifba.gym.entity.Usuario;
-import br.com.ifba.gym.repository.UsuarioRepository;
+import br.com.ifba.usuario.repository.UsuarioRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

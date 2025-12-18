@@ -1,5 +1,5 @@
 
-package br.com.ifba.gym.repository;
+package br.com.ifba.usuario.repository;
 
 import br.com.ifba.gym.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
