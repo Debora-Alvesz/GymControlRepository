@@ -4,6 +4,8 @@
  */
 package br.com.ifba.gym.service;
 
+import br.com.ifba.exception.BusinessException;
+import br.com.ifba.exception.ResourceNotFoundException;
 import br.com.ifba.gym.entity.Aluno;
 import br.com.ifba.gym.entity.Plano;
 import br.com.ifba.gym.repository.AlunoRepository;
@@ -35,13 +37,13 @@ public class AlunoService implements AlunoIService{
         logger.info("Iniciando matrícula do aluno. CPF: {}, Plano ID: {}", novoAluno.getCpf(), planoId);
         if (novoAluno.getMatricula() == null || novoAluno.getMatricula().isEmpty()) {
             logger.warn("Matrícula vazia informada para CPF: {}", novoAluno.getCpf());
-            throw new RuntimeException("Erro: Matrícula não pode ser vazia.");
+            throw new ResourceNotFoundException("Matrícula não pode ser vazia.");
         }
 
         // 2️⃣ Valida matrícula duplicada
         if (alunoRepository.existsByMatricula(novoAluno.getMatricula())) {
             logger.warn("Tentativa de matrícula duplicada: {}", novoAluno.getMatricula());
-            throw new RuntimeException("Erro: Matrícula já cadastrada.");
+            throw new BusinessException("Matrícula já cadastrada.");
         }
 
         // 3️⃣ Busca plano pelo ID
@@ -51,7 +53,7 @@ public class AlunoService implements AlunoIService{
         // 4️⃣ Valida plano ativo
         if (!plano.isStatus()) {
             logger.warn("Tentativa de matrícula em plano inativo. Plano ID: {}", planoId);
-            throw new RuntimeException("Erro: Não é possível matricular em um plano inativo.");
+            throw new ResourceNotFoundException("Não é possível matricular em um plano inativo.");
         }
 
         // 5️⃣ Associa plano ao aluno
@@ -80,19 +82,19 @@ public class AlunoService implements AlunoIService{
         logger.info("Iniciando cadastro de aluno. CPF: {}", aluno.getCpf());
         if (aluno.getMatricula() == null || aluno.getMatricula().isEmpty()) {
             logger.warn("Tentativa de cadastro com matrícula vazia. CPF: {}", aluno.getCpf());
-            throw new RuntimeException("Erro: Matrícula não pode ser vazia.");
+            throw new ResourceNotFoundException("Matrícula não pode ser vazia.");
         }
 
         // Valida matrícula duplicada
         if (alunoRepository.existsByMatricula(aluno.getMatricula())) {
             logger.warn("Tentativa de cadastro com matrícula vazia. CPF: {}", aluno.getCpf());
-            throw new RuntimeException("Erro: Matrícula já cadastrada.");
+            throw new BusinessException("Matrícula já cadastrada.");
         }
 
         // Valida plano associado
         if (aluno.getPlano() == null) {
             logger.warn("Aluno sem plano associado. CPF: {}", aluno.getCpf());
-            throw new RuntimeException("Erro: Aluno deve ter um plano associado.");
+            throw new ResourceNotFoundException("Aluno deve ter um plano associado.");
         }
 
         logger.info("Aluno cadastrado com sucesso.");
@@ -109,7 +111,7 @@ public class AlunoService implements AlunoIService{
 
         if (alunoRepository.existsByMatriculaAndCpfNot(aluno.getMatricula(), existente.getCpf())) {
             logger.warn("Matrícula já usada por outro aluno: {}", aluno.getMatricula());
-            throw new RuntimeException("Erro: Matrícula já usada por outro aluno.");
+            throw new BusinessException("Matrícula já usada por outro aluno.");
         }
 
         existente.setMatricula(aluno.getMatricula());
@@ -128,7 +130,7 @@ public class AlunoService implements AlunoIService{
         logger.info("Solicitação de exclusão do aluno. CPF: {}", cpf);
         if (!alunoRepository.existsById(cpf)) {
             logger.error("Tentativa de exclusão de aluno inexistente. CPF: {}", cpf);
-            throw new RuntimeException("Erro: O aluno com CPF " + cpf + " não existe na base de dados.");
+            throw new ResourceNotFoundException("O aluno com CPF " + cpf + " não existe na base de dados.");
         }
         alunoRepository.deleteById(cpf);
         logger.info("Aluno excluído com sucesso. CPF: {}", cpf);

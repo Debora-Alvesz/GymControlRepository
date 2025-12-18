@@ -4,6 +4,8 @@
  */
 package br.com.ifba.gym.service;
 
+import br.com.ifba.exception.BusinessException;
+import br.com.ifba.exception.ResourceNotFoundException;
 import br.com.ifba.gym.entity.Plano;
 import br.com.ifba.gym.repository.PlanoRepository;
 import java.util.List;
@@ -32,7 +34,7 @@ public class PlanoService implements PlanoIService{
         logger.info("Iniciando cadastro de plano. ID: {}", plano.getId());
         if (planoRepository.existsById(plano.getId())) {
             logger.warn("Tentativa de cadastro de plano com ID já existente: {}", plano.getId());
-            throw new RuntimeException("Erro: Já existe um plano com o ID " + plano.getId());
+            throw new BusinessException("Já existe um plano com o ID " + plano.getId());
         }
         //Se passou pelas regras, chama o repository para salvar de fato
         logger.info("Plano cadastrado com sucesso.");
@@ -60,7 +62,7 @@ public class PlanoService implements PlanoIService{
         if (!planoRepository.existsById(id)) {
             // Se não existir, lança um erro e avisa o Controller
             logger.error("Tentativa de exclusão de plano inexistente. ID: {}", id);
-            throw new RuntimeException("Erro: O plano com o ID " + id + " não existe na base de dados, por isso não pode ser deletado.");
+            throw new ResourceNotFoundException("O plano com o ID " + id + " não existe na base de dados, por isso não pode ser deletado.");
         }
         // Se passou pelo if, significa que existe. Então pode deletar.
         planoRepository.deleteById(id);
@@ -72,7 +74,7 @@ public class PlanoService implements PlanoIService{
         logger.info("Iniciando atualização do plano. ID: {}", id);
         if (!planoRepository.existsById(id)) {
             logger.error("Plano não encontrado para atualização. ID: {}", id);
-            throw new RuntimeException("Erro: Plano não encontrado para atualização.");
+            throw new ResourceNotFoundException("Plano não encontrado para atualização.");
         }
         //Garante que o objeto que vai pro banco tem o ID correto
         plano.setId(id);

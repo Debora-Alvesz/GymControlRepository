@@ -1,5 +1,7 @@
 package br.com.ifba.gym.service;
 
+import br.com.ifba.exception.BusinessException;
+import br.com.ifba.exception.ResourceNotFoundException;
 import br.com.ifba.gym.entity.Usuario;
 import br.com.ifba.gym.repository.UsuarioRepository;
 import java.util.List;
@@ -28,13 +30,13 @@ public class UsuarioService implements UsuarioIService {
        // Verifica se já existe esse CPF no banco (navegando pela Pessoa)
         if (usuarioRepository.existsByPessoaCpf(usuario.getPessoa().getCpf())) {
             logger.warn("Tentativa de cadastro com CPF já existente: {}", usuario.getPessoa().getCpf());
-            throw new RuntimeException("Erro: Já existe um usuário com o CPF " + usuario.getPessoa().getCpf());
+            throw new BusinessException("Já existe um usuário com esse CPF");
         }
         
         // Verifica se já existe esse email no banco (navegando pela Pessoa)
         if (usuarioRepository.existsByPessoaEmail(usuario.getPessoa().getEmail())) {
             logger.warn("Tentativa de cadastro com e-mail já existente: {}", usuario.getPessoa().getEmail());
-            throw new RuntimeException("Erro: Já existe um usuário com o E-mail " + usuario.getPessoa().getEmail());
+            throw new BusinessException("Já existe um usuário com esse email");
         }
 
         // Se passou pelas regras, chama o repository para salvar de fato
@@ -63,7 +65,7 @@ public class UsuarioService implements UsuarioIService {
         if (!usuarioRepository.existsById(id)) {
             // Se não existir, lança um erro e avisa o Controller
             logger.error("Falha ao deletar. Usuário não encontrado. ID: {}", id);
-            throw new RuntimeException("Erro: O usuário com o ID " + id + " não existe na base de dados, por isso não pode ser deletado.");
+            throw new ResourceNotFoundException("Usuário não encontrado.");
         }
         // Se passou pelo if, significa que existe. Então pode deletar.
         usuarioRepository.deleteById(id);
@@ -76,21 +78,21 @@ public class UsuarioService implements UsuarioIService {
         // 1. Verifica se o usuário que queremos editar realmente existe
         if (!usuarioRepository.existsById(id)) {
             logger.error("Usuário não encontrado para atualização. ID: {}", id);
-            throw new RuntimeException("Erro: Usuário não encontrado para atualização.");
+            throw new ResourceNotFoundException("Usuário não encontrado.");
         }
 
         // 2. Verifica se o email já existe em OUTRO registro (navegando pela Pessoa)
         // Correção: usuario.getPessoa().getEmail() e existsByPessoaEmailAndIdNot
         if (usuarioRepository.existsByPessoaEmailAndIdNot(usuario.getPessoa().getEmail(), id)) {
             logger.warn("E-mail já utilizado por outro usuário: {}", usuario.getPessoa().getEmail());
-            throw new RuntimeException("Erro: O e-mail " + usuario.getPessoa().getEmail() + " já está sendo usado por outro usuário.");
+            throw new BusinessException("Email já foi cadastrado.");
         }
 
         // 3. Regra do CPF para Atualização
         // Correção: usuario.getPessoa().getCpf() e existsByPessoaCpfAndIdNot
         if (usuarioRepository.existsByPessoaCpfAndIdNot(usuario.getPessoa().getCpf(), id)) {
             logger.warn("CPF já utilizado por outro usuário: {}", usuario.getPessoa().getCpf());
-            throw new RuntimeException("Erro: O CPF " + usuario.getPessoa().getCpf() + " já pertence a outro usuário.");
+            throw new BusinessException("CPF já cadastrado.");
         }
 
         // 4. Garante que o objeto que vai pro banco tem o ID correto
