@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package br.com.ifba.gym.repository;
+package br.com.ifba.plano.repository;
 
-import br.com.ifba.gym.entity.Plano;
+import br.com.ifba.plano.entity.Plano;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;

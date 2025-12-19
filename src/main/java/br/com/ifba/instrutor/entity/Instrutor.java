@@ -1,7 +1,8 @@
 
-package br.com.ifba.gym.entity;
+package br.com.ifba.instrutor.entity;
 
-import br.com.ifba.gym.entity.Pessoa;
+import br.com.ifba.pessoa.entity.Pessoa;
+import br.com.ifba.pessoa.entity.Pessoa;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;

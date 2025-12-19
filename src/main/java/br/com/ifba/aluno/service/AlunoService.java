@@ -2,14 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package br.com.ifba.gym.service;
+package br.com.ifba.aluno.service;
 
+import br.com.ifba.aluno.service.AlunoIService;
 import br.com.ifba.exception.BusinessException;
 import br.com.ifba.exception.ResourceNotFoundException;
-import br.com.ifba.gym.entity.Aluno;
-import br.com.ifba.gym.entity.Plano;
-import br.com.ifba.gym.repository.AlunoRepository;
-import br.com.ifba.gym.repository.PlanoRepository;
+import br.com.ifba.aluno.entity.Aluno;
+import br.com.ifba.plano.entity.Plano;
+import br.com.ifba.aluno.repository.AlunoRepository;
+import br.com.ifba.plano.repository.PlanoRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

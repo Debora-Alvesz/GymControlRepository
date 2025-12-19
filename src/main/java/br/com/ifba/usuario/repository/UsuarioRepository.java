@@ -1,7 +1,7 @@
 
 package br.com.ifba.usuario.repository;
 
-import br.com.ifba.gym.entity.Usuario;
+import br.com.ifba.usuario.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 /**

@@ -1,7 +1,7 @@
 
 package br.com.ifba.usuario.service;
 
-import br.com.ifba.gym.entity.Usuario;
+import br.com.ifba.usuario.entity.Usuario;
 import java.util.List;
 import java.util.Optional;
 

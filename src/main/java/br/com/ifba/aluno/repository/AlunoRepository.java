@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package br.com.ifba.gym.repository;
+package br.com.ifba.aluno.repository;
 
-import br.com.ifba.gym.entity.Aluno;
+import br.com.ifba.aluno.entity.Aluno;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
