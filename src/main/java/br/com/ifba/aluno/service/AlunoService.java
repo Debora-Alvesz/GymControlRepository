@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author ricle
+ * @author ricley
  */
 @Service//Marca a classe como um bean de serviço no Spring
 @RequiredArgsConstructor//o lombok gera o construtor para os campos "final"
