@@ -2,18 +2,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package br.com.ifba.avaliacaofisica.service;
+package br.com.ifba.avaliacaofisica.controller;
 
 import br.com.ifba.avaliacaofisica.entity.AvaliacaoFisica;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.stereotype.Controller;
 
 /**
  *
  * @author João Victor
  */
-public interface AvaliacaoFisicaIService {
+
+@Controller
+public interface AvaliacaoFisicaIController {
+    
     //Método para salvar Avaliacão Fisica
     AvaliacaoFisica save(AvaliacaoFisica avaliacaoFisica);
     

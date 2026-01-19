@@ -10,7 +10,6 @@ import br.com.ifba.avaliacaofisica.entity.AvaliacaoFisica;
 import br.com.ifba.avaliacaofisica.repository.AvaliacaoFisicaRepository;
 import br.com.ifba.exception.BusinessException;
 import br.com.ifba.exception.ResourceNotFoundException;
-import br.com.ifba.plano.service.PlanoService;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +29,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AvaliacaoFisicaService implements AvaliacaoFisicaIService {
     
-    private static final Logger logger = LoggerFactory.getLogger(PlanoService.class);
+    private static final Logger logger = LoggerFactory.getLogger(AvaliacaoFisicaService.class);
     @Autowired
     private AvaliacaoFisicaRepository avaliacaoFisicaRepository;
     @Autowired
@@ -80,18 +79,18 @@ public class AvaliacaoFisicaService implements AvaliacaoFisicaIService {
     }
 
     @Override
-    public void delete(String matricula) {
+    public void deleteByAlunoMatricula(String matricula) {
         logger.info("Solicitação de exclusão da avaliação física. Matrícula do aluno: {}", matricula);
 
     // 1. Verifica se existe avaliação física para a matrícula informada
-    AvaliacaoFisica avaliacao = avaliacaoFisicaRepository
+    avaliacaoFisicaRepository
             .findByAlunoMatricula(matricula)
             .orElseThrow(() -> new ResourceNotFoundException(
                     "Não existe avaliação física cadastrada para o aluno de matrícula: " + matricula
             ));
 
     // 2. Remove a avaliação
-    avaliacaoFisicaRepository.delete(avaliacao);
+    avaliacaoFisicaRepository.deleteByAlunoMatricula(matricula);
     logger.info("Avaliação física excluída com sucesso. Matrícula do aluno: {}", matricula);
     }
     
