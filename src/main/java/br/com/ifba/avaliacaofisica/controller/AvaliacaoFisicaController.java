@@ -41,8 +41,8 @@ public class AvaliacaoFisicaController implements AvaliacaoFisicaIController{
     
     //Método para deletar avaliação pela matricula do aluno
     @Override
-    public void delete(String matricula){    
-    avaliacaoFisicaService.delete(matricula);
+    public void deleteByAlunoMatricula(String matricula){    
+    avaliacaoFisicaService.deleteByAlunoMatricula(matricula);
     }
     
     // Método específico para atualização

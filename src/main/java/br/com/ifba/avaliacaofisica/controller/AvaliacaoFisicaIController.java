@@ -28,7 +28,7 @@ public interface AvaliacaoFisicaIController {
     Optional<AvaliacaoFisica> findAlunoByMatricula(String matricula);
     
     //Método para deletar avaliação pela matricula do aluno
-    void delete(String matricula);
+    void deleteByAlunoMatricula(String matricula);
     
     // Método específico para atualização
     AvaliacaoFisica update(String matricula, AvaliacaoFisica avaliacaoFisica);
@@ -36,6 +36,6 @@ public interface AvaliacaoFisicaIController {
     // Método para calcular IMC
     float calcularImc(int altura, float peso);
     
-    // Método para listar as avaliações fisicas que um dia especifico
+    // Método para listar as avaliações fisicas de um dia especifico
     List<AvaliacaoFisica> findByDataAvaliacao(LocalDate dataAvaliacao);
 }
