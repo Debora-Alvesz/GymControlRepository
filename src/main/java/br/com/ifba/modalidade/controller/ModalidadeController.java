@@ -6,9 +6,12 @@ package br.com.ifba.modalidade.controller;
 
 import br.com.ifba.modalidade.service.ModalidadeService;
 import br.com.ifba.modalidade.entity.Modalidade;
+import br.com.ifba.modalidade.view.ModalidadeCadastroView;
+import br.com.ifba.modalidade.view.ModalidadeView;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -18,8 +21,25 @@ import org.springframework.stereotype.Controller;
 @Controller//Indica ao Spring que esta classe é um bean e pode ser injetada em outras classes
 public class ModalidadeController {
     
+    @Autowired @Lazy
+    private ModalidadeView listagemView; // Tela Principal
+    @Autowired @Lazy
+    private ModalidadeCadastroView cadastroView; // Tela de Cadastro
+    
     @Autowired//O Spring injeta automaticamente a instância de ModalidadeService aqui
     private ModalidadeService modalidadeService;
+    
+    
+    public void abrirCadastro() {
+        listagemView.setVisible(false); //esconde a tela principal
+        cadastroView.prepararParaNova();//limpa os campos
+        cadastroView.setVisible(true);//abre a tela de cadastro
+    }
+    public void voltarParaListagem() {
+        cadastroView.dispose();
+        listagemView.atualizarTabela(); // Este método deve ser PUBLIC na listagemView
+        listagemView.setVisible(true);
+    }
     
     //Método responsável por receber os dados da View e coordenar o salvamento
     public void saveModalidade(String nome, String descricao, String nivel, String requisitos){
@@ -40,7 +60,7 @@ public class ModalidadeController {
         modalidadeService.save(modalidade);
         
         //exibe um feedback visual de sucesso para o usuário no JFrame
-        JOptionPane.showMessageDialog(null, "Modalidade " + modalidade.getNome() + "cadastrada com sucesso!");
+        //JOptionPane.showMessageDialog(null, "Modalidade " + modalidade.getNome() + "cadastrada com sucesso!");
     }
     catch(Exception e){
         //Captura qualquer erro (incluindo as exceções lançadas no Service) e mostra ao usuário
@@ -67,9 +87,10 @@ public class ModalidadeController {
     }
   }
     // Método utilizado para buscar todos os registros e exibir em componentes
-    public List<Modalidade> findAll(){
-        return modalidadeService.findAll();
-    }
+   public List<Modalidade> findAll() {
+    return modalidadeService.findAll(); 
+   
+}
     // Método para excluir um registro através do ID
     public void delete(Long id){
         modalidadeService.delete(id);  

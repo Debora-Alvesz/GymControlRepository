@@ -15,5 +15,5 @@ import org.springframework.stereotype.Repository;
 public interface ExercicioRepository extends JpaRepository<Exercicio, Long> {
 
     //Método para verificar duplicidade de nome.
-    boolean existsByName(String nome);
+    boolean existsByNome(String nome);
 }

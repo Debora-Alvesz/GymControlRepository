@@ -25,7 +25,7 @@ public class ExercicioService {
 @Transactional
     public Exercicio save(Exercicio exercicio) {
         // Verifica se já existe algum exercício com esse nome exato
-        if (exercicioRepository.existsByName(exercicio.getNome())) {
+        if (exercicioRepository.existsByNome(exercicio.getNome())) {
             throw new RuntimeException("Erro: Já existe um exercício com este nome.");
         }
         return exercicioRepository.save(exercicio);
