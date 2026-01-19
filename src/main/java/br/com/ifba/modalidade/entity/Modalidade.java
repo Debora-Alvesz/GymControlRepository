@@ -40,8 +40,8 @@ public class Modalidade {
     private String nivelDificuldade;
     private String requisitos;
     
-    @OneToMany(mappedBy = "modalidade")//associação um para muitos
-    List<Turma> turmas = new ArrayList<>();//define uma lista de turmas que terá a modalidade
+   // @OneToMany(mappedBy = "modalidade")//associação um para muitos
+  //  List<Turma> turmas = new ArrayList<>();//define uma lista de turmas que terá a modalidade
   
 
     public Long getId() {
@@ -65,11 +65,9 @@ public class Modalidade {
     public void setRequisitos(String requisitos) {
         this.requisitos = requisitos;
     }
+      
 
-    public List<Turma> getTurmas(){//retorna a lista de Turmas associadas
-        return turmas;
-        
-    }
-    
-    
+  //  public List<Turma> getTurmas(){//retorna a lista de Turmas associadas
+ //       return turmas;     
+ //   } 
 }

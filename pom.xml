@@ -71,7 +71,11 @@
                         <artifactId>postgresql</artifactId>
                         <scope>runtime</scope>
                 </dependency>
-
+	 <dependency>
+	  <groupId>org.netbeans.external</groupId>
+	  <artifactId>AbsoluteLayout</artifactId>
+	  <version>RELEASE250</version>
+	 </dependency>
 	</dependencies>
 
 	<build>
