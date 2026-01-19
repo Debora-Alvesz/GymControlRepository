@@ -47,7 +47,25 @@ public class ModalidadeController {
         JOptionPane.showMessageDialog(null, "Erro ao salvar: " + e.getMessage());
         
     }  
-}
+  }
+    public void updateModalidade(Long id, String nome, String descricao, String nivel, String requisitos){
+        try{
+
+        //Cria um objeto temporário com os novos dados da tela
+        Modalidade modalidadeEditada = new Modalidade();
+        modalidadeEditada.setNome(nome);
+        modalidadeEditada.setDescricao(descricao);
+        modalidadeEditada.setNivelDificuldade(nivel);
+        modalidadeEditada.setRequisitos(requisitos);
+        
+        //Chama o service passando o ID e o objeto com novos dados
+        modalidadeService.update(id, modalidadeEditada);
+        JOptionPane.showMessageDialog(null, "Modalidade atualizada com sucesso!");
+    } catch (Exception e) {
+        // Trata o erro caso o ID não seja encontrado
+        JOptionPane.showMessageDialog(null, "Erro ao atualizar: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+  }
     // Método utilizado para buscar todos os registros e exibir em componentes
     public List<Modalidade> findAll(){
         return modalidadeService.findAll();

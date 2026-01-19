@@ -4,6 +4,7 @@
  */
 package br.com.ifba.modalidade.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,7 +27,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor//Define construtor sem argumentos(necessário para o Spring)
 @AllArgsConstructor//Define construtor com argumentos
-
 @EqualsAndHashCode//define Equals e HashCode
 @Entity
 @Table(name = "tb_modalidade")//nomeia a tabela
@@ -35,9 +35,17 @@ public class Modalidade {
     @Id//Define que haverá Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)//Gera o id único
     private Long id;
+    
+    @Column(name = "nome", nullable = false, length = 100)
     private String nome;
+    
+    @Column(name = "descricao", length = 100)
     private String descricao;
+    
+    @Column(name = "nivelDificuldade", nullable = false)
     private String nivelDificuldade;
+    
+    @Column(name = "requisitos", length = 100)
     private String requisitos;
     
    // @OneToMany(mappedBy = "modalidade")//associação um para muitos
