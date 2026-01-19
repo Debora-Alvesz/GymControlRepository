@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AvaliacaoFisicaService implements AvaliacaoFisicaIService {
     
-    private static final Logger logger = LoggerFactory.getLogger(PlanoService.class);
+    private static final Logger logger = LoggerFactory.getLogger(AvaliacaoFisicaService.class);
     @Autowired
     private AvaliacaoFisicaRepository avaliacaoFisicaRepository;
     @Autowired
