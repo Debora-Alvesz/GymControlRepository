@@ -45,56 +45,66 @@ public class ValidadorUtil {
         return value != null && value.matches(".*[^a-zA-Z0-9 ].*");
     }
     
-     // Verifica se o CPF é válido (11 dígitos + dígitos verificadores)
-    public static boolean isValidCPF(String cpf) {
-        if (isNullOrEmpty(cpf)) {
+    // Verifica se o CPF é válido (11 dígitos + dígitos verificadores)
+    public static boolean isCpfValido(String cpf) {
+    if (cpf == null) return false;
+
+    // 1. Limpeza
+    String cpfLimpo = cpf.replaceAll("[^0-9]", "");
+
+    // 2. Tamanho e Repetidos
+    if (cpfLimpo.length() != 11 || cpfLimpo.matches("(\\d)\\1{10}")) {
+        return false;
+    }
+
+    // 3. Cálculo Oficial (Padrão Receita Federal)
+    try {
+        char dig10, dig11;
+        int sm, i, r, num, peso;
+
+        // Calculo do 1o. Digito Verificador
+        sm = 0;
+        peso = 10;
+        for (i = 0; i < 9; i++) {
+            // Converte o char para int (48 é o código ASCII do '0')
+            num = (int) (cpfLimpo.charAt(i) - 48);
+            sm = sm + (num * peso);
+            peso = peso - 1;
+        }
+
+        r = 11 - (sm % 11);
+        if ((r == 10) || (r == 11)) {
+            dig10 = '0';
+        } else {
+            // Converte int para char
+            dig10 = (char) (r + 48);
+        }
+
+        // Calculo do 2o. Digito Verificador
+        sm = 0;
+        peso = 11;
+        for (i = 0; i < 10; i++) {
+            num = (int) (cpfLimpo.charAt(i) - 48);
+            sm = sm + (num * peso);
+            peso = peso - 1;
+        }
+
+        r = 11 - (sm % 11);
+        if ((r == 10) || (r == 11)) {
+            dig11 = '0';
+        } else {
+            dig11 = (char) (r + 48);
+        }
+
+        // Verifica se os calculados batem com os digitados
+        if ((dig10 == cpfLimpo.charAt(9)) && (dig11 == cpfLimpo.charAt(10))) {
+            return true;
+        } else {
             return false;
         }
-        
-        // Remove pontos e traço
-        cpf = cpf.replace(".", "").replace("-", "");
 
-        // Deve conter exatamente 11 números
-        if (!cpf.matches("\\d{11}")) {
-            return false;
-        }
-
-        // Evita CPFs com todos os números iguais
-        if (cpf.chars().distinct().count() == 1) {
-            return false;
-        }
-
-        try {
-            int soma = 0;
-            int peso = 10;
-
-            // Primeiro dígito verificador
-            for (int i = 0; i < 9; i++) {
-                soma += (cpf.charAt(i) - '0') * peso--;
-            }
-
-            int resto = (soma * 10) % 11;
-            resto = (resto == 10) ? 0 : resto;
-
-            if (resto != (cpf.charAt(9) - '0')) {
-                return false;
-            }
-
-            soma = 0;
-            peso = 11;
-
-            // Segundo dígito verificador
-            for (int i = 0; i < 10; i++) {
-                soma += (cpf.charAt(i) - '0') * peso--;
-            }
-
-            resto = (soma * 10) % 11;
-            resto = (resto == 10) ? 0 : resto;
-
-            return resto == (cpf.charAt(10) - '0');
-
-        } catch (Exception e) {
-            return false;
-        }
+    } catch (Exception e) {
+        return false;
     }
 }
+}  
