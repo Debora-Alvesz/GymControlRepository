@@ -12,7 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,23 +30,31 @@ import lombok.Setter;
 @Table(name = "manutencoes")
 public class Manutencao {
     
+    // Define a chave primária da tabela
     @Id
+    // Gera o valor do ID automaticamente (auto incremento)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // Mapeia o atributo para a coluna id_manutencao
     @Column(name = "id_manutencao", nullable = false, unique = true)
     private Long id;
     
-    @Column(name = "nome_equipamento", nullable = false, length = 100)
+    // Coluna que armazena o nome do equipamento
+    @Column(name = "nome_equipamento", nullable = false)
     private String nomeEquipamento;
     
-    @Column(name = "descricao_problema", nullable = false, length = 255)
+    // Coluna que descreve o problema apresentado
+    @Column(name = "descricao_problema", nullable = false)
     private String descricaoProblema;
     
+    // Coluna que guarda a data em que o problema foi reportado
     @Column(name = "data_reporte", nullable = false)
     private LocalDate dataReporte;
     
+    // Coluna que armazena o custo da manutenção
     @Column(name = "custo", nullable = false)
     private Double custo;
     
-    @Column(name = "status", nullable = false, length = 20)
+    // Coluna que representa o status da manutenção
+    @Column(name = "status", nullable = false)
     private String status;
 }

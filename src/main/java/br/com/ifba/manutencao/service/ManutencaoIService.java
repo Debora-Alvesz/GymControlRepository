@@ -16,9 +16,21 @@ public interface ManutencaoIService {
     //método para salvar um novo problema de manutencao
     Manutencao save(Manutencao manutencao);
     
-    //Metodo que apos a manutencao, altera o status para resolvido
-    Manutencao finalizarManutencao(Long id);
+    //Metodo que atualiza uma manutencao
+    Manutencao update(Manutencao manutencao);
     
     //Metodo para listar as manutencoes feitas
     List<Manutencao> findAll();
+    
+    //Metodo que Deleta uma manutencao
+    void delete(Long id);
+    
+    //Metodo para buscar a manutencao pelo ID
+    Manutencao findById(Long id);
+    
+    //Metodo que apos a manutencao, altera o status para resolvido
+    Manutencao finalizarManutencao(Long id);
+    
+    
+    
 }
