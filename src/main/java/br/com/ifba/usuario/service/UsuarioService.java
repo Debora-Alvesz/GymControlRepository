@@ -24,32 +24,6 @@ public class UsuarioService implements UsuarioIService {
     private final UsuarioRepository usuarioRepository;
 
     @Override
-   public boolean validarLogin(String login, String senha) {
-        logger.info("Tentativa de autenticação para o usuário: {}", login);
-
-        // 1. Busca o Optional do banco
-        Optional<Usuario> usuarioOpt = usuarioRepository.findByLogin(login);
-
-        // 2. Verifica se a "caixa" está vazia (Usuário não encontrado)
-        if (usuarioOpt.isEmpty()) { 
-            logger.warn("Login falhou: Usuário '{}' não encontrado.", login);
-            return false;
-        }
-
-        // 3. Tira o usuário de dentro do Optional
-        Usuario usuario = usuarioOpt.get();
-
-        // 4. Verifica a senha
-        if (!usuario.getSenha().equals(senha)) {
-            logger.warn("Login falhou: Senha incorreta para o usuário '{}'.", login);
-            return false;
-        }
-
-        logger.info("Login efetuado com sucesso para: {}", login);
-        return true;
-    }
-    
-    @Override
     public Usuario save(Usuario usuario) {
 
         logger.info("Iniciando cadastro de usuário com CPF: {}", usuario.getPessoa().getCpf());

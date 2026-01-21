@@ -25,16 +25,16 @@ import lombok.Setter;
  * @author ketli
  */
 
-@Entity//define a classe como entidade
-@Getter//gera os getters
-@Setter//gera os setters
-@NoArgsConstructor//gera um construtor vazio(importante para o Springboot)
-@AllArgsConstructor//gera um construtor com todos os argumentos
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)//gera automaticamente Equals e HashCode
-@Table(name = "usuario")//Define o nome da tabela
+@Entity
+@Table(name = "usuario")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Usuario {
 
-    @Id//define um identificador único para cada objeto
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     @Column(name = "id_usuario")

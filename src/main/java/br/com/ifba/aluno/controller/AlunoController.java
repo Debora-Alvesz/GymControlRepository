@@ -2,10 +2,11 @@
 package br.com.ifba.aluno.controller;
 
 import br.com.ifba.aluno.entity.Aluno;
-import br.com.ifba.aluno.service.AlunoIService;
-import java.util.List;
+import br.com.ifba.aluno.service.AlunoService;
+import br.com.ifba.plano.entity.Plano;
+import javax.swing.JOptionPane;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -13,36 +14,35 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 
 @Controller //diz para o spring que isso é um controller
+@RequiredArgsConstructor // o lombok cria o construtor nos campos com "final"
+public class AlunoController {
 
-public class AlunoController implements AlunoIController {
+    private final AlunoService service;
     
-    @Autowired//O Spring injeta automaticamente a instância de ModalidadeService aqui
-    private AlunoIService alunoService;
+    public void matricularAluno(String nome, String cpf, String email, String matricula, Plano plano) {
+       
+        try {
+            //Cria o objeto 
+            Aluno aluno = new Aluno();
+            
+            // Dados de Aluno
+            aluno.setName(nome);
+            aluno.setCpf(cpf);
+            aluno.setEmail(email);
+            aluno.setMatricula(matricula);
+            // Associação do relacionamento 
+            aluno.setPlano(plano);
 
-    @Override
-    public List<Aluno> findAll() {
-        return alunoService.findAll();
+            // Manda pro Service salvar
+            service.save(aluno);
+
+            // Feedback de sucesso para o usuário
+            JOptionPane.showMessageDialog(null, "Matrícula realizada!");
+
+        } catch (Exception e) {
+            //Tratamento de exceções técnicas (ex: Erro de conexão, Constraints do Banco)
+            JOptionPane.showMessageDialog(null, "Falha ao realizar matrícula: " + e.getMessage());
+            e.printStackTrace(); // Log do erro no console para depuração
+        }
     }
-
-    @Override
-    public Aluno save(Aluno aluno) {
-        return alunoService.save(aluno);
-    }
-
-    @Override
-    public Aluno update(String cpf, Aluno aluno) {
-        return alunoService.update(cpf, aluno);
-    }
-
-    @Override
-    public void delete(String cpf) {
-        alunoService.delete(cpf);
-    }
-
-    @Override
-    public Aluno findById(String cpf) {
-        // Se não encontrar, retorna null (padrão para telas Swing/Desktop)
-        return alunoService.findById(cpf).orElse(null);
-    }   
- 
 }

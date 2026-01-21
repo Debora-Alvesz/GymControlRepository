@@ -14,11 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
  */
 public interface PagamentoIController {
     
-    //busca dados financeiros
     ResponseEntity<DadosFinanceiro> buscarDadosFinanceiros(
             @PathVariable String cpf);
     
-    //registra pagamentos
     ResponseEntity<String> registrarPagamento(
             @PathVariable String cpf);
     

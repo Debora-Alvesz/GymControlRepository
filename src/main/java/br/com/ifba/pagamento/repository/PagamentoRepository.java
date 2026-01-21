@@ -31,7 +31,7 @@ public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
    /**
      * Busca pagamentos com valor maior que o valor informado.
      */
-    List<Pagamento> findByValorPagoGreaterThan(float valor);
+    List<Pagamento> findByValorGreaterThan(float valor);
     
     //busca pagamento por data informada
     List<Pagamento> findByDataPagamento(LocalDate dataPagamento);
