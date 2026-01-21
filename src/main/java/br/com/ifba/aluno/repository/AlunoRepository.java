@@ -16,6 +16,11 @@ import org.springframework.data.repository.query.Param;
  * @author ricle
  */
 public interface AlunoRepository extends JpaRepository<Aluno, Long>{
+
+
+    // Lista alunos por nome
+    List<Aluno> findAllByOrderByNomeAsc();
+
     //Busca aluno pela matricula
     Optional<Aluno> findByMatricula(String matricula);
     

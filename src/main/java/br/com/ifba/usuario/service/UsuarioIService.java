@@ -24,4 +24,7 @@ public interface UsuarioIService {
     
     // Método específico para atualização
     Usuario update(Long id, Usuario usuario);
+    
+    //
+    boolean validarLogin(String login, String senha);
 }

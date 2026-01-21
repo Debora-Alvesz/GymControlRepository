@@ -27,7 +27,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     
     // Verifica se o CPF já está sendo usado por OUTRO usuário diferente do que estou editando.
     boolean existsByPessoaCpfAndIdNot(String cpf, Long id);
-
-    // Busca um usuário pelo login.
+    
+    // Busca o usuário pelo campo 'login'. Retorna null se não achar.
     Optional<Usuario> findByLogin(String login);
 }
