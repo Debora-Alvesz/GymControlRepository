@@ -8,6 +8,7 @@ import br.com.ifba.aluno.entity.Aluno;
 import br.com.ifba.pagamento.entity.Pagamento;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
+    
+    Optional<Pagamento> findByMatriculaAluno(String matricula);
     
     /**
      * Busca todos os pagamentos pelo status.

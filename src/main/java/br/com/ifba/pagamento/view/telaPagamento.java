@@ -39,13 +39,13 @@ public class telaPagamento extends javax.swing.JFrame {
         lblValor = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Tela Pagamento");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("CPF");
 
         txtCpf.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtCpf.setText("...");
 
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnBuscar.setText("Buscar");

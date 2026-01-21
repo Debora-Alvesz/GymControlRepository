@@ -74,7 +74,7 @@ public class AlunoService implements AlunoIService{
     @Override
     public Optional<Aluno> findById(String cpf) {
         logger.info("Buscando aluno pelo CPF: {}", cpf);
-        return alunoRepository.findById(cpf);
+        return alunoRepository.findByCpf(cpf);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class AlunoService implements AlunoIService{
     public Aluno update(String cpf, Aluno aluno) {
 
         logger.info("Iniciando atualização do aluno. CPF: {}", cpf);
-          Aluno existente = alunoRepository.findById(cpf).orElseThrow(() -> new RuntimeException("Erro: Aluno não encontrado."));
+          Aluno existente = alunoRepository.findByCpf(cpf).orElseThrow(() -> new RuntimeException("Erro: Aluno não encontrado."));
         logger.error("Aluno não encontrado para atualização. CPF: {}", cpf);
 
         if (alunoRepository.existsByMatriculaAndCpfNot(aluno.getMatricula(), existente.getCpf())) {
@@ -129,12 +129,27 @@ public class AlunoService implements AlunoIService{
     public void delete(String cpf) {
 
         logger.info("Solicitação de exclusão do aluno. CPF: {}", cpf);
-        if (!alunoRepository.existsById(cpf)) {
+        if (!alunoRepository.existsByCpf(cpf)) {
             logger.error("Tentativa de exclusão de aluno inexistente. CPF: {}", cpf);
             throw new ResourceNotFoundException("O aluno com CPF " + cpf + " não existe na base de dados.");
         }
-        alunoRepository.deleteById(cpf);
+        alunoRepository.deleteByCpf(cpf);
         logger.info("Aluno excluído com sucesso. CPF: {}", cpf);
     }
+
+    @Override
+    public boolean existsByCpf(String cpf) {
+        return alunoRepository.existsByCpf(cpf);
+                
+    }
+
+    @Override
+    public void deleteByCpf(String cpf) {
+        if (!alunoRepository.existsByCpf(cpf)) {
+            throw new RuntimeException("Aluno não encontrado");
+        }
+        alunoRepository.deleteByCpf(cpf);
+    }
+
     
 }

@@ -4,6 +4,7 @@
  */
 package br.com.ifba.modalidade.entity;
 
+import br.com.ifba.turma.entity.Turma;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

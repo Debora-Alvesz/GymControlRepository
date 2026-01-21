@@ -30,4 +30,9 @@ public interface AlunoIService {
     
     //método para deletar alunos pelo id
     void delete(String cpf);
+    
+     boolean existsByCpf(String cpf);
+     
+     void deleteByCpf(String cpf);
+     
 }

@@ -9,6 +9,9 @@ import br.com.ifba.plano.entity.Plano;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
@@ -38,9 +41,6 @@ import lombok.Setter;
 //Define que a chave primaria de Aluno é a pk de Pessoa
 @PrimaryKeyJoinColumn(name = "pessoa_id")
 public class Aluno extends Pessoa{
-    
-    @Column(name = "id_aluno", nullable = false, unique = true)
-    private Long id_aluno;//Define o id do aluno como unico
     
     @Column(name = "matricula", nullable =  false, length = 20)
     private String matricula;

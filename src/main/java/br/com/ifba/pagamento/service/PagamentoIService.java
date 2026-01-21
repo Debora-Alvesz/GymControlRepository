@@ -5,12 +5,14 @@
 package br.com.ifba.pagamento.service;
         
 import br.com.ifba.aluno.entity.Aluno;
+import br.com.ifba.dto.DadosFinanceiro;
 
 /**
  *
  * @author ETM-00168
  */
 public interface PagamentoIService {
+
 
     /**
      * Realiza a baixa de pagamento de um aluno,
@@ -19,5 +21,9 @@ public interface PagamentoIService {
      * @param aluno aluno que terá o pagamento registrado
      */
     void realizarBaixa(Aluno aluno);
+    
+    boolean registrarPagamento(String cpf);
+    
+    DadosFinanceiro buscarDadosFinanceiros(String cpf);
     
 }
