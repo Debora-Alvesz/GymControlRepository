@@ -1,5 +1,6 @@
 package br.com.ifba;
 
+import br.com.ifba.manutencao.view.TelaManutencao;
 import java.awt.EventQueue;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,6 +20,7 @@ public static void main(String[] args) {
             // Busque o bean da sua View principal pelo contexto do Spring
             var principal = context.getBean(br.com.ifba.modalidade.view.ModalidadeView.class);
             principal.setVisible(true);
+            
         });
     }
 }
