@@ -1,7 +1,6 @@
 package br.com.ifba.turma.controller;
 
 import br.com.ifba.aluno.entity.Aluno;
-import br.com.ifba.avaliacaofisica.entity.AvaliacaoFisica;
 import br.com.ifba.turma.entity.Turma;
 import br.com.ifba.turma.service.TurmaService;
 import lombok.RequiredArgsConstructor;

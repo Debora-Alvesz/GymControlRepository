@@ -29,21 +29,21 @@
                       <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Component id="nomeCurso" alignment="1" min="-2" pref="241" max="-2" attributes="0"/>
+                              <Component id="nome" alignment="1" min="-2" pref="241" max="-2" attributes="0"/>
                               <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                   <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="descricaoCurso" alignment="0" pref="241" max="32767" attributes="0"/>
-                                      <Component id="duracaoCurso" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="idModalidade" alignment="0" pref="241" max="32767" attributes="0"/>
+                                      <Component id="idInstrutor" alignment="0" max="32767" attributes="0"/>
                                       <Group type="102" alignment="1" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="descricaoCurso1" alignment="0" min="-2" pref="104" max="-2" attributes="0"/>
+                                              <Component id="horario" alignment="0" min="-2" pref="104" max="-2" attributes="0"/>
                                               <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                              <Component id="descricaoCurso2" min="-2" pref="105" max="-2" attributes="0"/>
+                                              <Component id="capacidade" min="-2" pref="105" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -61,7 +61,7 @@
                       <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
                       <Component id="cancelar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="salvarCurso" min="-2" max="-2" attributes="0"/>
+                      <Component id="salvarTurma" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="119" max="32767" attributes="0"/>
@@ -76,30 +76,30 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-              <Component id="nomeCurso" min="-2" pref="29" max="-2" attributes="0"/>
+              <Component id="nome" min="-2" pref="29" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-              <Component id="duracaoCurso" min="-2" pref="29" max="-2" attributes="0"/>
+              <Component id="idInstrutor" min="-2" pref="29" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="descricaoCurso" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="idModalidade" min="-2" pref="29" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                      <Component id="descricaoCurso1" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="horario" min="-2" pref="29" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="descricaoCurso2" min="-2" pref="29" max="-2" attributes="0"/>
+                  <Component id="capacidade" min="-2" pref="29" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="salvarCurso" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="salvarTurma" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cancelar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="63" max="32767" attributes="0"/>
@@ -108,7 +108,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="salvarCurso">
+    <Component class="javax.swing.JButton" name="salvarTurma">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="cc" red="cc" type="rgb"/>
@@ -116,7 +116,7 @@
         <Property name="text" type="java.lang.String" value="Salvar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="salvarCursoActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="salvarTurmaActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="cancelar">
@@ -142,11 +142,11 @@
         <Property name="text" type="java.lang.String" value="ID Modalidade:"/>
       </Properties>
     </Component>
-    <Component class="java.awt.TextField" name="nomeCurso">
+    <Component class="java.awt.TextField" name="nome">
     </Component>
-    <Component class="java.awt.TextField" name="duracaoCurso">
+    <Component class="java.awt.TextField" name="idInstrutor">
     </Component>
-    <Component class="java.awt.TextField" name="descricaoCurso">
+    <Component class="java.awt.TextField" name="idModalidade">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
@@ -161,14 +161,20 @@
         <Property name="text" type="java.lang.String" value="Hor&#xe1;rio:"/>
       </Properties>
     </Component>
-    <Component class="java.awt.TextField" name="descricaoCurso1">
+    <Component class="java.awt.TextField" name="horario">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="HH:MM"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
         <Property name="text" type="java.lang.String" value="Capacidade:"/>
       </Properties>
     </Component>
-    <Component class="java.awt.TextField" name="descricaoCurso2">
+    <Component class="java.awt.TextField" name="capacidade">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="capacidadeActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

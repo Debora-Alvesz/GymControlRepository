@@ -4,6 +4,12 @@
  */
 package br.com.ifba.turma.view;
 
+import br.com.ifba.turma.entity.Turma;
+import br.com.ifba.turma.repository.TurmaRepository;
+import java.awt.List;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author angra
@@ -17,6 +23,7 @@ public class TurmaView extends javax.swing.JFrame {
      */
     public TurmaView() {
         initComponents();
+        //carregarTurma();
     }
 
     /**
@@ -29,25 +36,20 @@ public class TurmaView extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaListarCurso = new javax.swing.JTable();
-        btnExcluirCurso = new javax.swing.JButton();
-        txtPesquisar = new java.awt.TextField();
+        tabelaListarTurma = new javax.swing.JTable();
+        btnExcluirTurma = new javax.swing.JButton();
+        txtPesquisarId = new java.awt.TextField();
         btnPesquisar = new javax.swing.JButton();
-        btnAdicionarCurso = new javax.swing.JButton();
-        btnEditarCurso = new javax.swing.JButton();
+        btnAdicionarTurma = new javax.swing.JButton();
+        btnEditarTurma = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tabelaListarCurso.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaListarTurma.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null,  new Boolean(false)},
+                {null, null, null, null, null, null,  new Boolean(false)}
             },
             new String [] {
                 "Id", "Nome", "Id Instrutor", "Id Modalidade", "Horário", "Capacidade", "Selecionar"
@@ -61,21 +63,21 @@ public class TurmaView extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        tabelaListarCurso.setColumnSelectionAllowed(true);
-        jScrollPane1.setViewportView(tabelaListarCurso);
-        tabelaListarCurso.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tabelaListarTurma.setColumnSelectionAllowed(true);
+        jScrollPane1.setViewportView(tabelaListarTurma);
+        tabelaListarTurma.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        btnExcluirCurso.setText("Excluir");
-        btnExcluirCurso.addActionListener(new java.awt.event.ActionListener() {
+        btnExcluirTurma.setText("Excluir");
+        btnExcluirTurma.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcluirCursoActionPerformed(evt);
+                btnExcluirTurmaActionPerformed(evt);
             }
         });
 
-        txtPesquisar.setText("Pesquisar");
-        txtPesquisar.addActionListener(new java.awt.event.ActionListener() {
+        txtPesquisarId.setText("Pesquisar");
+        txtPesquisarId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPesquisarActionPerformed(evt);
+                txtPesquisarIdActionPerformed(evt);
             }
         });
 
@@ -86,17 +88,17 @@ public class TurmaView extends javax.swing.JFrame {
             }
         });
 
-        btnAdicionarCurso.setText("Adicionar");
-        btnAdicionarCurso.addActionListener(new java.awt.event.ActionListener() {
+        btnAdicionarTurma.setText("Adicionar");
+        btnAdicionarTurma.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdicionarCursoActionPerformed(evt);
+                btnAdicionarTurmaActionPerformed(evt);
             }
         });
 
-        btnEditarCurso.setText("Editar");
-        btnEditarCurso.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarTurma.setText("Editar");
+        btnEditarTurma.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarCursoActionPerformed(evt);
+                btnEditarTurmaActionPerformed(evt);
             }
         });
 
@@ -108,15 +110,15 @@ public class TurmaView extends javax.swing.JFrame {
                 .addGap(111, 111, 111)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPesquisarId, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnPesquisar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAdicionarCurso)
+                        .addComponent(btnAdicionarTurma)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEditarCurso)
+                        .addComponent(btnEditarTurma)
                         .addGap(18, 18, 18)
-                        .addComponent(btnExcluirCurso))
+                        .addComponent(btnExcluirTurma))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(124, Short.MAX_VALUE))
         );
@@ -126,11 +128,11 @@ public class TurmaView extends javax.swing.JFrame {
                 .addGap(0, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnExcluirCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEditarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAdicionarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnExcluirTurma, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEditarTurma, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAdicionarTurma, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtPesquisarId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 18, Short.MAX_VALUE))
@@ -139,60 +141,88 @@ public class TurmaView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnExcluirCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirCursoActionPerformed
+    public void carregarTurma() {
+//        DefaultTableModel tabela = (DefaultTableModel) tabelaListarTurma.getModel();
+//        tabela.setNumRows(0);
+//
+//        TurmaRepository turmaRepository;
+//        turmaRepository = new TurmaRepository() {};
+//      
+//        try {
+//            for(Turma turma : turmaRepository.findAll()) {
+//                tabela.addRow(new Object[]{
+//                    turma.getId(),
+//                    turma.getNome(),
+//                    turma.getInstrutor(),
+//                    turma.getModalidade(),
+//                    turma.getHorario(),
+//                    turma.getCapacidade()
+//                });
+//            } 
+//        } catch(Exception Erro) {
+//            JOptionPane.showMessageDialog(
+//                    null, 
+//                    "Erro ao carregar a turma\n" + Erro, 
+//                    "ERRO", 
+//                    JOptionPane.ERROR_MESSAGE
+//            );
+//        }
+    }
+    
+    private void btnExcluirTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirTurmaActionPerformed
         // TODO add your handling code here:
 
-        if(tabelaListarCurso.getSelectedRow() != -1) {
-            int resposta = JOptionPane.showConfirmDialog(
-                null,
-                "Excluir o curso selecionado?",
-                "Excluir curso",
-                JOptionPane.YES_NO_OPTION
-            );
-
-            if(resposta == JOptionPane.YES_OPTION) {
-                Long id = (Long) tabelaListarCurso.getValueAt(tabelaListarCurso.getSelectedRow(), 1);
-
-                CursoIDao cursoDao = new CursoDao();
-                cursoDao.delete(cursoDao.findById(id));
-
-                carregarCursos();
-            }
-        } else {
-            JOptionPane.showMessageDialog(
-                null,
-                "Selecione um curso"
-            );
-        }
-    }//GEN-LAST:event_btnExcluirCursoActionPerformed
+//        if(tabelaListarTurma.getSelectedRow() != -1) {
+//            int resposta = JOptionPane.showConfirmDialog(
+//                null,
+//                "Excluir o curso selecionado?",
+//                "Excluir curso",
+//                JOptionPane.YES_NO_OPTION
+//            );
+//
+//            if(resposta == JOptionPane.YES_OPTION) {
+//                Long id = (Long) tabelaListarTurma.getValueAt(tabelaListarTurma.getSelectedRow(), 1);
+//
+//                TurmaRepository turmaRepository = new TurmaRepository;
+//                turmaRepository.delete(id);
+//
+//                //carregarCursos();
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(
+//                null,
+//                "Selecione uma turma"
+//            );
+//        }
+    }//GEN-LAST:event_btnExcluirTurmaActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
-    private void btnAdicionarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarCursoActionPerformed
+    private void btnAdicionarTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarTurmaActionPerformed
         // TODO add your handling code here:
-        AdicionarCurso adicionarCurso = new AdicionarCurso();
-        adicionarCurso.setVisible(true);
-    }//GEN-LAST:event_btnAdicionarCursoActionPerformed
+        TurmaAdicionarView adicionarTurma = new TurmaAdicionarView();
+        adicionarTurma.setVisible(true);
+    }//GEN-LAST:event_btnAdicionarTurmaActionPerformed
 
-    private void btnEditarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarCursoActionPerformed
-        if(tabelaListarCurso.getSelectedRow() != -1) {
+    private void btnEditarTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarTurmaActionPerformed
+        if(tabelaListarTurma.getSelectedRow() != -1) {
             //Guarda o id do curso selecionado e envia para a tela cursoEditar
-            Long id = (Long) tabelaListarCurso.getValueAt(tabelaListarCurso.getSelectedRow(), 1);
-            EditarCurso editarCurso = new EditarCurso(this, id);
-            editarCurso.setVisible(true);
+            Long id = (Long) tabelaListarTurma.getValueAt(tabelaListarTurma.getSelectedRow(), 1);
+            TurmaEditarView editarTurma = new TurmaEditarView(this, id);
+            editarTurma.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(
                 null,
                 "Selecione um curso"
             );
         }
-    }//GEN-LAST:event_btnEditarCursoActionPerformed
+    }//GEN-LAST:event_btnEditarTurmaActionPerformed
 
-    private void txtPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesquisarActionPerformed
+    private void txtPesquisarIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesquisarIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtPesquisarActionPerformed
+    }//GEN-LAST:event_txtPesquisarIdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,12 +250,12 @@ public class TurmaView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdicionarCurso;
-    private javax.swing.JButton btnEditarCurso;
-    private javax.swing.JButton btnExcluirCurso;
+    private javax.swing.JButton btnAdicionarTurma;
+    private javax.swing.JButton btnEditarTurma;
+    private javax.swing.JButton btnExcluirTurma;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabelaListarCurso;
-    private java.awt.TextField txtPesquisar;
+    private javax.swing.JTable tabelaListarTurma;
+    private java.awt.TextField txtPesquisarId;
     // End of variables declaration//GEN-END:variables
 }

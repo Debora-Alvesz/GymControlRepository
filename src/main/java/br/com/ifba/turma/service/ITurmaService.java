@@ -1,11 +1,10 @@
 package br.com.ifba.turma.service;
 
 import br.com.ifba.turma.entity.Turma;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+
 public interface ITurmaService {
 
    Turma save(Turma turma);
