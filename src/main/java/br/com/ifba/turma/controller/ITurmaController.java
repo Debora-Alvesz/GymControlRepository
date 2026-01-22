@@ -4,17 +4,22 @@ import br.com.ifba.turma.entity.Turma;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Repository
 public interface ITurmaController {
 
-    Turma save(Turma turma);
+    ResponseEntity<Turma> salvar(@RequestBody Turma turma);
 
-    Turma update(String id, Turma turma);
+    ResponseEntity<Turma> buscarPorId(@PathVariable Long id);
+    
+    ResponseEntity<List<Turma>> listarTodas();
 
-    void delete(String id);
+    ResponseEntity<Turma> atualizar(
+            @PathVariable Long id,
+            @RequestBody Turma turma);
 
-    Turma findById(String id);
-
-    List<Turma> findAll();
+    ResponseEntity<Void> excluir(@PathVariable Long id);
 }
