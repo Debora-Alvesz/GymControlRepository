@@ -1,87 +1,44 @@
 package br.com.ifba.turma.controller;
 
+import br.com.ifba.aluno.entity.Aluno;
 import br.com.ifba.turma.entity.Turma;
 import br.com.ifba.turma.service.TurmaService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
-//Controller responsável por expor os endpoints REST e relacionados à entidade Turma.
-@RestController // Indica que esta classe é um controller REST
-@RequestMapping("/api/turmas") // URL base da API
-@RequiredArgsConstructor // Injeção de dependência via construtor
-@Slf4j // Habilita o Logger
-public class TurmaController implements ITurmaController {
+@Controller
+@RequiredArgsConstructor
+public class TurmaController implements ITurmaController{
 
-    //Serviço responsável pelas regras de negócio
+    @Autowired
     private final TurmaService turmaService;
 
-    //Endpoint para criação de uma nova Turma
-    @PostMapping
     @Override
-    public ResponseEntity<Turma> salvar(@RequestBody Turma turma) {
-
-        log.info("Requisição recebida para salvar nova turma");
-        Turma novaTurma = turmaService.salvar(turma);
-        log.info("Turma criada com sucesso. ID: {}", novaTurma.getId());
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(novaTurma);
-    }
-    
-    //Endpoint para listar todas as Turmas
-    @GetMapping
-    @Override
-    public ResponseEntity<List<Turma>> listarTodas() {
-
-        log.info("Requisição para listar todas as turmas");
-        return ResponseEntity.ok(turmaService.listarTodas());
+    public Turma save(Turma turma) {
+        return turmaService.save(turma);
     }
 
-    //Endpoint para buscar uma Turma pelo ID
-    @GetMapping("/{id}")
     @Override
-    public ResponseEntity<Turma> buscarPorId(@PathVariable Long id) {
-
-        log.info("Requisição para buscar turma com ID: {}", id);
-        return ResponseEntity.ok(turmaService.buscarPorId(id));
+    public Turma update(String id, Turma turma) {
+        return turmaService.update(id, turma);
     }
 
-    //Endpoint para atualizar uma Turma existente
-    @PutMapping("/{id}")
     @Override
-    public ResponseEntity<Turma> atualizar(
-            @PathVariable Long id,
-            @RequestBody Turma turma) {
-
-        log.info("Requisição para atualizar turma ID: {}", id);
-
-        //Busca a turma existente
-        Turma turmaExistente = turmaService.buscarPorId(id);
-
-        //Atualiza os dados permitidos
-        turmaExistente.setHorario(turma.getHorario());
-        turmaExistente.setCapacidade(turma.getCapacidade());
-        turmaExistente.setInstrutor(turma.getInstrutor());
-        turmaExistente.setModalidade(turma.getModalidade());
-
-        Turma turmaAtualizada = turmaService.salvar(turmaExistente);
-        log.info("Turma atualizada com sucesso. ID: {}", turmaAtualizada.getId());
-        return ResponseEntity.ok(turmaAtualizada);
+    public void delete(String id) {
+        turmaService.delete(Long.valueOf(id));
     }
 
-    //Endpoint para excluir uma Turma pelo ID
-    @DeleteMapping("/{id}")
     @Override
-    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+    public Turma findById(String id) {
 
-        log.warn("Requisição para excluir turma ID: {}", id);
-        turmaService.deletar(id);
-        log.info("Turma excluída com sucesso. ID: {}", id);
-        return ResponseEntity.noContent().build();
+        return turmaService.findById(Long.valueOf(id));
+    }
+
+    @Override
+    public List<Turma> findAll(){
+        return turmaService.findAll();
     }
 }

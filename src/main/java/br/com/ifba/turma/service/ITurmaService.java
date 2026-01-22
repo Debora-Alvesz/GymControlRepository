@@ -7,12 +7,14 @@ import java.util.List;
 
 public interface ITurmaService {
 
-   Turma salvar(Turma turma);
+   Turma save(Turma turma);
 
-   List<Turma> listarTodas();
+   List<Turma> findAll();
 
-    Turma buscarPorId(Long id);
-    
-    void deletar(Long id);
+    Turma findById(Long id);
+
+    Turma update(String id, Turma turma);
+
+    void delete(Long id);
 
 }
