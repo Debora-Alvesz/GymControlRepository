@@ -18,7 +18,7 @@ public static void main(String[] args) {
         // Inicia a sua tela principal de forma segura para o Swing
         EventQueue.invokeLater(() -> {
             // Busque o bean da sua View principal pelo contexto do Spring
-            var principal = context.getBean(br.com.ifba.modalidade.view.ModalidadeView.class);
+            var principal = context.getBean(br.com.ifba.aluno.view.TelaMatriculaAlunos.class);
             principal.setVisible(true);
             
         });

@@ -6,7 +6,9 @@ import br.com.ifba.aluno.entity.Aluno;
 import br.com.ifba.infrastructure.util.ValidadorUtil;
 import br.com.ifba.plano.controller.PlanoController;
 import br.com.ifba.plano.entity.Plano;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -14,8 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Débora Alves
  */
 
-@org.springframework.stereotype.Component // Permite que o Spring gerencie esta tela
-
+@Component // Permite que o Spring gerencie esta tela
 
 public class TelaMatriculaAlunos extends javax.swing.JFrame {
     
@@ -32,7 +33,12 @@ public class TelaMatriculaAlunos extends javax.swing.JFrame {
 
     public TelaMatriculaAlunos() {
         initComponents();
-        carregarPlanos();  // Carrega os dados do banco no ComboBox
+    }
+
+    @PostConstruct // Isso diz ao Spring: "Rode isso logo depois de injetar tudo"
+    public void init() {
+        carregarPlanos(); // Agora sim o controller vai existir!
+        this.setVisible(true); // Opcional: Para fazer a tela aparecer
     }
 
    
@@ -60,17 +66,22 @@ public class TelaMatriculaAlunos extends javax.swing.JFrame {
         jLabel1.setText("Matricular novo Aluno");
 
         jPanel3.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel3.setForeground(new java.awt.Color(51, 51, 51));
 
         lblCpf.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblCpf.setForeground(new java.awt.Color(255, 255, 255));
         lblCpf.setText("CPF:");
 
         lblTelefone.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblTelefone.setForeground(new java.awt.Color(255, 255, 255));
         lblTelefone.setText("Telefone:");
 
         lblPlano.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblPlano.setForeground(new java.awt.Color(255, 255, 255));
         lblPlano.setText("Plano:");
 
         lblNome.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblNome.setForeground(new java.awt.Color(255, 255, 255));
         lblNome.setText("Nome");
 
         txtNomeAluno.addActionListener(new java.awt.event.ActionListener() {
@@ -89,6 +100,7 @@ public class TelaMatriculaAlunos extends javax.swing.JFrame {
         });
 
         lblEmail.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblEmail.setForeground(new java.awt.Color(255, 255, 255));
         lblEmail.setText("Email:");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -201,8 +213,9 @@ public class TelaMatriculaAlunos extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "O Telefone deve conter apenas números!");
             return;
         }
+
         // Valida o CPF usando classe ValidadorUtil 
-        if (!ValidadorUtil.isValidCPF(txtCpf.getText())) {
+        if (!ValidadorUtil.isCpfValido(txtCpf.getText())) {
             javax.swing.JOptionPane.showMessageDialog(this, "CPF Inválido!");
             return; // Interrompe se o CPF estiver errado
         }
@@ -214,7 +227,9 @@ public class TelaMatriculaAlunos extends javax.swing.JFrame {
         }
 
         try {
-            // Preenche os dados no objeto 'aluno' que o Spring injetou (sem usar new)
+            // Cria uma nova instância de Aluno (uma ficha em branco)
+            //  entidades de dados precisam ser instanciadas para não sobrescrever o anterior.
+            this.aluno = new Aluno();
             aluno.setName(txtNomeAluno.getText());
             aluno.setCpf(txtCpf.getText());
             aluno.setTelefone(txtTelefone.getText());

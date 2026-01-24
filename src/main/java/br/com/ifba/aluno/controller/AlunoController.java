@@ -41,7 +41,7 @@ public class AlunoController implements AlunoIController {
 
     @Override
     public Aluno findById(String cpf) {
-        // Se não encontrar, retorna null (padrão para telas Swing/Desktop)
+        // Se não encontrar, retorna null
         return alunoService.findById(cpf).orElse(null);
     }   
  
