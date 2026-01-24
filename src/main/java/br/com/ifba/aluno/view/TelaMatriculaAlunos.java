@@ -6,6 +6,7 @@ import br.com.ifba.aluno.entity.Aluno;
 import br.com.ifba.infrastructure.util.ValidadorUtil;
 import br.com.ifba.plano.controller.PlanoController;
 import br.com.ifba.plano.entity.Plano;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +33,12 @@ public class TelaMatriculaAlunos extends javax.swing.JFrame {
 
     public TelaMatriculaAlunos() {
         initComponents();
-        carregarPlanos();  // Carrega os dados do banco no ComboBox
+    }
+
+    @PostConstruct // Isso diz ao Spring: "Rode isso logo depois de injetar tudo"
+    public void init() {
+        carregarPlanos(); // Agora sim o controller vai existir!
+        this.setVisible(true); // Opcional: Para fazer a tela aparecer
     }
 
    

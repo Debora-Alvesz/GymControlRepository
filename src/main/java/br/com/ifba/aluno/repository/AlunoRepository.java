@@ -19,7 +19,7 @@ public interface AlunoRepository extends JpaRepository<Aluno, String>{
 
 
     // Lista alunos por nome
-    List<Aluno> findAllByOrderByNomeAsc();
+    List<Aluno> findAllByOrderByNameAsc();
 
     //Busca aluno pela matricula
     Optional<Aluno> findByMatricula(String matricula);
