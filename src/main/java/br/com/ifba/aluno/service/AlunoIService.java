@@ -30,4 +30,7 @@ public interface AlunoIService {
     
     //método para deletar alunos pelo id
     void delete(String cpf);
+    
+    //Verifica se existe um aluno com essa matricula
+    boolean existsByMatricula(String matricula);
 }

@@ -7,7 +7,6 @@ package br.com.ifba.avaliacaofisica.service;
 import br.com.ifba.avaliacaofisica.entity.AvaliacaoFisica;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 /**
  *
@@ -20,11 +19,14 @@ public interface AvaliacaoFisicaIService {
     //Método para listar Avaliacões Fisicas
     List<AvaliacaoFisica> findAll();
     
-    //Método para buscar Avaliacão Fisica por matricula
-    Optional<AvaliacaoFisica> findAlunoByMatricula(String matricula);
+    //Método para buscar Avaliacão Fisica com a matricula informada
+    AvaliacaoFisica findByAluno_Matricula(String matricula);
     
-    //Método para deletar avaliação pela matricula do aluno
-    void deleteByAlunoMatricula(String matricula);
+    //Método para deletar avaliação do aluno
+    void delete(AvaliacaoFisica avaliacaoFisica);
+    
+    //Método para deletar pela matricula
+    void deleteByMatricula(String matricula);
     
     // Método específico para atualização
     AvaliacaoFisica update(String matricula, AvaliacaoFisica avaliacaoFisica);

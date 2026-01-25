@@ -45,4 +45,8 @@ public class AlunoController implements AlunoIController {
         return alunoService.findById(cpf).orElse(null);
     }   
  
+    @Override
+    public boolean existsByMatricula(String matricula){
+        return alunoService.existsByMatricula(matricula);
+    }
 }

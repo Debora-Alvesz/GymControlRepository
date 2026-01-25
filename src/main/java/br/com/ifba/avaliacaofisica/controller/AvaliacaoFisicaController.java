@@ -8,7 +8,6 @@ import br.com.ifba.avaliacaofisica.entity.AvaliacaoFisica;
 import br.com.ifba.avaliacaofisica.service.AvaliacaoFisicaIService;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -35,14 +34,20 @@ public class AvaliacaoFisicaController implements AvaliacaoFisicaIController{
     
     //Método para buscar Avaliacão Fisica por matricula
     @Override
-    public Optional<AvaliacaoFisica> findAlunoByMatricula(String matricula){
-    return avaliacaoFisicaService.findAlunoByMatricula(matricula);
+    public AvaliacaoFisica findByAluno_Matricula(String matricula){
+    return avaliacaoFisicaService.findByAluno_Matricula(matricula);
+    }
+    
+    //Método para deletar avaliação do aluno
+    @Override
+    public void delete(AvaliacaoFisica avaliacaoFisica){
+    avaliacaoFisicaService.delete(avaliacaoFisica);
     }
     
     //Método para deletar avaliação pela matricula do aluno
     @Override
-    public void deleteByAlunoMatricula(String matricula){    
-    avaliacaoFisicaService.deleteByAlunoMatricula(matricula);
+    public void deleteByMatricula(String matricula){    
+    avaliacaoFisicaService.deleteByMatricula(matricula);
     }
     
     // Método específico para atualização

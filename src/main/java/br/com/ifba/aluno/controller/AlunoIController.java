@@ -25,4 +25,6 @@ public interface AlunoIController {
     // Busca pelo ID do banco
     Aluno findById(String cpf);
     
+    //Verifica se existe um aluno com essa matricula
+    boolean existsByMatricula(String matricula);
 }

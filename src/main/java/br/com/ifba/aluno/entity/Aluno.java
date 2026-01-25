@@ -38,11 +38,8 @@ import lombok.Setter;
 //Define que a chave primaria de Aluno é a pk de Pessoa
 @PrimaryKeyJoinColumn(name = "pessoa_id")
 public class Aluno extends Pessoa{
-    
-    @Column(name = "id_aluno", nullable = false, unique = true)
-    private Long id_aluno;//Define o id do aluno como unico
-    
-    @Column(name = "matricula", nullable =  false, length = 20)
+  
+    @Column(name = "matricula", nullable =  false, length = 20, unique = true)
     private String matricula;
 
     @Column(name = "requisitos", nullable = false, length = 100)

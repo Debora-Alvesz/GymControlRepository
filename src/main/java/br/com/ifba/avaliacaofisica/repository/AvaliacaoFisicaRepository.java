@@ -27,11 +27,9 @@ public interface AvaliacaoFisicaRepository extends JpaRepository<AvaliacaoFisica
     @Override
     List<AvaliacaoFisica> findAll();
     
-    //Método para buscar Avaliacão Fisica por matricula
-    Optional<AvaliacaoFisica> findAlunoByMatricula(String matricula);
-    
-    //Método para deletar avaliação pela matricula do aluno
-    void deleteByAlunoMatricula(String matricula);
+    //Método para deletar avaliação do aluno
+    @Override
+    void delete(AvaliacaoFisica avaliacaoFisica);
     
     // Método específico para atualização
     AvaliacaoFisica update(String matricula, AvaliacaoFisica avaliacaoFisica);
@@ -39,8 +37,8 @@ public interface AvaliacaoFisicaRepository extends JpaRepository<AvaliacaoFisica
     // Método para listar as avaliações fisicas de um dia especifico
     List<AvaliacaoFisica> findByDataAvaliacao(LocalDate dataAvaliacao);
     
-    //Método para buscar se existe Avaliacão Fisica com aquela matricula
-    Optional<AvaliacaoFisica> findByAlunoMatricula(String matricula);
+    //Método para buscar Avaliacão Fisica com a matricula informada
+    Optional<AvaliacaoFisica> findByAluno_Matricula(String matricula);
     
     // Verifica se existe Avaliação Física para a matrícula informada
     boolean existsByAlunoMatricula(String matricula);

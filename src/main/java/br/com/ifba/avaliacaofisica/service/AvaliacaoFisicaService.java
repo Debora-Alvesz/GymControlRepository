@@ -12,7 +12,6 @@ import br.com.ifba.exception.BusinessException;
 import br.com.ifba.exception.ResourceNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,26 +71,19 @@ public class AvaliacaoFisicaService implements AvaliacaoFisicaIService {
     }
 
     @Override
-    public Optional<AvaliacaoFisica> findAlunoByMatricula(String matricula) {
-        //Busca pelo CPF do aluno. O retorno é Optional para tratar se o usuário não existir.
-        logger.info("Buscando avaliação pela matricula do aluno: {}", matricula);
-        return avaliacaoFisicaRepository.findAlunoByMatricula(matricula);
-    }
-
-    @Override
-    public void deleteByAlunoMatricula(String matricula) {
-        logger.info("Solicitação de exclusão da avaliação física. Matrícula do aluno: {}", matricula);
+    public void delete(AvaliacaoFisica avaliacaoFisica) {
+        logger.info("Solicitação de exclusão da avaliação física. Matrícula do aluno: {}", avaliacaoFisica.getAluno().getMatricula());
 
     // 1. Verifica se existe avaliação física para a matrícula informada
     avaliacaoFisicaRepository
-            .findByAlunoMatricula(matricula)
+            .findByAluno_Matricula(avaliacaoFisica.getAluno().getMatricula())
             .orElseThrow(() -> new ResourceNotFoundException(
-                    "Não existe avaliação física cadastrada para o aluno de matrícula: " + matricula
+                    "Não existe avaliação física cadastrada para o aluno de matrícula: " + avaliacaoFisica.getAluno().getMatricula()
             ));
 
     // 2. Remove a avaliação
-    avaliacaoFisicaRepository.deleteByAlunoMatricula(matricula);
-    logger.info("Avaliação física excluída com sucesso. Matrícula do aluno: {}", matricula);
+    avaliacaoFisicaRepository.delete(avaliacaoFisica);
+    logger.info("Avaliação física excluída com sucesso. Matrícula do aluno: {}", avaliacaoFisica.getAluno().getMatricula());
     }
     
     @Override
@@ -100,7 +92,7 @@ public class AvaliacaoFisicaService implements AvaliacaoFisicaIService {
 
     // 1. Busca a avaliação existente pela matrícula
     AvaliacaoFisica avaliacaoExistente = avaliacaoFisicaRepository
-            .findByAlunoMatricula(matricula)
+            .findByAluno_Matricula(matricula)
             .orElseThrow(() -> new ResourceNotFoundException(
                     "Avaliação física não encontrada para o aluno de matrícula: " + matricula
             ));
@@ -147,5 +139,34 @@ public class AvaliacaoFisicaService implements AvaliacaoFisicaIService {
     }
 
     return avaliacoes;
-}
+    }
+    
+    @Override
+    public void deleteByMatricula(String matricula) {
+
+        //Aqui você obtém o OBJETO AvaliacaoFisica
+        AvaliacaoFisica avaliacaoFisica =
+                avaliacaoFisicaRepository
+                        .findByAluno_Matricula(matricula)
+                        .orElseThrow(() ->
+                                new BusinessException(
+                                        "Avaliação física não encontrada para a matrícula: " + matricula
+                                )
+                        );
+
+        //Aqui você passa o objeto para o método delete
+        avaliacaoFisicaRepository.delete(avaliacaoFisica);
+    }
+    
+    @Override
+    public AvaliacaoFisica findByAluno_Matricula(String matricula){
+     return avaliacaoFisicaRepository
+                .findByAluno_Matricula(matricula)
+                .orElseThrow(() ->
+                        new BusinessException(
+                                "Avaliação Física não encontrada para a matrícula: " + matricula
+                        )
+                );
+    
+    }
 }

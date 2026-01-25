@@ -137,4 +137,9 @@ public class AlunoService implements AlunoIService{
         logger.info("Aluno excluído com sucesso. CPF: {}", cpf);
     }
     
+    @Override
+    public boolean existsByMatricula(String matricula) {
+        return alunoRepository.existsByMatricula(matricula);
+    }
+    
 }
