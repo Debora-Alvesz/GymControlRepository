@@ -46,24 +46,24 @@ public class telaPagamento extends javax.swing.JFrame {
         lblValor = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
 
-<<<<<<< Updated upstream
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-=======
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Tela Pagamento");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
->>>>>>> Stashed changes
+
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("CPF");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 42, 47, 22));
 
         txtCpf.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-<<<<<<< Updated upstream
+
         txtCpf.setText("...");
-=======
+
         getContentPane().add(txtCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 43, 106, -1));
->>>>>>> Stashed changes
+
 
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnBuscar.setText("Buscar");
