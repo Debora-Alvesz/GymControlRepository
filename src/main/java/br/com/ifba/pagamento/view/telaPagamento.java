@@ -4,6 +4,11 @@
  */
 package br.com.ifba.pagamento.view;
 
+import br.com.ifba.dto.DadosFinanceiro;
+import br.com.ifba.pagamento.service.PagamentoService;
+import javax.swing.JOptionPane;
+
+
 /**
  *
  * @author ETM-00168
@@ -12,6 +17,8 @@ public class telaPagamento extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(telaPagamento.class.getName());
 
+    private final PagamentoService pagamentoService = new PagamentoService();
+    
     /**
      * Creates new form Pagamento
      */
@@ -39,95 +46,132 @@ public class telaPagamento extends javax.swing.JFrame {
         lblValor = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
 
+<<<<<<< Updated upstream
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+=======
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Tela Pagamento");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+>>>>>>> Stashed changes
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("CPF");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 42, 47, 22));
 
         txtCpf.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+<<<<<<< Updated upstream
         txtCpf.setText("...");
+=======
+        getContentPane().add(txtCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 43, 106, -1));
+>>>>>>> Stashed changes
 
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 40, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Nome:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 104, -1, 28));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Plano atual:");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 150, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Valor a pagar:");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 188, -1, -1));
 
         lblNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblNome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNome.setText("0");
+        getContentPane().add(lblNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 108, 158, -1));
 
         lblPlano.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblPlano.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPlano.setText("0");
+        getContentPane().add(lblPlano, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 150, 158, -1));
 
         lblValor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblValor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblValor.setText("0");
+        getContentPane().add(lblValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 188, 158, -1));
 
         btnSave.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnSave.setText("Save");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnBuscar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(54, 54, 54)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSave)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblPlano, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblValor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(122, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNome))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(lblPlano))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(lblValor))
-                .addGap(32, 32, 32)
-                .addComponent(btnSave)
-                .addContainerGap(33, Short.MAX_VALUE))
-        );
+        btnSave.setText("Registrar Pagamento");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 243, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    
+    public void buscarAluno() {
+
+    String cpf = txtCpf.getText();
+
+    try {
+        DadosFinanceiro dados =
+                pagamentoService.buscarDadosFinanceiros(cpf);
+
+        // Se achou aluno, mostra os dados
+        lblNome.setText(dados.getNomeAluno());
+        lblPlano.setText("Plano Padrão");
+        lblValor.setText(String.valueOf(dados.getValor()));
+
+    } catch (RuntimeException e) {
+
+        // Se NÃO achou aluno
+        if ("ALUNO_NAO_ENCONTRADO".equals(e.getMessage())) {
+
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Aluno não encontrado",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+            );
+
+            // Limpa os campos
+            lblNome.setText("");
+            lblPlano.setText("");
+            lblValor.setText("");
+        }
+    }
+}
+    
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        
+        buscarAluno();
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    
+    public void registrarPagamento() {
+
+        String cpf = txtCpf.getText();
+        pagamentoService.registrarPagamento(cpf);
+
+        JOptionPane.showMessageDialog(
+        null,
+        "Pagamento registrado com sucesso!",
+        "Sucesso",
+        JOptionPane.INFORMATION_MESSAGE
+);
+    }
+    
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        
+     registrarPagamento();
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     /**
      * @param args the command line arguments

@@ -71,6 +71,7 @@
                         <artifactId>postgresql</artifactId>
                         <scope>runtime</scope>
                 </dependency>
+
                 <dependency>
     <groupId>com.h2database</groupId>
     <artifactId>h2</artifactId>
@@ -86,7 +87,13 @@
 	  <artifactId>spring-boot-autoconfigure</artifactId>
 	  <version>3.5.7</version>
 	  <type>jar</type>
-	 </dependency>
+          
+	 <dependency>
+	  <groupId>org.netbeans.external</groupId>
+	  <artifactId>AbsoluteLayout</artifactId>
+	  <version>RELEASE270</version>
+          </dependency>
+	 
 	</dependencies>
 
 	<build>
