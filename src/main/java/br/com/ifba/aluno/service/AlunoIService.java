@@ -33,4 +33,8 @@ public interface AlunoIService {
     
     //Verifica se existe um aluno com essa matricula
     boolean existsByMatricula(String matricula);
+    
+     boolean existsByCpf(String cpf);
+     
+     void deleteByCpf(String cpf);
 }

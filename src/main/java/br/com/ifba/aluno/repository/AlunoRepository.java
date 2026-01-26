@@ -15,7 +15,7 @@ import org.springframework.data.repository.query.Param;
  *
  * @author ricle
  */
-public interface AlunoRepository extends JpaRepository<Aluno, String>{
+public interface AlunoRepository extends JpaRepository<Aluno, Long>{
 
 
     // Lista alunos por nome
@@ -24,6 +24,13 @@ public interface AlunoRepository extends JpaRepository<Aluno, String>{
     //Busca aluno pela matricula
     Optional<Aluno> findByMatricula(String matricula);
     
+     //Busca aluno pelo CPF
+    Optional<Aluno> findByCpf(String cpf);
+    
+    boolean existsByCpf(String cpf);
+    
+    void deleteByCpf(String cpf);
+
     //Verifica se existe um aluno com essa matricula
     boolean existsByMatricula(String matricula);
     

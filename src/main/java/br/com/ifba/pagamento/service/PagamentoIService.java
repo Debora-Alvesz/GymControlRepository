@@ -5,6 +5,7 @@
 package br.com.ifba.pagamento.service;
         
 import br.com.ifba.aluno.entity.Aluno;
+import br.com.ifba.dto.DadosFinanceiro;
 
 /**
  *
@@ -20,4 +21,7 @@ public interface PagamentoIService {
      */
     void realizarBaixa(Aluno aluno);
     
+    boolean registrarPagamento(String cpf);
+    
+    DadosFinanceiro buscarDadosFinanceiros(String cpf);
 }

@@ -46,7 +46,7 @@ public class Pagamento {
     
     // Mapeia o valor pago do pagamento
     @Column(name = "valorPago", nullable = false)
-    private float valorPago;
+    private double valorPago;
 
     // Data em que o pagamento foi realizado
     @Column(name = "data", nullable = false)

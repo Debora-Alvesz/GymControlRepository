@@ -47,7 +47,7 @@ public class Plano {
     private int duracao;
     
     @Column(name = "valor", nullable = false, unique = true)
-    private float valor;
+    private double valor;
     
     @Column(name = "benefícios", nullable =  false, length = 100)
     private String beneficios;
