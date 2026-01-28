@@ -45,6 +45,9 @@ public class Aluno extends Pessoa{
     @Column(name = "requisitos", nullable = false, length = 100)
     private String requisitos; 
     
+    @Column(name = "status", nullable = false, length = 100)
+    private boolean status;
+    
     //Relacionamento com Plano
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "plano_id", nullable = false)

@@ -1,5 +1,7 @@
 package br.com.ifba;
 
+import br.com.ifba.aluno.service.AlunoService;
+import br.com.ifba.aluno.view.TelaListagemAlunos;
 import br.com.ifba.manutencao.view.TelaManutencao;
 import java.awt.EventQueue;
 import org.springframework.boot.SpringApplication;
@@ -22,5 +24,6 @@ public static void main(String[] args) {
             principal.setVisible(true);
             
         });
+        
     }
 }

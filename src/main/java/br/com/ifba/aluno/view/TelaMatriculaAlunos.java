@@ -23,7 +23,7 @@ public class TelaMatriculaAlunos extends javax.swing.JFrame {
     @Autowired
     private AlunoController alunoController; // Injeta o controller
 
-    @Autowired
+   
     private Aluno aluno; // O Spring cria e gerencia o objeto Aluno 
     
     @Autowired
@@ -38,7 +38,7 @@ public class TelaMatriculaAlunos extends javax.swing.JFrame {
     @PostConstruct // Isso diz ao Spring: "Rode isso logo depois de injetar tudo"
     public void init() {
         carregarPlanos(); // Agora sim o controller vai existir!
-        this.setVisible(true); // Opcional: Para fazer a tela aparecer
+        
     }
 
    

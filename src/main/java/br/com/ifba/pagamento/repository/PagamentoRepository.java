@@ -25,7 +25,7 @@ public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
      */
     List<Pagamento> findByStatus(String status);
 
-    Optional<Pagamento> findByMatriculaAluno(String matricula);
+ 
     
    /**
      * Busca pagamentos com valor maior que o valor informado.
@@ -44,4 +44,7 @@ public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
      * Verifica se já existe pagamento para o aluno em determinada data.
      */
     boolean existsByIdAlunoAndStatus(Aluno aluno, String status);
+    
+    //Busca a data de vencimento do aluno
+    Optional<Pagamento> findTopByIdAlunoOrderByDataVencimentoDesc(Aluno aluno);
 }

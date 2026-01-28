@@ -5,6 +5,7 @@
 package br.com.ifba.aluno.service;
 
 import br.com.ifba.aluno.entity.Aluno;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,4 +38,7 @@ public interface AlunoIService {
      boolean existsByCpf(String cpf);
      
      void deleteByCpf(String cpf);
+     
+     //busca ultima data de vencimento
+     public Date findALLDataVencimento(Aluno aluno);
 }

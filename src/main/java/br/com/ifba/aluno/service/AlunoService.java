@@ -10,7 +10,10 @@ import br.com.ifba.exception.ResourceNotFoundException;
 import br.com.ifba.aluno.entity.Aluno;
 import br.com.ifba.plano.entity.Plano;
 import br.com.ifba.aluno.repository.AlunoRepository;
+import br.com.ifba.pagamento.entity.Pagamento;
+import br.com.ifba.pagamento.repository.PagamentoRepository;
 import br.com.ifba.plano.repository.PlanoRepository;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +32,8 @@ public class AlunoService implements AlunoIService{
     private static final Logger logger = LoggerFactory.getLogger(AlunoService.class);
     private final AlunoRepository alunoRepository;
     private final PlanoRepository planoRepository;
-
+    private final PagamentoRepository pagamentoRepository;
+    
     @Override
     public Aluno matriculaAluno(Aluno novoAluno, Long planoId) {
 
@@ -153,6 +157,14 @@ public class AlunoService implements AlunoIService{
             throw new RuntimeException("Aluno não encontrado");
         }
         alunoRepository.deleteByCpf(cpf);
+    }
+
+    @Override
+    public Date findALLDataVencimento(Aluno aluno) {
+        return pagamentoRepository
+            .findTopByIdAlunoOrderByDataVencimentoDesc(aluno)
+            .map(Pagamento::getDataVencimento)
+            .orElse(null);
     }
     
 }

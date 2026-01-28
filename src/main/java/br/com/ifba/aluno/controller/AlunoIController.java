@@ -2,6 +2,7 @@
 package br.com.ifba.aluno.controller;
 
 import br.com.ifba.aluno.entity.Aluno;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,4 +28,7 @@ public interface AlunoIController {
     
     //Verifica se existe um aluno com essa matricula
     boolean existsByMatricula(String matricula);
+    
+    //Busca a data de vencimento do aluno
+    public Date getDataVencimento(Aluno aluno);
 }
