@@ -53,11 +53,17 @@ public class AvaliacaoFisicaService implements AvaliacaoFisicaIService {
                 "O aluno de matrícula " + matricula + " já possui uma avaliação física cadastrada."
         );
     }
-
-    // 3. Associa o aluno gerenciado pelo JPA à avaliação
+    // 3. Calcula o imc
+    float imc = calcularImc(
+        avaliacaoFisica.getAltura(),
+        avaliacaoFisica.getPeso()
+);
+        avaliacaoFisica.setPercentualGordura(imc);
+        
+    // 4. Associa o aluno gerenciado pelo JPA à avaliação
     avaliacaoFisica.setAluno(aluno);
 
-    // 4. Salva a avaliação
+    // 5. Salva a avaliação
     AvaliacaoFisica salva = avaliacaoFisicaRepository.save(avaliacaoFisica);
     logger.info("Avaliação física cadastrada com sucesso. ID: {}", salva.getId());
     return salva;
