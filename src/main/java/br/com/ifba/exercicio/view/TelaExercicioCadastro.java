@@ -52,7 +52,13 @@ public class TelaExercicioCadastro extends javax.swing.JFrame {
     // Volta para tela principal
     public void voltarParaTelaInicial() {
         this.dispose();
+
+    if (exercicioView != null) {
         exercicioView.setVisible(true);
+        exercicioView.toFront();
+    } else {
+        logger.warning("[VIEW] TelaExercicios está null ao tentar voltar");
+    }
     }
 
     // Limpa campos para novo cadastro
@@ -175,6 +181,11 @@ public class TelaExercicioCadastro extends javax.swing.JFrame {
 
         voltarParaPrincipal.setText("Cancelar");
         voltarParaPrincipal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        voltarParaPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                voltarParaPrincipalMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(voltarParaPrincipal);
 
         setJMenuBar(jMenuBar1);
@@ -248,11 +259,13 @@ public class TelaExercicioCadastro extends javax.swing.JFrame {
     this.dispose();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    public static void main(String[] args) {
-    java.awt.EventQueue.invokeLater(() -> {
-        new TelaExercicioCadastro().setVisible(true);
-    });
-}
+    private void voltarParaPrincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarParaPrincipalMouseClicked
+        // TODO add your handling code here:
+        voltarParaTelaInicial();
+    }//GEN-LAST:event_voltarParaPrincipalMouseClicked
+
+    
+   
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

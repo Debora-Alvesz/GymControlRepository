@@ -25,15 +25,14 @@ public class ManutencaoService implements ManutencaoIService{
     //Salva uma nova manutencao
     @Override
     public Manutencao save(Manutencao manutencao) {
-        
-        log.info("Reportando problema no equipamento: {}",
-                manutencao.getNomeEquipamento());
+        //logger de informacao
+        log.info("[SERVICE] ManutencaoService - Reportando problema no equipamento: {}", manutencao.getNomeEquipamento());
         
         //Atualiza o status da manutencao
         manutencao.setStatus("PENDENTE");
         
         //logger de informacao
-        log.info("Manutenção registrada com sucesso.");
+        log.info("[SERVICE] ManutencaoService - Manutenção registrada com sucesso.");
         
         //Salva a manutencao no banco de dados
         return manutencaoRepository.save(manutencao);  
@@ -42,11 +41,12 @@ public class ManutencaoService implements ManutencaoIService{
     //Atualiza uma manutencao
      @Override
     public Manutencao update(Manutencao manutencao) {
-        
-        log.info("Atualizando manutencao ID: {}", manutencao.getId());
+        //logger de informacao
+        log.info("[SERVICE] ManutencaoService - Atualizando manutencao ID: {}", manutencao.getId());
         
         //Verifica sea manutencao existe 
         if(!manutencaoRepository.existsById(manutencao.getId())){
+            log.error("[SERVICE] ManutencaoService - Manutenção não encontrada para atualização");
             throw new RuntimeException("Manutencao nao encontrada para a atualizacao");
         }
         //Salva no Repository
@@ -57,10 +57,11 @@ public class ManutencaoService implements ManutencaoIService{
     @Override
     public void delete(Long id) {
         
-        log.info("Excluindo manutencao Id: {}", id);
+        log.info("[SERVICE] ManutencaoService - Excluindo manutencao Id: {}", id);
         
         //Verificacao simples
         if(!manutencaoRepository.existsById(id)){
+            log.error("[SERVICE] ManutencaoService - Manutenção não encontrada para exclusão");
             throw new RuntimeException("Manutencao nao encontrada para a exclusao");
         }
         
@@ -71,10 +72,13 @@ public class ManutencaoService implements ManutencaoIService{
     //Busca a manutencao pelo ID
     @Override
     public Manutencao findById(Long id) {
-        log.info("Buscando manutenção ID: {}", id);
+        log.info("[SERVICE] ManutencaoService - Buscando manutenção ID: {}", id);
 
         return manutencaoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Manutenção não encontrada."));
+                .orElseThrow(() -> {
+                log.error("[SERVICE] ManutencaoService - Manutenção não encontrada. ID: {}", id);
+                return new RuntimeException("Manutenção não encontrada");
+           });
     }
 
     /**
@@ -83,7 +87,7 @@ public class ManutencaoService implements ManutencaoIService{
      */
     @Override
     public List<Manutencao> findAll() {
-         log.info("Listando todas as manutenções");
+         log.info("[SERVICE] ManutencaoService - Listando todas as manutenções");
         return manutencaoRepository.findAll();
     }
     
@@ -91,18 +95,21 @@ public class ManutencaoService implements ManutencaoIService{
     @Override
     public Manutencao finalizarManutencao(Long id) {
         
-        log.info("Finalizando manutencao ID: {}", id);
+        log.info("[SERVICE] ManutencaoService - Finalizando manutencao ID: {}", id);
         
         // Busca a manutenção pelo ID.
         // Caso não exista, lança uma exceção.
-        Manutencao manutencao = manutencaoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Manutenção não encontrada."));
+         Manutencao manutencao = manutencaoRepository.findById(id)
+                .orElseThrow(() -> {
+                   log.error("[SERVICE] ManutencaoService - Manutenção não encontrada para finalização. ID: {}", id);
+                    return new RuntimeException("Manutenção não encontrada");
+                });
 
         //Atualiza o status da manutencao
         manutencao.setStatus("RESOLVIDO");
         
         //logger de informacao
-        log.info("Manutenção finalizada com sucesso. ID: {}", id);
+        log.info("[SERVICE] ManutencaoService - Manutenção finalizada com sucesso. ID: {}", id);
         
         //Salva a atualização no banco
         return manutencaoRepository.save(manutencao);
