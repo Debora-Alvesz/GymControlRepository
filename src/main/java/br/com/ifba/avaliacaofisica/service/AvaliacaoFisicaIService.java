@@ -36,4 +36,6 @@ public interface AvaliacaoFisicaIService {
     
     // Método para listar as avaliações fisicas de um dia especifico
     List<AvaliacaoFisica> findByDataAvaliacao(LocalDate dataAvaliacao);
+    
+    
 }

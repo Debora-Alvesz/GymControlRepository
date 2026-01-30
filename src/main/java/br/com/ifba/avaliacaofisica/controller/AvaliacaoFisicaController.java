@@ -9,11 +9,13 @@ import br.com.ifba.avaliacaofisica.service.AvaliacaoFisicaIService;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 /**
  *
  * @author João Victor
  */
+@Controller
 public class AvaliacaoFisicaController implements AvaliacaoFisicaIController{
     
     //Instância da camada Service

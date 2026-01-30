@@ -1,6 +1,8 @@
 
 package br.com.ifba.exercicio.view;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,6 +16,10 @@ public class TelaExercicios extends javax.swing.JFrame {
     
     @org.springframework.beans.factory.annotation.Autowired
     private br.com.ifba.exercicio.controller.ExercicioController exercicioController;
+    
+    @Autowired
+    @Lazy
+     TelaExercicioCadastro telaExercicioCadastro;
 
     private javax.swing.table.DefaultTableModel modeloTabela;
     
@@ -169,7 +175,16 @@ public class TelaExercicios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNovoExercicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoExercicioActionPerformed
-        javax.swing.JOptionPane.showMessageDialog(this, "Tela em construção!");
+
+        
+        // Esconde a tela principal
+        this.setVisible(false);
+
+        // Prepara a tela de cadastro (limpa campos)
+        telaExercicioCadastro.prepararParaNovo();
+
+        // Abre a tela de cadastro
+        telaExercicioCadastro.setVisible(true);
 
     }//GEN-LAST:event_btnNovoExercicioActionPerformed
 

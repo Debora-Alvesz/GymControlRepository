@@ -19,35 +19,74 @@ import org.springframework.stereotype.Service;
 @Service//define o bean de service
 public class ModalidadeService implements ModalidadeIService {
     
+    private static final org.slf4j.Logger logger =
+            org.slf4j.LoggerFactory.getLogger(ModalidadeService.class);
+    
     @Autowired//faz a injeção de dependencia
     private ModalidadeRepository modalidadeRepository;
     
     @Transactional//gerencia a transação com o banco de dados
     public Modalidade save(Modalidade modalidade){
+        //logs de informacoes
+        logger.info("[SERVICE] ModalidadeService - Iniciando cadastro de modalidade. Nome: {}", modalidade.getNome());
+        
+        logger.info("[SERVICE] ModalidadeService - Modalidade cadastrada com sucesso.");
         return modalidadeRepository.save(modalidade);
     }
     
     @Transactional
     public Modalidade update(Long id, Modalidade modalidadeAtualizada){
-        return modalidadeRepository.findById(id).map(entity -> {//verifica se o id existe
+        //logs de informacoes
+        logger.info("[SERVICE] ModalidadeService - Iniciando atualização da modalidade. ID: {}", id);
+        
+        return modalidadeRepository.findById(id)
+        .map(entity -> {
+            // Log de sucesso (achou a modalidade)
+            logger.info("[SERVICE] ModalidadeService - Modalidade encontrada. Atualizando dados. ID: {}", id);
+
             updateData(entity, modalidadeAtualizada);
+
+            logger.info("[SERVICE] ModalidadeService - Modalidade atualizada com sucesso. ID: {}", id);
             return modalidadeRepository.save(entity);
-        }).orElseThrow(()-> new RuntimeException("Modalidade não encontrada com id: "+ id));//lança uma exception caso não for encontrado
+        })
+        .orElseThrow(() -> {
+            // Log de erro (não encontrou)
+            logger.error("[SERVICE] ModalidadeService - Modalidade não encontrada para atualização. ID: {}", id);
+            return new RuntimeException("Modalidade não encontrada com id: " + id);
+        });
 }
     
     //Método encontrar todos
     public List<Modalidade> findAll(){
+        
+        logger.info("[SERVICE] ModalidadeService - Listando todas as modalidades");
+        
         return modalidadeRepository.findAll();    
     }
     //Método buscar por ID
-    public Modalidade findById(Long id){//gera uma Exceptioin caso não encontre o ID
-        return modalidadeRepository.findById(id).orElseThrow(() -> new RuntimeException("Modalidade não encontrada!"));       
+    public Modalidade findById(Long id){
+        
+        logger.info("[SERVICE] ModalidadeService - Buscando modalidade por ID: {}", id);
+        
+        return modalidadeRepository.findById(id)
+                .orElseThrow(() -> {
+                    logger.error("[SERVICE] ModalidadeService - Modalidade não encontrada. ID: {}", id);
+                    return new RuntimeException("Modalidade não encontrada!");//gera uma Exceptioin caso não encontre o ID 
+                });
     }
     
     //Método deletar
     @Transactional
     public void delete(Long id){
-        modalidadeRepository.deleteById(id);
+        logger.info("[SERVICE] ModalidadeService - Solicitação de exclusão da modalidade. ID: {}", id);
+
+            if (!modalidadeRepository.existsById(id)) {
+                logger.error("[SERVICE] ModalidadeService - Tentativa de exclusão de modalidade inexistente. ID: {}", id);
+                throw new RuntimeException("Modalidade não encontrada para exclusão.");
+        }
+
+            modalidadeRepository.deleteById(id);
+            logger.info("[SERVICE] ModalidadeService - Modalidade excluída com sucesso. ID: {}", id);
     }
     
     //Método para Atualizar dados especificos, não é possivel editar o ID por ser único

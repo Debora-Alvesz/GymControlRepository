@@ -31,8 +31,6 @@ public interface AvaliacaoFisicaRepository extends JpaRepository<AvaliacaoFisica
     @Override
     void delete(AvaliacaoFisica avaliacaoFisica);
     
-    // Método específico para atualização
-    AvaliacaoFisica update(String matricula, AvaliacaoFisica avaliacaoFisica);
 
     // Método para listar as avaliações fisicas de um dia especifico
     List<AvaliacaoFisica> findByDataAvaliacao(LocalDate dataAvaliacao);

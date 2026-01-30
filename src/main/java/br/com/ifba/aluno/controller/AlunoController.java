@@ -3,6 +3,7 @@ package br.com.ifba.aluno.controller;
 
 import br.com.ifba.aluno.entity.Aluno;
 import br.com.ifba.aluno.service.AlunoIService;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,10 @@ public class AlunoController implements AlunoIController {
     @Override
     public boolean existsByMatricula(String matricula){
         return alunoService.existsByMatricula(matricula);
+    }
+
+    @Override
+    public Date getDataVencimento(Aluno aluno) {
+        return alunoService.findALLDataVencimento(aluno);
     }
 }
