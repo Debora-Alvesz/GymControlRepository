@@ -6,6 +6,7 @@ package br.com.ifba.usuario.entity;
 
 import br.com.ifba.perfilusuario.entity.PerfilUsuario;
 import br.com.ifba.pessoa.entity.Pessoa;
+import br.com.ifba.usuario.enums.PerfilUsuarioEnums;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToOne;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,6 +31,7 @@ import lombok.Setter;
  * @author ketli
  */
 
+@Data
 @Entity//define a classe como entidade
 @Getter//gera os getters
 @Setter//gera os setters
@@ -56,7 +59,7 @@ public class Usuario {
     
     @Enumerated(EnumType.STRING) // Salva o nome do Enum (ex: "ALUNO") no banco
     @Column(name = "perfil")
-    private PerfilUsuario perfil;
+    private PerfilUsuarioEnums perfil;
     
     // Relação 1:1 com Pessoa (dono da FK)
     @OneToOne(fetch = FetchType.LAZY)

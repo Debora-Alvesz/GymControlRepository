@@ -2,7 +2,7 @@ package br.com.ifba.instrutor.service;
 
 import br.com.ifba.instrutor.entity.Instrutor;
 import br.com.ifba.instrutor.repository.InstrutorRepository;
-import br.com.ifba.usuario.enums.PerfilUsuarioEnum;
+import br.com.ifba.usuario.enums.PerfilUsuarioEnums;
 import br.com.ifba.util.ValidadorUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +37,7 @@ public class InstrutorService {
         }
 
         // DEFINIÇÃO DO PERFIL
-        instrutor.setPerfil(PerfilUsuarioEnum.INSTRUTOR);
+        instrutor.setPerfil(PerfilUsuarioEnums.INSTRUTOR);
 
         Instrutor instrutorSalvo = instrutorRepository.save(instrutor);
 
