@@ -25,6 +25,27 @@ public class TelaDeLogin extends javax.swing.JFrame {
         this.usuarioService = usuarioService;
         initComponents();
     }
+    
+    //método para redirecionar para a tela especifica de usuário
+    private void redirecionarParaTelaPrincipal(String perfil, Usuario usuario) {
+    switch (perfil.toUpperCase()) {
+        case "ADM":
+           // new TelaPrincipalAdm(usuario).setVisible(true);
+            break;
+        case "ALUNO":
+           // new TelaPrincipalAluno(usuario).setVisible(true);
+            break;
+        case "INSTRUTOR":
+          //  new TelaPrincipalInstrutor(usuario).setVisible(true);
+            break;
+        case "RECEPCIONISTA":
+           // new TelaPrincipalRecepcionista(usuario).setVisible(true);
+            break;
+        default:
+            JOptionPane.showMessageDialog(this, "Perfil desconhecido. Entre em contato com o suporte.");
+            break;
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -136,7 +157,7 @@ public class TelaDeLogin extends javax.swing.JFrame {
         //Tenta autenticar via service
         Usuario userLogado = usuarioService.validarLogin(login, senha);
         //identifica o nome do perfil associado ao Usuario
-        String perfil = userLogado.getPerfilUsuario().getNome();
+        String perfil = userLogado.getPerfil().getNome();
     
         //abre a tela correspondente ao perfil
       // redirecionarParaTelaPrincipal(perfil, userLogado);

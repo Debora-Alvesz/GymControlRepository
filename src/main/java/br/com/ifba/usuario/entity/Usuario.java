@@ -12,6 +12,8 @@ import lombok.AllArgsConstructor;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
@@ -51,14 +53,15 @@ public class Usuario {
     @Column(name = "funcao", nullable = false, length = 100)
     private String funcao;
 
+    
+    @Enumerated(EnumType.STRING) // Salva o nome do Enum (ex: "ALUNO") no banco
+    @Column(name = "perfil")
+    private PerfilUsuario perfil;
+    
     // Relação 1:1 com Pessoa (dono da FK)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pessoa_cpf", nullable = false, unique = true)
     private Pessoa pessoa;
-    
-    @ManyToOne
-    @JoinColumn(name = "perfil_id", nullable = false)
-    private PerfilUsuario perfilUsuario;
     
     
 }

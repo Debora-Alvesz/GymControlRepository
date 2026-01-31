@@ -2,16 +2,12 @@
 package br.com.ifba.instrutor.entity;
 
 import br.com.ifba.pessoa.entity.Pessoa;
-import br.com.ifba.pessoa.entity.Pessoa;
-<<<<<<< HEAD
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
-=======
 import jakarta.persistence.*;
->>>>>>> 6691bd9c4dfc22f939add5b305c5d89b5d30c18b
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;

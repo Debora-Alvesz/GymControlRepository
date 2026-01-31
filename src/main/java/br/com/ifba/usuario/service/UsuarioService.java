@@ -3,8 +3,10 @@ package br.com.ifba.usuario.service;
 
 import br.com.ifba.exception.BusinessException;
 import br.com.ifba.exception.ResourceNotFoundException;
+import br.com.ifba.perfilusuario.entity.PerfilUsuario;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.repository.UsuarioRepository;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -42,26 +44,27 @@ public class UsuarioService implements UsuarioIService {
     }
     
     @Override
+    @Transactional//se falhar o salvamento da Pessoa, nao salva o usuario
     public Usuario save(Usuario usuario) {
 
         logger.info("[SERVICE] UsuarioService - Iniciando cadastro de usuário com CPF: {}", usuario.getPessoa().getCpf());
 
-       // Verifica se já existe esse CPF no banco (navegando pela Pessoa)
-        if (usuarioRepository.existsByPessoaCpf(usuario.getPessoa().getCpf())) {
-            logger.warn("[SERVICE] UsuarioService - Tentativa de cadastro com CPF já existente: {}", usuario.getPessoa().getCpf());
-            throw new BusinessException("Já existe um usuário com esse CPF");
-        }
+       //Validação de dados únicos (CPF e Email) antes de tentar salvar
+       //Isso evita erros de constraint do banco de dados
+        validarDadosUnicos(usuario);
         
-        // Verifica se já existe esse email no banco (navegando pela Pessoa)
-        if (usuarioRepository.existsByPessoaEmail(usuario.getPessoa().getEmail())) {
-            logger.warn("[SERVICE] UsuarioService - Tentativa de cadastro com e-mail já existente: {}", usuario.getPessoa().getEmail());
-            throw new BusinessException("Já existe um usuário com esse email");
-        }
-
-        // Se passou pelas regras, chama o repository para salvar de fato
+    if (usuario.getPerfil() == null) {
+         throw new BusinessException("O perfil do usuário deve ser informado.");
+    }
+       try {
         logger.info("[SERVICE] UsuarioService - Usuário cadastrado com sucesso.");
         return usuarioRepository.save(usuario);
+    } catch (Exception e) {
+        logger.error("[SERVICE] Erro ao salvar usuário: {}", e.getMessage());
+        throw new BusinessException("Erro interno ao processar o cadastro.");
     }
+        
+  }
 
     @Override
     public List<Usuario> findAll() {
@@ -121,5 +124,23 @@ public class UsuarioService implements UsuarioIService {
         // 5. Salva (o método save serve para atualizar quando o objeto tem ID)
         return usuarioRepository.save(usuario);
     }
+    
+    //método para validar os dados para serem unicos(cpf e email)
+    private void validarDadosUnicos(Usuario usuario) {
+    String cpf = usuario.getPessoa().getCpf();
+    String email = usuario.getPessoa().getEmail();
+
+    // Validação de CPF único
+    if (usuarioRepository.existsByPessoaCpf(cpf)) {
+        logger.warn("[VALIDAÇÃO] CPF já cadastrado: {}", cpf);
+        throw new BusinessException("Já existe um cadastro com este CPF.");
+    }
+
+    // Validação de E-mail único
+    if (usuarioRepository.existsByPessoaEmail(email)) {
+        logger.warn("[VALIDAÇÃO] E-mail já cadastrado: {}", email);
+        throw new BusinessException("Este e-mail já está sendo utilizado por outro usuário.");
+    }
+}
    
 }
