@@ -6,6 +6,7 @@ package br.com.ifba.pagamento.service;
         
 import br.com.ifba.aluno.entity.Aluno;
 import br.com.ifba.dto.DadosFinanceiro;
+import java.time.LocalDate;
 
 /**
  *
@@ -24,4 +25,7 @@ public interface PagamentoIService {
     boolean registrarPagamento(String cpf);
     
     DadosFinanceiro buscarDadosFinanceiros(String cpf);
+    
+    public double calcularTotalArrecadado(LocalDate inicio, LocalDate fim);
+    
 }

@@ -6,6 +6,7 @@ package br.com.ifba.pagamento.controller;
 
 import br.com.ifba.dto.DadosFinanceiro;
 import br.com.ifba.pagamento.service.PagamentoService;
+import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -52,6 +53,14 @@ public class PagamentoController implements PagamentoIController{
         }
     
 
+    }
+
+    @Override
+    public double calcularTotalArrecadado(LocalDate inicio, LocalDate fim) {
+        pagamentoService.calcularTotalArrecadado(inicio, fim);
+        
+        return 0;
+        
     }
     
 }

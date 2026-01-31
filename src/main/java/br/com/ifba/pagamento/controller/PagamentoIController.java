@@ -5,6 +5,7 @@
 package br.com.ifba.pagamento.controller;
 
 import br.com.ifba.dto.DadosFinanceiro;
+import java.time.LocalDate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -19,4 +20,6 @@ public interface PagamentoIController {
     
     ResponseEntity<String> registrarPagamento(
             @PathVariable String cpf);
+    
+    public double calcularTotalArrecadado(LocalDate inicio, LocalDate fim);
 }

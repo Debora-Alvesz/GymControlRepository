@@ -35,6 +35,8 @@ public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
     //busca pagamento por data informada
     List<Pagamento> findByDataPagamento(LocalDate dataPagamento);
     
+    //busca pagamento por data de inicio e data de fim
+    List<Pagamento> findByDataPagamentoBetween(LocalDate inicio, LocalDate fim);
      /**
      * Busca pagamentos por aluno.
      */
