@@ -53,7 +53,7 @@ public class AvaliacaoFisicaService implements AvaliacaoFisicaIService {
                 "O aluno de matrícula " + matricula + " já possui uma avaliação física cadastrada."
         );
     }
-    // 3. Calcula o imc
+    // 3. Calcula o imc automaticamente
     float imc = calcularImc(
         avaliacaoFisica.getAltura(),
         avaliacaoFisica.getPeso()

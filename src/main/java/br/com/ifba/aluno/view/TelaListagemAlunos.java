@@ -11,6 +11,9 @@ import br.com.ifba.aluno.entity.Aluno;
 import br.com.ifba.aluno.repository.AlunoRepository;
 import br.com.ifba.aluno.service.AlunoService;
 import br.com.ifba.plano.repository.PlanoRepository;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -26,7 +29,8 @@ public class TelaListagemAlunos extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaListagemAlunos.class.getName());
    
   private final AlunoController alunoController;
-  
+  private List<Aluno> listaCompleta;
+  private List<Aluno> listaFiltrada; // vai pra tabela
     /**
      * Creates new form TelaListagemAlunos
      * 
@@ -36,7 +40,7 @@ public class TelaListagemAlunos extends javax.swing.JFrame {
             ApplicationContext context =
             new AnnotationConfigApplicationContext(Prg03ProjetoApplication.class);
          alunoController = context.getBean(AlunoController.class);
-        CarregarAlunos();
+        CarregarTabela();
     }
 
     /**
@@ -54,6 +58,9 @@ public class TelaListagemAlunos extends javax.swing.JFrame {
         btnDeletar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAlunos = new javax.swing.JTable();
+        cmbFiltro = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,52 +105,81 @@ public class TelaListagemAlunos extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblAlunos);
 
+        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Ativos", "Vencidos", "Inativos" }));
+        cmbFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbFiltroActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Total de Alunos:");
+
+        lblTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTotal.setText("0");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
                         .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(170, 170, 170)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)))
+                        .addGap(4, 4, 4)
+                        .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                        .addGap(4, 4, 4)
+                        .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(lblTotal)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
-    private void CarregarAlunos() {
-    
-
+private void CarregarTabela() {
     List<Aluno> alunos = alunoController.findAll();
+    CarregarAlunos(alunos);
+}
+
+    private void CarregarAlunos(List<Aluno> alunos) {
+   
 
    DefaultTableModel model = (DefaultTableModel) tblAlunos.getModel();
     model.setRowCount(0); // limpa a tabela antes de carregar
@@ -157,9 +193,48 @@ public class TelaListagemAlunos extends javax.swing.JFrame {
            
         });
     }
+    lblTotal.setText("Total de Alunos listados: " + alunos.size());
 }
+private void aplicarFiltro() {
 
-    
+    String opcao = cmbFiltro.getSelectedItem().toString();
+
+    List<Aluno> alunos = alunoController.findAll();
+    List<Aluno> filtrados = new ArrayList<>();
+
+    Date hoje = new Date();
+
+    for (Aluno aluno : alunos) {
+
+        Date vencimento = alunoController.getDataVencimento(aluno);
+
+        switch (opcao) {
+
+            case "Todos" -> filtrados.add(aluno);
+
+            case "Ativos" -> {
+                if (aluno.isStatus()) {
+                    filtrados.add(aluno);
+                }
+            }
+
+            case "Vencidos" -> {
+                if (vencimento != null && vencimento.before(hoje)) {
+                    filtrados.add(aluno);
+                }
+            }
+
+            case "Inativos/Trancados" -> {
+                if (!aluno.isStatus()) {
+                    filtrados.add(aluno);
+                }
+            }
+        }
+    }
+
+    CarregarAlunos(filtrados);
+}
+  
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
         
@@ -194,7 +269,7 @@ public class TelaListagemAlunos extends javax.swing.JFrame {
             tblAlunos.setValueAt(novoStatus, linhaSelecionada, 2);
         }
         
-        CarregarAlunos();
+        CarregarTabela();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
@@ -228,11 +303,18 @@ public class TelaListagemAlunos extends javax.swing.JFrame {
 if (confirmacao == JOptionPane.YES_OPTION) {
     
         alunoController.delete(cpfAluno);
-        CarregarAlunos();
+        CarregarTabela();
         JOptionPane.showMessageDialog(this, "Aluno excluído com sucesso!");
     }//GEN-LAST:event_btnDeletarActionPerformed
-
     }
+    
+    private void cmbFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFiltroActionPerformed
+        // TODO add your handling code here:
+        aplicarFiltro();
+        
+    }//GEN-LAST:event_cmbFiltroActionPerformed
+
+   
     /**
      * @param args the command line arguments
      */
@@ -249,8 +331,11 @@ if (confirmacao == JOptionPane.YES_OPTION) {
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JComboBox<String> cmbFiltro;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JTable tblAlunos;
     // End of variables declaration//GEN-END:variables
 }
