@@ -56,4 +56,10 @@ public class AlunoController implements AlunoIController {
     public Date getDataVencimento(Aluno aluno) {
         return alunoService.findALLDataVencimento(aluno);
     }
+
+    @Override
+    public void enviarEmail(Aluno aluno) {
+        alunoService.enviarEmail(aluno);
+        
+    }
 }

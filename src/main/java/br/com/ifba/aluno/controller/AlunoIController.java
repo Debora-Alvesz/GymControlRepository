@@ -32,4 +32,6 @@ public interface AlunoIController {
     
     //Busca a data de vencimento do aluno
     public Date getDataVencimento(Aluno aluno);
+    
+    public void enviarEmail(Aluno aluno);
 }
