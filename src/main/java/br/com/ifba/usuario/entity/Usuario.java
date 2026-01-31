@@ -4,6 +4,7 @@
  */
 package br.com.ifba.usuario.entity;
 
+import br.com.ifba.perfilusuario.entity.PerfilUsuario;
 import br.com.ifba.pessoa.entity.Pessoa;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -53,4 +55,10 @@ public class Usuario {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pessoa_cpf", nullable = false, unique = true)
     private Pessoa pessoa;
+    
+    @ManyToOne
+    @JoinColumn(name = "perfil_id", nullable = false)
+    private PerfilUsuario perfilUsuario;
+    
+    
 }

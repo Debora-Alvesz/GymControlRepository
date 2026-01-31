@@ -4,6 +4,7 @@ package br.com.ifba.instrutor.entity;
 import br.com.ifba.pessoa.entity.Pessoa;
 import br.com.ifba.pessoa.entity.Pessoa;
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
@@ -21,6 +22,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name = "instrutor")
 @PrimaryKeyJoinColumn(name = "pessoa_id")//define que a chave primaria de Instrutor é a fk que Pessoa
+@DiscriminatorValue("INSTRUTOR")////diz ao hibernate qual valor inserir na coluna discriminadora para identificar qual subclasse o registro representa
 public class Instrutor extends Pessoa{
     
     @Column(name = "cip", nullable = false, unique = true, length = 100)

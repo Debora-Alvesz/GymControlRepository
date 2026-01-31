@@ -24,29 +24,21 @@ public class UsuarioService implements UsuarioIService {
     private final UsuarioRepository usuarioRepository;
 
     @Override
-   public boolean validarLogin(String login, String senha) {
+   public Usuario validarLogin(String login, String senha) {
         logger.info("[SERVICE] UsuarioService - Tentativa de autenticação para o usuário: {}", login);
 
-        // 1. Busca o Optional do banco
-        Optional<Usuario> usuarioOpt = usuarioRepository.findByLogin(login);
+    
+        //Busca o usuário e já valida se existe
+        Usuario usuario = usuarioRepository.findByLogin(login)
+                .orElseThrow(() -> new BusinessException("Usuário não encontrado"));
 
-        // 2. Verifica se a "caixa" está vazia (Usuário não encontrado)
-        if (usuarioOpt.isEmpty()) { 
-            logger.warn("[SERVICE] UsuarioService - Login falhou: Usuário '{}' não encontrado.", login);
-            return false;
+        //verifica a senha
+        if (!usuario.getSenha().equals(senha)) { 
+            logger.warn("[SERVICE] Senha incorreta para o usuário '{}'.", login);
+            throw new BusinessException("Senha inválida!");
         }
-
-        // 3. Tira o usuário de dentro do Optional
-        Usuario usuario = usuarioOpt.get();
-
-        // 4. Verifica a senha
-        if (!usuario.getSenha().equals(senha)) {
-            logger.warn("[SERVICE] UsuarioService - Login falhou: Senha incorreta para o usuário '{}'.", login);
-            return false;
-        }
-
-        logger.info("[SERVICE] UsuarioService - Login efetuado com sucesso para: {}", login);
-        return true;
+         logger.info("[SERVICE] UsuarioService - Login efetuado com sucesso para: {}", login);
+        return usuario;//retorna o objeto com o perfilUsuario dentro
     }
     
     @Override
@@ -129,4 +121,5 @@ public class UsuarioService implements UsuarioIService {
         // 5. Salva (o método save serve para atualizar quando o objeto tem ID)
         return usuarioRepository.save(usuario);
     }
+   
 }
