@@ -6,7 +6,7 @@ package br.com.ifba.pessoa.entity;
 
 import br.com.ifba.endereco.entity.Endereco;
 import br.com.ifba.usuario.entity.Usuario;
-import br.com.ifba.usuario.enums.PerfilUsuarioEnum;
+import br.com.ifba.usuario.enums.PerfilUsuarioEnums;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -64,5 +64,5 @@ public class Pessoa {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "perfil")
-    private PerfilUsuarioEnum perfil;
+    private PerfilUsuarioEnums perfil;
 }

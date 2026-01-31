@@ -157,7 +157,7 @@ public class TelaDeLogin extends javax.swing.JFrame {
         //Tenta autenticar via service
         Usuario userLogado = usuarioService.validarLogin(login, senha);
         //identifica o nome do perfil associado ao Usuario
-        String perfil = userLogado.getPerfil().getNome();
+        String perfil = userLogado.getPerfil().name();
     
         //abre a tela correspondente ao perfil
       // redirecionarParaTelaPrincipal(perfil, userLogado);

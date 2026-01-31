@@ -9,7 +9,7 @@ package br.com.ifba.usuario.enums;
  * @author ketli
  */
 //Enum que define os perfis de usuário do sistema
-public enum PerfilUsuarioEnum {
+public enum PerfilUsuarioEnums {
     ADMIN,
     INSTRUTOR,
     ALUNO,

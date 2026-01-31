@@ -10,7 +10,7 @@ import br.com.ifba.instrutor.entity.Instrutor;
 import br.com.ifba.pessoa.entity.Pessoa;
 import br.com.ifba.recepcionista.entity.Recepcionista;
 import br.com.ifba.usuario.entity.Usuario;
-import br.com.ifba.usuario.enums.PerfilUsuarioEnum;
+import br.com.ifba.usuario.enums.PerfilUsuarioEnums;
 import br.com.ifba.usuario.service.UsuarioService;
 
 /**
@@ -252,14 +252,16 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_comboPerfilActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        String perfilSelecionado = comboPerfil.getSelectedItem().toString();
-        Pessoa pessoa;
-        
-        switch(perfilSelecionado){
-        case "ALUNO": pessoa = new Aluno(); break;
-        case "INSTRUTOR": pessoa = new Instrutor(); break;
-        case "RECEPCIONISTA": pessoa = new Recepcionista(); break;
-        case "ADM": pessoa = new Administrador(); break;
+       // Pega a String do ComboBox e converte para o Enum
+    String selecao = comboPerfil.getSelectedItem().toString();
+    PerfilUsuarioEnums perfilEnum = PerfilUsuarioEnums.valueOf(selecao);
+    // Decide qual classe de Pessoa instanciar (Herança)
+    Pessoa pessoa;
+        switch(perfilEnum){
+        case ALUNO: pessoa = new Aluno(); break;
+        case INSTRUTOR: pessoa = new Instrutor(); break;
+        case RECEP: pessoa = new Recepcionista(); break;
+        case ADMIN: pessoa = new Administrador(); break;
         default: pessoa = new Administrador(); break;  
     }
         
@@ -267,10 +269,12 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
         usuario.setLogin(txtUsuario.getText());
         usuario.setSenha(new String(txtSenha.getPassword()));
         
-        usuario.setPessoa(pessoa);
+        usuario.setPerfil(perfilEnum);
         pessoa.setDadosLogin(usuario);
+        usuarioService.save(usuario);
         
-        //usuarioController.save(usuario, PerfilUsuarioEnum);
+        
+      
  
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
