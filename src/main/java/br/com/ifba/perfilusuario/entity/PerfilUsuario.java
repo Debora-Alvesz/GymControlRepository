@@ -38,7 +38,5 @@ public class PerfilUsuario {
     @Column(nullable = false, length = 500)
     private String descricao;
     
-    @OneToOne // relação 1: 1 com usuario
-    @JoinColumn(name = "id_usuario", nullable = false, unique = true)
-    private Usuario usuario;
+
 }

@@ -5,6 +5,7 @@
 package br.com.ifba.recepcionista.entity;
 
 import br.com.ifba.pessoa.entity.Pessoa;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
@@ -17,6 +18,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "recepcionista")
 @PrimaryKeyJoinColumn(name = "pessoa_id")//define que pk desta tabela também é FK da tabela Pessoa
+@DiscriminatorValue("RECEPCIONISTA")//diz ao hibernate qual valor inserir na coluna discriminadora para identificar qual subclasse o registro representa
 public class Recepcionista extends Pessoa {
     
 }

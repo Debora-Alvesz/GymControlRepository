@@ -26,5 +26,5 @@ public interface UsuarioIService {
     Usuario update(Long id, Usuario usuario);
     
     //
-    boolean validarLogin(String login, String senha);
+    Usuario validarLogin(String login, String senha);
 }

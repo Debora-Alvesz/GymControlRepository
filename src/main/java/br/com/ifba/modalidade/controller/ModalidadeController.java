@@ -19,7 +19,7 @@ import org.springframework.stereotype.Controller;
  * @author ketli
  */
 @Controller//Indica ao Spring que esta classe é um bean e pode ser injetada em outras classes
-public class ModalidadeController {
+public class ModalidadeController implements ModalidadeIController {
     
     @Autowired @Lazy
     private ModalidadeView listagemView; // Tela Principal

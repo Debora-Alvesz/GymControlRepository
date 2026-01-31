@@ -39,25 +39,25 @@ public class AlunoService implements AlunoIService{
 
         
          // 1️⃣ Valida matrícula vazia
-        logger.info("Iniciando matrícula do aluno. CPF: {}, Plano ID: {}", novoAluno.getCpf(), planoId);
+        logger.info("[SERVICE] AlunoService - Iniciando matrícula do aluno. CPF: {}, Plano ID: {}", novoAluno.getCpf(), planoId);
         if (novoAluno.getMatricula() == null || novoAluno.getMatricula().isEmpty()) {
-            logger.warn("Matrícula vazia informada para CPF: {}", novoAluno.getCpf());
+            logger.warn("[SERVICE] AlunoService - Matrícula vazia informada para CPF: {}", novoAluno.getCpf());
             throw new ResourceNotFoundException("Matrícula não pode ser vazia.");
         }
 
         // 2️⃣ Valida matrícula duplicada
         if (alunoRepository.existsByMatricula(novoAluno.getMatricula())) {
-            logger.warn("Tentativa de matrícula duplicada: {}", novoAluno.getMatricula());
+            logger.warn("[SERVICE] AlunoService - Tentativa de matrícula duplicada: {}", novoAluno.getMatricula());
             throw new BusinessException("Matrícula já cadastrada.");
         }
 
         // 3️⃣ Busca plano pelo ID
-        logger.error("Plano não encontrado. ID: {}", planoId);
+        logger.error("[SERVICE] AlunoService - Plano não encontrado. ID: {}", planoId);
         Plano plano = planoRepository.findById(planoId).orElseThrow(() -> new RuntimeException("Erro: Plano com ID " + planoId + " não encontrado."));
 
         // 4️⃣ Valida plano ativo
         if (!plano.isStatus()) {
-            logger.warn("Tentativa de matrícula em plano inativo. Plano ID: {}", planoId);
+            logger.warn("[SERVICE] AlunoService - Tentativa de matrícula em plano inativo. Plano ID: {}", planoId);
             throw new ResourceNotFoundException("Não é possível matricular em um plano inativo.");
         }
 
@@ -65,44 +65,44 @@ public class AlunoService implements AlunoIService{
         novoAluno.setPlano(plano);
 
         // 6️⃣ Salva no banco
-        logger.info("Aluno matriculado com sucesso.");
+        logger.info("[SERVICE] AlunoService - Aluno matriculado com sucesso.");
         return alunoRepository.save(novoAluno);
     }
 
     @Override
     public List<Aluno> findAll() {
-        logger.info("Buscando lista de alunos");
+        logger.info("[SERVICE] AlunoService - Buscando lista de alunos");
         return alunoRepository.findAll();
     }
 
     @Override
     public Optional<Aluno> findById(String cpf) {
-        logger.info("Buscando aluno pelo CPF: {}", cpf);
+        logger.info("[SERVICE] AlunoService - Buscando aluno pelo CPF: {}", cpf);
         return alunoRepository.findByCpf(cpf);
     }
 
     @Override
     public Aluno save(Aluno aluno) {
         // Valida matrícula não vazia
-        logger.info("Iniciando cadastro de aluno. CPF: {}", aluno.getCpf());
+        logger.info("[SERVICE] AlunoService - Iniciando cadastro de aluno. CPF: {}", aluno.getCpf());
         if (aluno.getMatricula() == null || aluno.getMatricula().isEmpty()) {
-            logger.warn("Tentativa de cadastro com matrícula vazia. CPF: {}", aluno.getCpf());
+            logger.warn("[SERVICE] AlunoService - Tentativa de cadastro com matrícula vazia. CPF: {}", aluno.getCpf());
             throw new ResourceNotFoundException("Matrícula não pode ser vazia.");
         }
 
         // Valida matrícula duplicada
         if (alunoRepository.existsByMatricula(aluno.getMatricula())) {
-            logger.warn("Tentativa de cadastro com matrícula vazia. CPF: {}", aluno.getCpf());
+            logger.warn("[SERVICE] AlunoService - Tentativa de cadastro com matrícula vazia. CPF: {}", aluno.getCpf());
             throw new BusinessException("Matrícula já cadastrada.");
         }
 
         // Valida plano associado
         if (aluno.getPlano() == null) {
-            logger.warn("Aluno sem plano associado. CPF: {}", aluno.getCpf());
+            logger.warn("[SERVICE] AlunoService - Aluno sem plano associado. CPF: {}", aluno.getCpf());
             throw new ResourceNotFoundException("Aluno deve ter um plano associado.");
         }
 
-        logger.info("Aluno cadastrado com sucesso.");
+        logger.info("[SERVICE] AlunoService - Aluno cadastrado com sucesso.");
         return alunoRepository.save(aluno);
     
     }
@@ -110,12 +110,12 @@ public class AlunoService implements AlunoIService{
     @Override
     public Aluno update(String cpf, Aluno aluno) {
 
-        logger.info("Iniciando atualização do aluno. CPF: {}", cpf);
+        logger.info("[SERVICE] AlunoService - Iniciando atualização do aluno. CPF: {}", cpf);
           Aluno existente = alunoRepository.findByCpf(cpf).orElseThrow(() -> new RuntimeException("Erro: Aluno não encontrado."));
         logger.error("Aluno não encontrado para atualização. CPF: {}", cpf);
 
         if (alunoRepository.existsByMatriculaAndCpfNot(aluno.getMatricula(), existente.getCpf())) {
-            logger.warn("Matrícula já usada por outro aluno: {}", aluno.getMatricula());
+            logger.warn("[SERVICE] AlunoService - Matrícula já usada por outro aluno: {}", aluno.getMatricula());
             throw new BusinessException("Matrícula já usada por outro aluno.");
         }
 
@@ -125,20 +125,20 @@ public class AlunoService implements AlunoIService{
             existente.setPlano(aluno.getPlano());
         }
 
-        logger.info("Aluno atualizado com sucesso.");
+        logger.info("[SERVICE] AlunoService - Aluno atualizado com sucesso.");
             return alunoRepository.save(existente);
         }
 
     @Override
     public void delete(String cpf) {
 
-        logger.info("Solicitação de exclusão do aluno. CPF: {}", cpf);
+        logger.info("[SERVICE] AlunoService - Solicitação de exclusão do aluno. CPF: {}", cpf);
         if (!alunoRepository.existsByCpf(cpf)) {
-            logger.error("Tentativa de exclusão de aluno inexistente. CPF: {}", cpf);
+            logger.error("[SERVICE] AlunoService - Tentativa de exclusão de aluno inexistente. CPF: {}", cpf);
             throw new ResourceNotFoundException("O aluno com CPF " + cpf + " não existe na base de dados.");
         }
         alunoRepository.deleteByCpf(cpf);
-        logger.info("Aluno excluído com sucesso. CPF: {}", cpf);
+        logger.info("[SERVICE] AlunoService - Aluno excluído com sucesso. CPF: {}", cpf);
     }
     
     @Override
