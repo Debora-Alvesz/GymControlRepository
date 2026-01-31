@@ -13,6 +13,7 @@ import br.com.ifba.plano.entity.Plano;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -144,6 +145,16 @@ public class PagamentoService implements PagamentoIService{
         aluno.getPlano().getValor()
 );
 
+    }
+
+    @Override
+    public double calcularTotalArrecadado(LocalDate inicio, LocalDate fim) {
+         List<Pagamento> pagamentos =
+                pagamentoRepository.findByDataPagamentoBetween(inicio, fim);
+
+        return pagamentos.stream()
+        .mapToDouble(Pagamento::getValorPago)
+        .sum();
     }
     }
 
