@@ -172,7 +172,7 @@ public class AlunoService implements AlunoIService{
         // Simulação de envio
         System.out.println(
             "Enviando cobrança para: " 
-            + aluno.getName() 
+            + aluno.getNome() 
             + " | CPF: " 
             + aluno.getCpf()
             + aluno.getEmail()

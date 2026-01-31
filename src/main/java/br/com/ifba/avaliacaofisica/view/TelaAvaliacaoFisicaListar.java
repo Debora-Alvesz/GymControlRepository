@@ -352,7 +352,7 @@ public class TelaAvaliacaoFisicaListar extends javax.swing.JFrame {
         AvaliacaoFisica e = new AvaliacaoFisica();
         
         e.getAluno().setMatricula(novaMatricula);
-        e.getInstrutor().setName(novoInstrutor);
+        e.getInstrutor().setNome(novoInstrutor);
         e.setDataAvaliacao(novaDataAvaliacao);
         e.setPeso(novoPeso);
         e.setAltura(novaAltura);
@@ -390,7 +390,7 @@ public class TelaAvaliacaoFisicaListar extends javax.swing.JFrame {
                 modeloTabela.setNumRows(0);
                 modeloTabela.addRow(new Object[]{
                 e.getAluno().getMatricula(),
-                e.getInstrutor().getName(),
+                e.getInstrutor().getNome(),
                 e.getDataAvaliacao(),
                 e.getPeso(),
                 e.getAltura(),
@@ -605,7 +605,7 @@ public class TelaAvaliacaoFisicaListar extends javax.swing.JFrame {
         br.com.ifba.avaliacaofisica.entity.AvaliacaoFisica e = avaliacaoFisicaController.findByAluno_Matricula(matricula);
         
         e.getAluno().setMatricula(matricula);
-        e.getInstrutor().setName(novoInstrutor);
+        e.getInstrutor().setNome(novoInstrutor);
         e.setDataAvaliacao(novaDataAvaliacao);
         e.setPeso(novoPeso);
         e.setAltura(novaAltura);
@@ -645,7 +645,7 @@ public class TelaAvaliacaoFisicaListar extends javax.swing.JFrame {
         for (br.com.ifba.avaliacaofisica.entity.AvaliacaoFisica e : lista) {
             modeloTabela.addRow(new Object[]{
                 e.getAluno().getMatricula(),
-                e.getInstrutor().getName(),
+                e.getInstrutor().getNome(),
                 e.getDataAvaliacao(),
                 e.getPeso(),
                 e.getAltura(),

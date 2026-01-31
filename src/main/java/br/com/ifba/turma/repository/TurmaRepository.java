@@ -7,14 +7,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TurmaRepository extends JpaRepository<Turma, Long> {
-
-    @Override
-    Turma save(Turma turma);
-
-    @Override
-    List<Turma> findAll();
-
-    Turma update(String id, Turma turma);
-
-    void delete(Long id);
 }

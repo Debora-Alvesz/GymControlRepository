@@ -25,13 +25,9 @@ import org.springframework.data.annotation.Id;
 @PrimaryKeyJoinColumn(name = "pessoa_id")//define que a chave primaria de Instrutor é a fk que Pessoa
 @DiscriminatorValue("INSTRUTOR")////diz ao hibernate qual valor inserir na coluna discriminadora para identificar qual subclasse o registro representa
 public class Instrutor extends Pessoa{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     
-    @Column(name = "cpf", nullable = false, unique = true, length = 100)
-    private String cpf;//define o cip do instrutor como unico
+    @Column(name = "cip", nullable = false, unique = true, length = 100)
+    private String cip;//define o cip do instrutor como unico
     
     @Column(name = "especialidade", nullable =  false, length = 100)
     private String especialidade;
@@ -39,7 +35,7 @@ public class Instrutor extends Pessoa{
     @Column(name = "carga_horaria")
     private int carga_horaria;
     
-    @Column(name = "disponibilidade", nullable = false, length = 100)
+    @Column(name = "disponibilidade", length = 100)
     private String disponibilidade;
     
     @Column(name = "status")

@@ -230,7 +230,7 @@ public class TelaMatriculaAlunos extends javax.swing.JFrame {
             // Cria uma nova instância de Aluno (uma ficha em branco)
             //  entidades de dados precisam ser instanciadas para não sobrescrever o anterior.
             this.aluno = new Aluno();
-            aluno.setName(txtNomeAluno.getText());
+            aluno.setNome(txtNomeAluno.getText());
             aluno.setCpf(txtCpf.getText());
             aluno.setTelefone(txtTelefone.getText());
             aluno.setEmail(email);

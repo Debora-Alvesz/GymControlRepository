@@ -53,9 +53,9 @@ public class UsuarioService implements UsuarioIService {
        //Isso evita erros de constraint do banco de dados
         validarDadosUnicos(usuario);
         
-    if (usuario.getPerfil() == null) {
-         throw new BusinessException("O perfil do usuário deve ser informado.");
-    }
+   // if (usuario.getPerfil() == null) {
+    //     throw new BusinessException("O perfil do usuário deve ser informado.");
+   // }
        try {
         logger.info("[SERVICE] UsuarioService - Usuário cadastrado com sucesso.");
         return usuarioRepository.save(usuario);

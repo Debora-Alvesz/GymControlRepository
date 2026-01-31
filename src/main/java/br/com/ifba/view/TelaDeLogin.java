@@ -9,6 +9,7 @@ import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.service.UsuarioService;
 import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,6 +20,9 @@ import org.springframework.stereotype.Component;
 public class TelaDeLogin extends javax.swing.JFrame {
 
     private final UsuarioService usuarioService;
+    
+    @Autowired
+    private ApplicationContext springContext;
    
     @Autowired
     public TelaDeLogin(UsuarioService usuarioService) {
@@ -175,6 +179,8 @@ public class TelaDeLogin extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
+      springContext.getBean(TelaCadastrarNovoUsuario.class).setVisible(true);
+      this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

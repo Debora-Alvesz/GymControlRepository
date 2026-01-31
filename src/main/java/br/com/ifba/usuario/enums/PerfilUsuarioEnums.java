@@ -10,9 +10,20 @@ package br.com.ifba.usuario.enums;
  */
 //Enum que define os perfis de usuário do sistema
 public enum PerfilUsuarioEnums {
-    ADMIN,
-    INSTRUTOR,
-    ALUNO,
-    RECEP
+    ADMIN("Administrador"),
+    INSTRUTOR("Instrutor"),
+    ALUNO("Aluno"),
+    RECEP("Recepcionista");
     
+    private String nome;
+
+    PerfilUsuarioEnums(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
+    }
 }
+    
+

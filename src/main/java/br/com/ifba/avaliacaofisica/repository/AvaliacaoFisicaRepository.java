@@ -19,19 +19,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AvaliacaoFisicaRepository extends JpaRepository<AvaliacaoFisica, Long>{
     
-    //Método para salvar Avaliacão Fisica
-    @Override
-    AvaliacaoFisica save(AvaliacaoFisica avaliacaoFisica);
-    
-    //Método para listar Avaliacões Fisicas
-    @Override
-    List<AvaliacaoFisica> findAll();
-    
-    //Método para deletar avaliação do aluno
-    @Override
-    void delete(AvaliacaoFisica avaliacaoFisica);
-    
-
     // Método para listar as avaliações fisicas de um dia especifico
     List<AvaliacaoFisica> findByDataAvaliacao(LocalDate dataAvaliacao);
     

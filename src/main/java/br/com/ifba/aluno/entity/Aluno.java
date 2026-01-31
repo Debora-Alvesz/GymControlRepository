@@ -38,9 +38,10 @@ import lombok.Setter;
 @Table(name = "alunos")
 //Define que a chave primaria de Aluno é a pk de Pessoa
 @PrimaryKeyJoinColumn(name = "pessoa_id")
-@DiscriminatorValue("ALUNO")////diz ao hibernate qual valor inserir na coluna discriminadora para identificar qual subclasse o registro representa
+@DiscriminatorValue("ALUNO")
 public class Aluno extends Pessoa{
   
+    
     @Column(name = "matricula", nullable =  false, length = 20, unique = true)
     private String matricula;
 

@@ -19,7 +19,7 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long>{
 
 
     // Lista alunos por nome
-    List<Aluno> findAllByOrderByNameAsc();
+    List<Aluno> findAllByOrderByNomeAsc();
 
     //Busca aluno pela matricula
     Optional<Aluno> findByMatricula(String matricula);
@@ -53,7 +53,7 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long>{
     List<Aluno> findByPlanoValorLessThanEqual(float valor);
     
     // Lista todos os alunos de um plano ordenados pelo nome
-    @Query("SELECT a FROM Aluno a WHERE a.plano.id = :planoId ORDER BY a.name ASC")
+    @Query("SELECT a FROM Aluno a WHERE a.plano.id = :planoId ORDER BY a.nome ASC")
     List<Aluno> findByPlanoIdOrderByPessoaNomeAsc(@Param("planoId") Long planoId);
     
 }

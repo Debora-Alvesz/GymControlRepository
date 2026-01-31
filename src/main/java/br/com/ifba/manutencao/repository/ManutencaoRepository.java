@@ -17,25 +17,12 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ManutencaoRepository extends JpaRepository<Manutencao, Long>{
-    
-    // Salvar ou atualizar manutenção
-    @Override
-    Manutencao save(Manutencao manutencao);
-
-    // Listar todas as manutenções
-    @Override
-    List<Manutencao> findAll();
 
     // Buscar manutenção por ID
     @Override
     Optional<Manutencao> findById(Long id);
 
     // Deletar manutenção por ID
-
-    /**
-     *
-     * @param id
-     */
     @Override
     void deleteById(Long id);
 

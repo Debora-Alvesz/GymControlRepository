@@ -201,7 +201,7 @@ private void CarregarTabela() {
 
     for (Aluno aluno : alunos) {
          model.addRow(new Object[]{
-            aluno.getName(),
+            aluno.getNome(),
             aluno.getCpf(),
             aluno.isStatus() ? "Ativo" : "Inativo",
             alunoController.getDataVencimento(aluno)

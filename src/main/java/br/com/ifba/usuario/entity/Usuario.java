@@ -7,6 +7,7 @@ package br.com.ifba.usuario.entity;
 import br.com.ifba.perfilusuario.entity.PerfilUsuario;
 import br.com.ifba.pessoa.entity.Pessoa;
 import br.com.ifba.usuario.enums.PerfilUsuarioEnums;
+import jakarta.persistence.CascadeType;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -62,8 +63,8 @@ public class Usuario {
     private PerfilUsuarioEnums perfil;
     
     // Relação 1:1 com Pessoa (dono da FK)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pessoa_cpf", nullable = false, unique = true)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "pessoa_id", nullable = false, unique = true)
     private Pessoa pessoa;
     
     

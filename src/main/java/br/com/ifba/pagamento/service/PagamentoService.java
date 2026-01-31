@@ -140,7 +140,7 @@ public class PagamentoService implements PagamentoIService{
     return new DadosFinanceiro(
         aluno.getCpf(),
         aluno.getMatricula(),
-        aluno.getName(),              
+        aluno.getNome(),              
         aluno.getPlano().getValor()
 );
 

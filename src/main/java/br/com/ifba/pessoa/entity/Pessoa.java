@@ -43,7 +43,7 @@ public class Pessoa {
     private String cpf;
 
     @Column(name = "nome", nullable = false)
-    private String name;
+    private String nome;
 
     @Column(name = "telefone", nullable = false)
     private String telefone;
