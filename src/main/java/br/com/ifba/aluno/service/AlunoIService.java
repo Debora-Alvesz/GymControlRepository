@@ -41,4 +41,7 @@ public interface AlunoIService {
      
      //busca ultima data de vencimento
      public Date findALLDataVencimento(Aluno aluno);
+     
+     //simula enviar email para alunos com pagamento vencido
+     public void enviarEmail(Aluno aluno);
 }

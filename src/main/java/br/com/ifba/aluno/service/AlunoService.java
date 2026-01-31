@@ -166,5 +166,17 @@ public class AlunoService implements AlunoIService{
             .map(Pagamento::getDataVencimento)
             .orElse(null);
     }
+
+    @Override
+    public void enviarEmail(Aluno aluno) {
+        // Simulação de envio
+        System.out.println(
+            "Enviando cobrança para: " 
+            + aluno.getName() 
+            + " | CPF: " 
+            + aluno.getCpf()
+            + aluno.getEmail()
+        );
+    }
     
 }

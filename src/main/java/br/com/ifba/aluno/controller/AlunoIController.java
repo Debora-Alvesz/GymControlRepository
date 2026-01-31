@@ -2,6 +2,7 @@
 package br.com.ifba.aluno.controller;
 
 import br.com.ifba.aluno.entity.Aluno;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -31,4 +32,6 @@ public interface AlunoIController {
     
     //Busca a data de vencimento do aluno
     public Date getDataVencimento(Aluno aluno);
+    
+    public void enviarEmail(Aluno aluno);
 }
