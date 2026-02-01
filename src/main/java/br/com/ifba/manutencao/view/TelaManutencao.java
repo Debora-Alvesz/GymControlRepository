@@ -9,6 +9,8 @@ import br.com.ifba.manutencao.entity.Manutencao;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,26 +22,28 @@ public class TelaManutencao extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaManutencao.class.getName());
 
+    @Autowired
+    private ManutencaoController manutencaoController;
+    @Autowired
+    @Lazy
+    private TelaRelatorioManutencao telaRelatorio;
     
-    private final ManutencaoController manutencaoController;
-    
-    /**
-     * Creates new form TelaPagamento
-     * @param manutencaoController
-     */
-    // Construtor com injeção do controller
-    public TelaManutencao(ManutencaoController manutencaoController) {
-        this.manutencaoController = manutencaoController;
+    public TelaManutencao() {
         initComponents();
         this.setResizable(false);
         this.setSize(800, 600);
         this.setLocationRelativeTo(null);
+        
     }
     
      // Executa após todas as injeções do Spring
     @jakarta.annotation.PostConstruct
     public void init() {
         atualizarTabela();
+        
+        if (telaRelatorio != null) {
+        telaRelatorio.atualizar(); // garante que tabela do relatório está pronta
+    }
     }
     
     // Atualiza a tabela com as manutenções cadastradas
@@ -60,6 +64,20 @@ public class TelaManutencao extends javax.swing.JFrame {
             });
         }
     }
+    
+    private void carregarCamposDaTabela() {
+    int linha = tblEquipamento.getSelectedRow();
+
+    if (linha != -1) {
+        txtEquipamento.setText(
+            tblEquipamento.getValueAt(linha, 1).toString()
+        );
+
+        txtDescricao.setText(
+            tblEquipamento.getValueAt(linha, 2).toString()
+        );
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -82,6 +100,7 @@ public class TelaManutencao extends javax.swing.JFrame {
         txtDescricao = new javax.swing.JTextArea();
         btnExcluir = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
+        btnRelatorio = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,12 +123,20 @@ public class TelaManutencao extends javax.swing.JFrame {
 
         tblEquipamento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
                 "Id", "Nome", "Descrição", "Status"
             }
         ));
+        tblEquipamento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblEquipamentoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblEquipamento);
 
         btnConcluir.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -140,22 +167,31 @@ public class TelaManutencao extends javax.swing.JFrame {
             }
         });
 
+        btnRelatorio.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnRelatorio.setText("Exibir Relatorio");
+        btnRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelatorioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(247, 247, 247)
-                .addComponent(btnConcluir)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(247, 247, 247)
+                        .addComponent(btnConcluir))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(206, 206, 206)
+                        .addComponent(jLabel2)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
@@ -167,22 +203,24 @@ public class TelaManutencao extends javax.swing.JFrame {
                                 .addComponent(jScrollPane2)))
                         .addGap(41, 41, 41)
                         .addComponent(btnReportar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnExcluir)
+                            .addComponent(btnEditar))
+                        .addGap(33, 33, 33))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnExcluir)
-                    .addComponent(btnEditar))
-                .addGap(33, 33, 33))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRelatorio)
+                        .addGap(25, 25, 25))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(7, 7, 7)
                 .addComponent(jLabel2)
-                .addGap(19, 19, 19)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -203,7 +241,9 @@ public class TelaManutencao extends javax.swing.JFrame {
                         .addComponent(btnExcluir)
                         .addGap(50, 50, 50)
                         .addComponent(btnEditar)
-                        .addContainerGap(238, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                        .addComponent(btnRelatorio)
+                        .addGap(78, 78, 78))))
         );
 
         pack();
@@ -284,13 +324,14 @@ public class TelaManutencao extends javax.swing.JFrame {
     Long id = (Long) tblEquipamento.getValueAt(linha, 0);
 
     try {
-        // Cria objeto com os novos dados
-        Manutencao manutencao = new Manutencao();
-        manutencao.setId(id);
+        // BUSCA a manutenção existente no banco
+        Manutencao manutencao = manutencaoController.findById(id);
+
+        // Atualiza SOMENTE os campos editáveis
         manutencao.setNomeEquipamento(txtEquipamento.getText());
         manutencao.setDescricaoProblema(txtDescricao.getText());
 
-         // Atualiza no sistema
+        // Salva mantendo custo, status e data
         manutencaoController.update(manutencao);
 
         atualizarTabela();
@@ -305,29 +346,111 @@ public class TelaManutencao extends javax.swing.JFrame {
     private void btnConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConcluirActionPerformed
         // TODO add your handling code here:
         
-        int linha = tblEquipamento.getSelectedRow();
+       int linha = tblEquipamento.getSelectedRow();
 
-    if (linha == -1) {
+        if (linha == -1) {
         JOptionPane.showMessageDialog(this, "Selecione uma manutenção na tabela.");
         return;
     }
 
-    Long id = (Long) tblEquipamento.getValueAt(linha, 0);
+        Long id = (Long) tblEquipamento.getValueAt(linha, 0);
 
-    try {
-        manutencaoController.marcarComoResolvido(id);
+        try {
+            //Busca a manutenção real no banco
+            Manutencao manutencao = manutencaoController.findById(id);
+
+            //BLOQUEIA se já estiver concluída
+            if ("CONCLUÍDA".equalsIgnoreCase(manutencao.getStatus())) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Esta manutenção já foi concluída.",
+                "Ação inválida",
+                JOptionPane.WARNING_MESSAGE
+            );
+                return;
+        }
+
+            //Só aqui pede o custo
+            String custoStr = JOptionPane.showInputDialog(
+                this,
+                "Informe o custo da manutenção:"
+        );
+
+            if (custoStr == null || custoStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Custo é obrigatório!");
+            return;
+        }
+
+         double custo;
+            try {
+            custo = Double.parseDouble(custoStr.replace(",", "."));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Informe um valor numérico válido!");
+            return;
+        }
+
+        //Conclui de verdade
+        manutencao.setCusto(custo);
+        manutencao.setStatus("CONCLUÍDA");
+        manutencao.setDataReporte(java.time.LocalDate.now());
+
+        manutencaoController.update(manutencao);
+
         atualizarTabela();
         JOptionPane.showMessageDialog(this, "Manutenção concluída com sucesso!");
+
     } catch (RuntimeException e) {
         JOptionPane.showMessageDialog(this, e.getMessage());
     }
     }//GEN-LAST:event_btnConcluirActionPerformed
+
+    private void btnRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorioActionPerformed
+        // TODO add your handling code here:
+        // Pega todas as manutenções
+        List<Manutencao> manutencoes = manutencaoController.findAll();
+
+        // Filtra apenas as concluídas
+        boolean existeConcluida = manutencoes.stream()
+            .anyMatch(m -> "CONCLUÍDA".equalsIgnoreCase(m.getStatus()));
+
+        if (!existeConcluida) {
+            // Se não houver nenhuma concluída, mostra mensagem
+            JOptionPane.showMessageDialog(this, 
+            "Nenhuma manutenção concluída para exibir!",
+            "Relatório Vazio",
+            JOptionPane.WARNING_MESSAGE);
+         return;
+    }   
+
+        // Atualiza a tabela do relatório
+        telaRelatorio.atualizar();
+
+        // Mostra a tela de relatório
+         this.setVisible(false);
+        telaRelatorio.setVisible(true);
+    }//GEN-LAST:event_btnRelatorioActionPerformed
+
+    private void tblEquipamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEquipamentoMouseClicked
+        // TODO add your handling code here:
+        int linha = tblEquipamento.getSelectedRow();
+
+        if (linha != -1) {
+        txtEquipamento.setText(
+        tblEquipamento.getValueAt(linha, 1).toString()
+    );
+
+        txtDescricao.setText(
+        tblEquipamento.getValueAt(linha, 2).toString()
+    );
+}
+    }//GEN-LAST:event_tblEquipamentoMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConcluir;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnRelatorio;
     private javax.swing.JButton btnReportar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

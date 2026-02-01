@@ -52,13 +52,7 @@ public class TelaExercicioCadastro extends javax.swing.JFrame {
     // Volta para tela principal
     public void voltarParaTelaInicial() {
         this.dispose();
-
-    if (exercicioView != null) {
         exercicioView.setVisible(true);
-        exercicioView.toFront();
-    } else {
-        logger.warning("[VIEW] TelaExercicios está null ao tentar voltar");
-    }
     }
 
     // Limpa campos para novo cadastro
@@ -87,8 +81,8 @@ public class TelaExercicioCadastro extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescricao = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+        btnCancelar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        voltarParaPrincipal = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -179,15 +173,12 @@ public class TelaExercicioCadastro extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Cadastrar novo Exercicio");
 
-        voltarParaPrincipal.setText("Cancelar");
-        voltarParaPrincipal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        voltarParaPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                voltarParaPrincipalMouseClicked(evt);
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
             }
         });
-        jMenuBar1.add(voltarParaPrincipal);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -195,20 +186,22 @@ public class TelaExercicioCadastro extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(237, 237, 237)
-                        .addComponent(jLabel1)))
+                        .addComponent(btnCancelar)
+                        .addGap(142, 142, 142)
+                        .addComponent(jLabel1))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(btnCancelar))
                 .addGap(26, 26, 26)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -259,16 +252,16 @@ public class TelaExercicioCadastro extends javax.swing.JFrame {
     this.dispose();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void voltarParaPrincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarParaPrincipalMouseClicked
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         voltarParaTelaInicial();
-    }//GEN-LAST:event_voltarParaPrincipalMouseClicked
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     
    
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> cmbGrupoMuscular;
     private javax.swing.JLabel jLabel1;
@@ -280,6 +273,5 @@ public class TelaExercicioCadastro extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea txtDescricao;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JMenu voltarParaPrincipal;
     // End of variables declaration//GEN-END:variables
 }
