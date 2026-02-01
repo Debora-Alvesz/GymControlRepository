@@ -13,7 +13,7 @@ public enum PerfilUsuarioEnums {
     ADMIN("Administrador"),
     INSTRUTOR("Instrutor"),
     ALUNO("Aluno"),
-    RECEP("Recepcionista");
+    RECEPCIONISTA("Recepcionista");
     
     private String nome;
 
