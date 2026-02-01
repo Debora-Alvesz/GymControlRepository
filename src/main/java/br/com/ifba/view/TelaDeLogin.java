@@ -9,6 +9,7 @@ import br.com.ifba.infrastructure.util.ValidadorUtil;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.service.UsuarioService;
 import javax.swing.JOptionPane;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component;
  * @author ketli
  */
 @Component
+@Slf4j
 public class TelaDeLogin extends javax.swing.JFrame {
 
     private final UsuarioService usuarioService;
@@ -208,10 +210,12 @@ public class TelaDeLogin extends javax.swing.JFrame {
     try{
         String login = txtLogin.getText();
         String senha = new String(txtSenha.getPassword());
+        log.info("Tentativa de login iniciada para o usuário: {}", login);//log de login
         
         //valida os campos de login e senha
         if (ValidadorUtil.isNullOrEmpty(login) || ValidadorUtil.isNullOrEmpty(senha)) {
              JOptionPane.showMessageDialog(this, "Usuário e senha devem ser preenchidos!");
+             log.warn("Tentativa de login com campo usuário vazio.");
              return;
         }
         //Tenta autenticar via service
@@ -220,16 +224,18 @@ public class TelaDeLogin extends javax.swing.JFrame {
         String perfil = userLogado.getPerfil().name();
     
         //abre a tela correspondente ao perfil
-      // redirecionarParaTelaPrincipal(perfil, userLogado);
-      
-      this.dispose();;
+        // redirecionarParaTelaPrincipal(perfil, userLogado);
+         log.info("Usuário {} logado com sucesso!", login);
+         this.dispose();;
       
     }catch(BusinessException ex){
         //captura o erro de "Usuario nao encontrado" ou "senha invalida"
         JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro de login", JOptionPane.ERROR_MESSAGE);
+        log.error("Erro crítico durante o login: ", ex);
     }catch(Exception ex){
         //captura erros inesperados
         JOptionPane.showMessageDialog(this, "Erro inesperado:" + ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        log.error("Erro inesperado durante o login: ", ex);
     }
     }//GEN-LAST:event_jButton1ActionPerformed
 

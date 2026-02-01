@@ -18,12 +18,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import br.com.ifba.endereco.entity.Endereco;
 import br.com.ifba.infrastructure.util.ValidadorUtil;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *
  * @author ketli
  */
 @Component
+@Slf4j
 public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
 
     @Autowired
@@ -522,10 +524,13 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
 
       try{
+        
         // Captura os dados da View (Campos de Usuário)
         String login = txtUsuario.getText().trim();
         String senha = new String(txtSenha.getPassword());
         String selecaoPerfil = comboPerfil.getSelectedItem().toString().trim();
+        
+        log.info("Iniciando cadastro de novo usuário do tipo: {}", selecaoPerfil);
    
         //Captura os dados da View (Campos de Pessoa)
         String nome = txtNome.getText().trim();
@@ -533,20 +538,25 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
         String email = txtEmail.getText().trim();
         String telefone = txtTell.getText().trim();
         
+        log.debug("Dados capturados: Nome={}, CPF={}", nome, cpf);
+        
         //valida o nome
         if (ValidadorUtil.isNullOrEmpty(nome) || !ValidadorUtil.isAlphabetic(nome)) {
              JOptionPane.showMessageDialog(this, "Nome inválido! Use apenas letras.");
+              log.warn("Tentativa de cadastro com campo nome vazio ou inválido.");
              return;
         }
         //valida o cpf informado
         if (!ValidadorUtil.isCpfValido(cpf)) {
              JOptionPane.showMessageDialog(this, "CPF inválido! Verifique os números.");
+              log.warn("Tentativa de cadastro com CPF vazio ou inválido");
              return;
         }
         
         //valida o email
         if (!ValidadorUtil.isValidEmail(email)) {
             JOptionPane.showMessageDialog(this, "Por favor, insira um e-mail válido.");
+            log.warn("Tentativa de cadastro com email vazio ou inválido");
             return;
         }
         
@@ -563,12 +573,6 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
             endereco.setNumero(Integer.parseInt(txtNumero.getText()));
         } catch (NumberFormatException e) {
             endereco.setNumero(0); 
-        }
-        
-        //validação para evitar campos null
-        if (cpf.isEmpty() || login.isEmpty() || nome.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nome, CPF e Usuário são obrigatórios!");
-            return;
         }
         
         Pessoa pessoa;
@@ -625,12 +629,13 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
         pessoa.setDadosLogin(usuario); // A pessoa aponta de volta para o usuário 
         usuarioService.save(usuario);//salva o usuario
         
+         log.info("Usuário salvo com sucesso no banco de dados.");
          JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!");
          // Volta para o login
          fecharEReabrirLogin();
       }catch(Exception e){
           JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
-          
+           log.warn("Erro inesperado ao finalizar cadastro", e.getMessage());
       }
  
     }//GEN-LAST:event_btnCadastrarActionPerformed
