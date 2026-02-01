@@ -591,6 +591,7 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
                 String cip = txtCIP.getText().trim();
                 if (cip.isEmpty()) {
                      JOptionPane.showMessageDialog(this, "O campo CIP é obrigatório para Instrutores!");
+                     log.warn("erro ao cadastrar com o campo CIP de Instrutor vazio");
                 return;
                 }
                 instrutor.setCip(cip); 
@@ -598,6 +599,7 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
                 String especialidade = txtEspecialidade.getText().trim();
                  if (especialidade.isEmpty()) {
                      JOptionPane.showMessageDialog(this, "O campo Especialidade é obrigatório para Instrutores!");
+                     log.warn("Erro ao cadastrar com o campo Especialidade de Instrutores vazio");
                 return;
                 }
                  instrutor.setEspecialidade(especialidade);    

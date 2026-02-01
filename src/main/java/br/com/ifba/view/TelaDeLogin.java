@@ -5,6 +5,7 @@
 package br.com.ifba.view;
 
 import br.com.ifba.exception.BusinessException;
+import br.com.ifba.infrastructure.util.Notificacao;
 import br.com.ifba.infrastructure.util.ValidadorUtil;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.service.UsuarioService;
@@ -26,6 +27,8 @@ public class TelaDeLogin extends javax.swing.JFrame {
     
     @Autowired
     private ApplicationContext springContext;
+    
+    private final Notificacao notificacao = new Notificacao();
    
     @Autowired
     public TelaDeLogin(UsuarioService usuarioService) {
@@ -216,6 +219,7 @@ public class TelaDeLogin extends javax.swing.JFrame {
         if (ValidadorUtil.isNullOrEmpty(login) || ValidadorUtil.isNullOrEmpty(senha)) {
              JOptionPane.showMessageDialog(this, "Usuário e senha devem ser preenchidos!");
              log.warn("Tentativa de login com campo usuário vazio.");
+             notificacao.enviarEmail(login, "Alerta de Segurança", "Tentativa de login detectada.");
              return;
         }
         //Tenta autenticar via service
@@ -224,15 +228,16 @@ public class TelaDeLogin extends javax.swing.JFrame {
         String perfil = userLogado.getPerfil().name();
     
         //abre a tela correspondente ao perfil
-        // redirecionarParaTelaPrincipal(perfil, userLogado);
+        redirecionarParaTelaPrincipal(perfil, userLogado);
          log.info("Usuário {} logado com sucesso!", login);
+         notificacao.enviarEmail(login, "Alerta de Segurança", "Login realizado.");
          this.dispose();;
       
     }catch(BusinessException ex){
         //captura o erro de "Usuario nao encontrado" ou "senha invalida"
         JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro de login", JOptionPane.ERROR_MESSAGE);
         log.error("Erro crítico durante o login: ", ex);
-    }catch(Exception ex){
+       
         //captura erros inesperados
         JOptionPane.showMessageDialog(this, "Erro inesperado:" + ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         log.error("Erro inesperado durante o login: ", ex);
