@@ -48,7 +48,7 @@ public class TelaCadastroRecepcionista extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("Matricular novo Recepcionista");
+        jLabel1.setText("Cadastrar novo Recepcionista");
 
         jPanel3.setBackground(new java.awt.Color(51, 51, 51));
         jPanel3.setForeground(new java.awt.Color(51, 51, 51));
@@ -209,7 +209,7 @@ public class TelaCadastroRecepcionista extends javax.swing.JFrame {
         if (!ValidadorUtil.isCpfValido(cpf)) {
             javax.swing.JOptionPane.showMessageDialog(this, "CPF Inválido!");
             return;
-        }
+       }
         
         if (!ValidadorUtil.isValidEmail(email)) {
             javax.swing.JOptionPane.showMessageDialog(this, "E-mail Inválido!");

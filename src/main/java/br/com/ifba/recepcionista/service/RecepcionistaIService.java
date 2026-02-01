@@ -13,7 +13,7 @@ public interface RecepcionistaIService {
 
    Recepcionista save(Recepcionista recepcionista);
     
-    Recepcionista update(Long id, Recepcionista recepcionista);
+    Recepcionista update(Recepcionista recepcionista);
     
     void delete(Long id);
     

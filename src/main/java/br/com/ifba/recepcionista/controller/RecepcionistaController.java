@@ -39,8 +39,8 @@ public class RecepcionistaController implements RecepcionistaIController {
 
     // Método específico para atualização
     @Override
-    public Recepcionista update(Long id, Recepcionista recepcionista){   
-    return recepcionistaService.update(id, recepcionista);
+    public Recepcionista update( Recepcionista recepcionista){   
+    return recepcionistaService.update(recepcionista);
     }
     
     // Método para buscar por nome

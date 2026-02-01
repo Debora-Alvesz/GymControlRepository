@@ -43,21 +43,29 @@ public class RecepcionistaService implements RecepcionistaIService {
     }
 
     @Override
-    public Recepcionista update(Long id, Recepcionista recepcionista) {
-      //Verifica se a recepcionista que queremos editar realmente existe
+    public Recepcionista update(Recepcionista recepcionistaTela) {
+      // 1. Pega o ID para saber quem estamos editando
+        Long id = recepcionistaTela.getId();
+        
         logger.info("[SERVICE] RecepcionistaService - Iniciando atualização. ID: {}", id);
-        
-        if (!recepcionistaRepository.existsById(id)) {
-            logger.error("[SERVICE] RecepcionistaService - Registro não encontrado para atualização. ID: {}", id);
-            throw new ResourceNotFoundException("Recepcionista não encontrada para atualização.");
-        }
-        
-        //Garante que o objeto que vai pro banco tem o ID correto
-        recepcionista.setId(id);
-        
-        //Salva (o método save serve para atualizar quando o objeto tem ID)
+
+        // 2. Busca o cadastro ORIGINAL completo no banco (com senha, endereço, etc.)
+        Recepcionista recepcionistaDoBanco = recepcionistaRepository.findById(id)
+                .orElseThrow(() -> {
+                    logger.error("[SERVICE] Registro não encontrado. ID: {}", id);
+                    return new ResourceNotFoundException("Recepcionista não encontrada para atualização.");
+                });
+
+        // 3. Atualiza SOMENTE os dados que vieram da tela
+        // Assim a Senha e o Endereço originais são preservados!
+        recepcionistaDoBanco.setNome(recepcionistaTela.getNome());
+        recepcionistaDoBanco.setCpf(recepcionistaTela.getCpf());
+        recepcionistaDoBanco.setEmail(recepcionistaTela.getEmail());
+        recepcionistaDoBanco.setTelefone(recepcionistaTela.getTelefone());
+
+        // 4. Salva o objeto do banco (que agora tem os dados novos + os dados antigos preservados)
         logger.info("[SERVICE] RecepcionistaService - Recepcionista atualizada com sucesso.");
-        return recepcionistaRepository.save(recepcionista);
+        return recepcionistaRepository.save(recepcionistaDoBanco);
     }
 
     @Override

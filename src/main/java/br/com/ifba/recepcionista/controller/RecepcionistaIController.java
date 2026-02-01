@@ -17,7 +17,7 @@ public interface RecepcionistaIController {
     void delete(Recepcionista recepcionista);
     
     // Atualiza passando o ID e o Objeto (conforme definido no Service)
-    Recepcionista update(Long id, Recepcionista recepcionista);
+    Recepcionista update(Recepcionista recepcionista);
     
     // Métodos extras solicitados anteriormente (busca por nome e id)
     List<Recepcionista> findByName(String nome);
