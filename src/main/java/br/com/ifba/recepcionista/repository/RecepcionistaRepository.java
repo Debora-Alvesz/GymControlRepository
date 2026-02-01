@@ -15,6 +15,6 @@ public interface RecepcionistaRepository extends JpaRepository<Recepcionista, Lo
 
     // Método para buscar recepcionistas pelo nome.
     // O 'ContainingIgnoreCase' permite buscar por partes do nome e ignora maiúsculas/minúsculas.
-    List<Recepcionista> findByNameContainingIgnoreCase(String nome);
+    List<Recepcionista> findByNomeContainingIgnoreCase(String nome);
     
 }

@@ -353,14 +353,7 @@ if (confirmacao == JOptionPane.YES_OPTION) {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
 
-    java.awt.EventQueue.invokeLater(() -> {
-        TelaListagemAlunos tela = new TelaListagemAlunos();
-        tela.setVisible(true);
-    });
-
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;

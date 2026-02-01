@@ -46,7 +46,7 @@ public class RecepcionistaController implements RecepcionistaIController {
     // Método para buscar por nome
     @Override
     public List<Recepcionista> findByName(String nome){
-    return recepcionistaService.findByName(nome);
+    return recepcionistaService.findByNome(nome);
     }
     
     // Método para buscar por ID

@@ -21,5 +21,5 @@ public interface RecepcionistaIService {
     
     Optional<Recepcionista> findById(Long id);
     
-    List<Recepcionista> findByName(String nome);
+    List<Recepcionista> findByNome(String nome);
 }

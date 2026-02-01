@@ -91,10 +91,10 @@ public class RecepcionistaService implements RecepcionistaIService {
     } 
 
         @Override
-        public List<Recepcionista> findByName(String nome) {
+        public List<Recepcionista> findByNome(String nome) {
         //Busca específica por nome
         logger.info("[SERVICE] RecepcionistaService - Buscando recepcionista pelo nome: {}", nome);
-        return recepcionistaRepository.findByNameContainingIgnoreCase(nome);
+        return recepcionistaRepository.findByNomeContainingIgnoreCase(nome);
         }
     }
 
