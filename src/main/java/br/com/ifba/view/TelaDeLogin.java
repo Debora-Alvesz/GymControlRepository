@@ -38,21 +38,25 @@ public class TelaDeLogin extends javax.swing.JFrame {
         this.setSize(560, 500);
         this.setLocationRelativeTo(null);
     }
+
+    TelaDeLogin() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     //método para redirecionar para a tela especifica de usuário
     private void redirecionarParaTelaPrincipal(String perfil, Usuario usuario) {
     switch (perfil.toUpperCase()) {
         case "ADMIN":
-           // new TelaPrincipalAdm(usuario).setVisible(true);
+           new TelaMenuPrincipalAdm().setVisible(true);
             break;
         case "ALUNO":
-           // new TelaPrincipalAluno(usuario).setVisible(true);
+           new TelaMenuPrincipalAluno().setVisible(true);
             break;
         case "INSTRUTOR":
-          //  new TelaPrincipalInstrutor(usuario).setVisible(true);
+           new TelaMenuPrincipalInstrutor().setVisible(true);
             break;
         case "RECEPCIONISTA":
-           // new TelaPrincipalRecepcionista(usuario).setVisible(true);
+           new TelaMenuPrincipalRecepcionista().setVisible(true);
             break;
         default:
             JOptionPane.showMessageDialog(this, "Perfil desconhecido. Entre em contato com o suporte.");

@@ -6,7 +6,9 @@ package br.com.ifba.administrador.service;
 
 import br.com.ifba.administrador.entity.Administrador;
 import br.com.ifba.administrador.repository.AdministradorRepository;
+import br.com.ifba.avaliacaofisica.entity.AvaliacaoFisica;
 import br.com.ifba.avaliacaofisica.service.AvaliacaoFisicaService;
+import br.com.ifba.exception.BusinessException;
 import br.com.ifba.exception.ResourceNotFoundException;
 import java.util.List;
 import org.slf4j.Logger;
@@ -45,14 +47,14 @@ public class AdministradorService implements AdministradorIService{
     public void delete(Administrador administrador) {
         logger.info("Solicitação de exclusão de administrador. CPF do administrador: {}", administrador.getCpf());
 
-    // 1. Verifica se existe avaliação física para a matrícula informada
+    // 1. Verifica se existe administrador para o cpf informado
     administradorRepository
             .existsByCpf(administrador.getCpf())
             .orElseThrow(() -> new ResourceNotFoundException(
                     "Não existe administrador cadastrado com esse CPF: " + administrador.getCpf()
             ));
 
-    // 2. Remove a avaliação
+    // 2. Remove o administrador
     administradorRepository.delete(administrador);
     logger.info("Administrador excluído com sucesso. CPF do administrador: {}", administrador.getCpf());
     }
@@ -61,19 +63,48 @@ public class AdministradorService implements AdministradorIService{
     public Administrador update(String cpf, Administrador administrador) {
         logger.info("Iniciando atualização do administrador. CPF do administrador: {}", administrador.getCpf());
 
-    // 1. Busca a avaliação existente pela matrícula
+    // 1. Busca administrador existente pelo cpf
     Administrador administradorExistente = administradorRepository
             .existsByCpf(cpf)
             .orElseThrow(() -> new ResourceNotFoundException(
                     "Administrador não encontrado com o CPF: " + cpf
             ));
 
-    // 2. Garante que o ID da avaliação não seja perdido
+    // 2. Garante que o ID do administrador não seja perdido
     administrador.setId(administradorExistente.getId());
 
     // 4. Salva a atualização
     Administrador atualizado = administradorRepository.save(administrador);
     logger.info("Administrador atualizado com sucesso. CPF do administrador: {}", cpf);
     return atualizado;
+    }
+    
+    @Override
+    public void deleteByCpf(String cpf) {
+
+        //Aqui você obtém o OBJETO Administrador
+        Administrador administrador =
+                administradorRepository
+                        .findByCpf(cpf)
+                        .orElseThrow(() ->
+                                new BusinessException(
+                                        "Administrador não encontrado para o CPF: " + cpf
+                                )
+                        );
+
+        //Aqui você passa o objeto para o método delete
+        administradorRepository.delete(administrador);
+    }
+    
+    @Override
+    public Administrador findByCpf(String cpf){
+     return administradorRepository
+                .findByCpf(cpf)
+                .orElseThrow(() ->
+                        new BusinessException(
+                                "Administrador não encontrado para o CPF: " + cpf
+                        )
+                );
+    
     }
 }

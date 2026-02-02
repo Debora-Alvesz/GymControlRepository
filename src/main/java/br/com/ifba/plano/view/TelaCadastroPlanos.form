@@ -31,7 +31,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="205" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" pref="386" max="-2" attributes="0"/>
-              <EmptySpace pref="206" max="32767" attributes="0"/>
+              <EmptySpace pref="197" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -72,27 +72,21 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblNomeRecepcionista" alignment="0" min="-2" pref="55" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="lblCpf" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="lblTelefone" alignment="0" pref="108" max="32767" attributes="0"/>
-                                      </Group>
-                                      <Component id="lblEmail" alignment="0" min="-2" pref="128" max="-2" attributes="0"/>
-                                      <Component id="lblEndereco" alignment="0" min="-2" pref="128" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="txtTelefone" alignment="0" pref="363" max="32767" attributes="0"/>
-                                      <Component id="txtCpf" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txtNomeRecepcionista" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txtEndereco" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
+                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="lblNomePlano" min="-2" pref="132" max="-2" attributes="0"/>
+                              <Component id="lblValorMensal" alignment="1" min="-2" pref="108" max="-2" attributes="0"/>
+                              <Component id="lblDuração" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblValorMatricula" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblBeneficios" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="txtValorMensal" alignment="0" pref="363" max="32767" attributes="0"/>
+                              <Component id="txtDuracao" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtValorMatricula" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtNomePlano" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtBeneficios" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -109,28 +103,28 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblNomeRecepcionista" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
-                      <Component id="txtNomeRecepcionista" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
+                      <Component id="lblNomePlano" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="txtNomePlano" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblCpf" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
-                      <Component id="txtCpf" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
+                      <Component id="lblDuração" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="txtDuracao" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblTelefone" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
-                      <Component id="txtTelefone" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
+                      <Component id="lblValorMensal" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="txtValorMensal" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblEmail" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
-                      <Component id="txtEmail" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
+                      <Component id="lblValorMatricula" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="txtValorMatricula" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="20" max="32767" attributes="0"/>
+                  <EmptySpace pref="22" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtEndereco" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
-                      <Component id="lblEndereco" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="txtBeneficios" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
+                      <Component id="lblBeneficios" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btnCadastrar" min="-2" pref="48" max="-2" attributes="0"/>
@@ -140,7 +134,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="lblCpf">
+        <Component class="javax.swing.JLabel" name="lblDura&#xe7;&#xe3;o">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="18" style="0"/>
@@ -148,10 +142,10 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="CPF:"/>
+            <Property name="text" type="java.lang.String" value="Dura&#xe7;&#xe3;o:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblTelefone">
+        <Component class="javax.swing.JLabel" name="lblValorMensal">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="18" style="0"/>
@@ -159,10 +153,10 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Telefone:"/>
+            <Property name="text" type="java.lang.String" value="Valor Mensal:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblEndereco">
+        <Component class="javax.swing.JLabel" name="lblBeneficios">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="18" style="0"/>
@@ -170,10 +164,10 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Endere&#xe7;o:"/>
+            <Property name="text" type="java.lang.String" value="Benef&#xed;cios:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblNomeRecepcionista">
+        <Component class="javax.swing.JLabel" name="lblNomePlano">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="18" style="0"/>
@@ -181,17 +175,17 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Nome"/>
+            <Property name="text" type="java.lang.String" value="Nome do plano:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtNomeRecepcionista">
+        <Component class="javax.swing.JTextField" name="txtNomePlano">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNomeRecepcionistaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNomePlanoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtCpf">
+        <Component class="javax.swing.JTextField" name="txtDuracao">
         </Component>
-        <Component class="javax.swing.JTextField" name="txtTelefone">
+        <Component class="javax.swing.JTextField" name="txtValorMensal">
         </Component>
         <Component class="javax.swing.JButton" name="btnCadastrar">
           <Properties>
@@ -201,7 +195,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastrarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblEmail">
+        <Component class="javax.swing.JLabel" name="lblValorMatricula">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="18" style="0"/>
@@ -209,12 +203,12 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Email:"/>
+            <Property name="text" type="java.lang.String" value="Valor da Matr&#xed;cula:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtEmail">
+        <Component class="javax.swing.JTextField" name="txtValorMatricula">
         </Component>
-        <Component class="javax.swing.JTextField" name="txtEndereco">
+        <Component class="javax.swing.JTextField" name="txtBeneficios">
         </Component>
       </SubComponents>
     </Container>

@@ -4,6 +4,7 @@ package br.com.ifba.recepcionista.view;
 import br.com.ifba.infrastructure.util.ValidadorUtil;
 import br.com.ifba.recepcionista.controller.RecepcionistaIController;
 import br.com.ifba.recepcionista.entity.Recepcionista;
+import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -48,7 +49,7 @@ public class TelaCadastroRecepcionista extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("Matricular novo Recepcionista");
+        jLabel1.setText("Cadastrar novo Recepcionista");
 
         jPanel3.setBackground(new java.awt.Color(51, 51, 51));
         jPanel3.setForeground(new java.awt.Color(51, 51, 51));
@@ -201,15 +202,12 @@ public class TelaCadastroRecepcionista extends javax.swing.JFrame {
             return;
         }
 
-        if (!ValidadorUtil.isNullOrEmpty(telefone) && !ValidadorUtil.isNumeric(telefone)) {
-            
-             javax.swing.JOptionPane.showMessageDialog(this, "Telefone inválido.");
-        }
-
-        if (!ValidadorUtil.isCpfValido(cpf)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "CPF Inválido!");
-            return;
-        }
+        if (ValidadorUtil.isCpfValido(cpf)) {
+            String cpfParaBanco = cpf.replaceAll("[^0-9]", "");
+            recepcionista.setCpf(cpfParaBanco);
+        } else {
+             javax.swing.JOptionPane.showMessageDialog(this, "CPF deve conter 11 números!");
+}
         
         if (!ValidadorUtil.isValidEmail(email)) {
             javax.swing.JOptionPane.showMessageDialog(this, "E-mail Inválido!");
@@ -231,6 +229,8 @@ public class TelaCadastroRecepcionista extends javax.swing.JFrame {
             // 6. Feedback e Limpeza
             javax.swing.JOptionPane.showMessageDialog(this, "Recepcionista cadastrada com sucesso!");
             limparCampos();
+            this.dispose();
+            
 
         } catch (Exception e) {
             // Captura erros de negócio (ex: Login já existe) ou banco

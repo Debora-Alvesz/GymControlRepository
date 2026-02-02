@@ -10,6 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -37,7 +39,8 @@ import lombok.Setter;
 @Table(name = "planos")
 public class Plano {
     @Id
-    @Column(name = "id", nullable = false, unique = true, length = 20)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
     private Long id;//Define o id do plano como unico
     
     @Column(name = "nome", nullable =  false, length = 100)
@@ -46,16 +49,16 @@ public class Plano {
     @Column(name = "duração", nullable = false)
     private int duracao;
     
-    @Column(name = "valor", nullable = false, unique = true)
+    @Column(name = "valor", nullable = false)
     private double valor;
     
-    @Column(name = "benefícios", nullable =  false, length = 100)
+    @Column(name = "benefícios", length = 100)
     private String beneficios;
 
     @Column(name = "valor_matricula", nullable = false)
     private float valorMatricula;
     
-    @Column(name = "data_criação", nullable = false)
+    @Column(name = "data_criação", updatable = false)
     private LocalDate dataCriacao;
     
     @Column(name = "status", nullable = false)

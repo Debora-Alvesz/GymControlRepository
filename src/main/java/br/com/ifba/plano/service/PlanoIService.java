@@ -19,12 +19,16 @@ public interface PlanoIService {
     //Método para listar planos
     List<Plano> findAll();
     
-    //Método para buscar planos por id
-    Optional<Plano> findById(Long id);
+    //método para buscar pelo nome
+    Plano findByNome(String nome);
     
     //método para deletar plano pelo id
     void delete(Long id);
     
     // Método específico para atualização
     Plano update(Long id, Plano plano);
+    
+    List<Plano> findAllByOrderByValorAsc();
+    
+    List<Plano> findByNomeContainingIgnoreCase(String nome);
 }

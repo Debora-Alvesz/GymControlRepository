@@ -66,6 +66,10 @@ public class Usuario {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "pessoa_id", nullable = false, unique = true)
     private Pessoa pessoa;
+
+    public Usuario(String login, String senha, String funcao) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     
 }
