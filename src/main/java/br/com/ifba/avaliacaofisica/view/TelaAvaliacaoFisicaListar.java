@@ -241,7 +241,7 @@ public class TelaAvaliacaoFisicaListar extends javax.swing.JFrame {
 
         float novoPercentualGordura;
         try {
-            novoPercentualGordura = Float.parseFloat(novoPesoStr.replace(",", "."));
+            novoPercentualGordura = Float.parseFloat(novoPercentualGorduraStr.replace(",", "."));
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,
                 "Percentual de gordura inválido. Informe um número válido.",
@@ -256,7 +256,7 @@ public class TelaAvaliacaoFisicaListar extends javax.swing.JFrame {
 
         int novoBiceps;
         try {
-            novoBiceps = Integer.parseInt(novaAlturaStr.trim());
+            novoBiceps = Integer.parseInt(novoBicepsStr.trim());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,
                 "Valor inválido. Informe um número inteiro.",
@@ -270,7 +270,7 @@ public class TelaAvaliacaoFisicaListar extends javax.swing.JFrame {
 
         int novaCintura;
         try {
-            novaCintura = Integer.parseInt(novaAlturaStr.trim());
+            novaCintura = Integer.parseInt(novaCinturaStr.trim());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,
                 "Valor inválido. Informe um número inteiro.",
@@ -284,7 +284,7 @@ public class TelaAvaliacaoFisicaListar extends javax.swing.JFrame {
 
         int novoOmbro;
         try {
-            novoOmbro = Integer.parseInt(novaAlturaStr.trim());
+            novoOmbro = Integer.parseInt(novoOmbroStr.trim());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,
                 "Valor inválido. Informe um número inteiro.",
@@ -298,7 +298,7 @@ public class TelaAvaliacaoFisicaListar extends javax.swing.JFrame {
 
         int novaPanturrilha;
         try {
-            novaPanturrilha = Integer.parseInt(novaAlturaStr.trim());
+            novaPanturrilha = Integer.parseInt(novaPanturrilhaStr.trim());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,
                 "Valor inválido. Informe um número inteiro.",
@@ -312,7 +312,7 @@ public class TelaAvaliacaoFisicaListar extends javax.swing.JFrame {
 
         int novaCoxa;
         try {
-            novaCoxa = Integer.parseInt(novaAlturaStr.trim());
+            novaCoxa = Integer.parseInt(novaCoxaStr.trim());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,
                 "Valor inválido. Informe um número inteiro.",
@@ -326,7 +326,7 @@ public class TelaAvaliacaoFisicaListar extends javax.swing.JFrame {
 
         int novoGluteo;
         try {
-            novoGluteo = Integer.parseInt(novaAlturaStr.trim());
+            novoGluteo = Integer.parseInt(novoGluteoStr.trim());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,
                 "Valor inválido. Informe um número inteiro.",
@@ -340,7 +340,7 @@ public class TelaAvaliacaoFisicaListar extends javax.swing.JFrame {
 
         int novoPeitoral;
         try {
-            novoPeitoral = Integer.parseInt(novaAlturaStr.trim());
+            novoPeitoral = Integer.parseInt(novoPeitoralStr.trim());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,
                 "Valor inválido. Informe um número inteiro.",

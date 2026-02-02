@@ -20,4 +20,7 @@ public interface AdministradorRepository extends JpaRepository<Administrador, Lo
     
     // Método para verificar se existe um administrador com o cpf informado
     Optional<Administrador> existsByCpf(String cpf);
+    
+    // Método para procurar se tem um administrador com o cpf informado
+    Optional<Administrador> findByCpf(String cpf);
 }

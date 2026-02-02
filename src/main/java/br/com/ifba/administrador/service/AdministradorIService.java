@@ -24,4 +24,10 @@ public interface AdministradorIService {
     
     // Método específico para atualização
     Administrador update(String cpf, Administrador administrador);
+    
+    //Método para deletar Administrador pelo CPF
+    void deleteByCpf(String cpf);
+    
+    // Método para procurar se tem um administrador com o cpf informado
+    Administrador findByCpf(String cpf);
 }

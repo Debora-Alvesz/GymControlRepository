@@ -33,15 +33,20 @@ public class AdministradorController implements AdministradorIController{
     return administradorService.findAll();
     }
 
-    //Método para deletar administrador
+    //Método para deletar administrador pelo cpf
     @Override
-    public void delete(Administrador administrador){
-    administradorService.delete(administrador);
+    public void deleteByCpf(String cpf){
+    administradorService.deleteByCpf(cpf);
     }
 
     // Método específico para atualização
     @Override
     public Administrador update(String cpf, Administrador administrador){   
     return administradorService.update(cpf, administrador);
+    }
+    @Override
+    // Método para procurar se tem um administrador com o cpf informado
+    public Administrador findByCpf(String cpf){
+    return administradorService.findByCpf(cpf);
     }
 }
