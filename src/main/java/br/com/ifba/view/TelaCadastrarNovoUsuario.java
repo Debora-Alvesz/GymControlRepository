@@ -547,7 +547,7 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
              return;
         }
         //valida o cpf informado
-        if (!ValidadorUtil.isCpfValido(cpf)) {
+        if (cpf == null) {
              JOptionPane.showMessageDialog(this, "CPF inválido! Verifique os números.");
               log.warn("Tentativa de cadastro com CPF vazio ou inválido");
              return;

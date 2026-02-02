@@ -96,7 +96,7 @@ public class TelaDeLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -234,7 +234,7 @@ public class TelaDeLogin extends javax.swing.JFrame {
         //abre a tela correspondente ao perfil
         redirecionarParaTelaPrincipal(perfil, userLogado);
          log.info("Usuário {} logado com sucesso!", login);
-         notificacao.enviarEmail(login, "Alerta de Segurança", "Login realizado.");
+         notificacao.enviarEmail(login, "Alerta de Segurança", "Login realizado, se nao foi voce, entre em contato com o suporte.");
          this.dispose();;
       
     }catch(BusinessException ex){
