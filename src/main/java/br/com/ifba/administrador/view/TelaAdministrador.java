@@ -7,15 +7,20 @@ package br.com.ifba.administrador.view;
 import br.com.ifba.administrador.entity.Administrador;
 import br.com.ifba.endereco.entity.Endereco;
 import br.com.ifba.usuario.entity.Usuario;
+import br.com.ifba.usuario.enums.PerfilUsuarioEnums;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author João Victor
  */
+@Component
+@Slfj4
 public class TelaAdministrador extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaAdministrador.class.getName());
@@ -232,6 +237,7 @@ public class TelaAdministrador extends javax.swing.JFrame {
                 e.setEmail(novoEmail);
                 e.setEndereco(novoEndereco);
                 e.setDadosLogin(dadosLogin);
+                e.setPerfil(PerfilUsuarioEnums.ADMIN);
 
         administradorController.save(e);
 
