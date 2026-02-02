@@ -4,6 +4,7 @@
  */
 package br.com.ifba.view;
 
+import br.com.ifba.avaliacaofisica.view.TelaAvaliacaoFisicaListar;
 import br.com.ifba.exercicio.view.TelaExercicios;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -37,6 +38,7 @@ public class TelaMenuPrincipalAluno extends javax.swing.JFrame {
         lblMenu = new javax.swing.JLabel();
         btnExercicio = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        btnAvaliacaoFisica = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,6 +58,13 @@ public class TelaMenuPrincipalAluno extends javax.swing.JFrame {
             }
         });
 
+        btnAvaliacaoFisica.setText("AVALIAÇÃO FISICA");
+        btnAvaliacaoFisica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAvaliacaoFisicaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,6 +81,10 @@ public class TelaMenuPrincipalAluno extends javax.swing.JFrame {
                         .addComponent(btnExercicio)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnAvaliacaoFisica)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -85,7 +98,9 @@ public class TelaMenuPrincipalAluno extends javax.swing.JFrame {
                         .addComponent(btnSair)))
                 .addGap(18, 18, 18)
                 .addComponent(btnExercicio)
-                .addContainerGap(216, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnAvaliacaoFisica)
+                .addContainerGap(175, Short.MAX_VALUE))
         );
 
         pack();
@@ -98,6 +113,10 @@ public class TelaMenuPrincipalAluno extends javax.swing.JFrame {
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         new TelaDeLogin().setVisible(true);
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnAvaliacaoFisicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvaliacaoFisicaActionPerformed
+        new TelaAvaliacaoFisicaListar().setVisible(true);
+    }//GEN-LAST:event_btnAvaliacaoFisicaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -125,6 +144,7 @@ public class TelaMenuPrincipalAluno extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAvaliacaoFisica;
     private javax.swing.JButton btnExercicio;
     private javax.swing.JButton btnSair;
     private javax.swing.JLabel lblMenu;
