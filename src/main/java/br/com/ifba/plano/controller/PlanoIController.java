@@ -24,5 +24,11 @@ public interface PlanoIController {
     
     // Busca por nome
     Plano findByNome(String nome);
-
+    
+    public List<Plano> findAllByOrderByValorAsc();
+    
+    // Retorna uma Lista (List) porque pode achar mais de um plano
+    // "Containing" = busca partes do texto
+    // "IgnoreCase" = ignora maiúsculas e minúsculas
+    public List<Plano> findByNomeContainingIgnoreCase(String nome);
 }

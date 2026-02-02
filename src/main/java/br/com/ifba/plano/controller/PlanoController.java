@@ -44,4 +44,15 @@ public class PlanoController implements PlanoIController {
         return planoService.findByNome(nome);
     }
 
+    @Override
+    public List<Plano> findAllByOrderByValorAsc() {
+    return planoService.findAllByOrderByValorAsc();
+    }
+
+    @Override
+    public List<Plano> findByNomeContainingIgnoreCase(String nome) {
+        return planoService.findByNomeContainingIgnoreCase(nome);
+    }
+   
+
 }

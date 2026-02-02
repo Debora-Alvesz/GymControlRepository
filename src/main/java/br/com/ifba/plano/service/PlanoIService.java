@@ -27,4 +27,8 @@ public interface PlanoIService {
     
     // Método específico para atualização
     Plano update(Long id, Plano plano);
+    
+    List<Plano> findAllByOrderByValorAsc();
+    
+    List<Plano> findByNomeContainingIgnoreCase(String nome);
 }

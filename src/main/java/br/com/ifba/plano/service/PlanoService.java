@@ -31,7 +31,9 @@ public class PlanoService implements PlanoIService{
     public Plano save(Plano plano) {
        //Verifica se já existe esse ID no banco
         logger.info("[SERVICE] PlanoService - Iniciando cadastro de plano. ID: {}", plano.getId());
-        if (planoRepository.existsById(plano.getId())) {
+       // Só verificamos se existe no banco SE o ID não for nulo.
+       // Se for nulo, sabemos que é um cadastro novo, então pode passar direto.
+        if (plano.getId() != null && planoRepository.existsById(plano.getId())) {
             logger.warn("[SERVICE] PlanoService - Tentativa de cadastro de plano com ID já existente: {}", plano.getId());
             throw new BusinessException("Já existe um plano com o ID " + plano.getId());
         }
@@ -80,5 +82,18 @@ public class PlanoService implements PlanoIService{
         //Salva (o método save serve para atualizar quando o objeto tem ID)
         logger.info("[SERVICE] PlanoService - Plano atualizado com sucesso.");
         return planoRepository.save(plano);
+    }
+
+    @Override
+    public List<Plano> findAllByOrderByValorAsc() {
+        
+        logger.info("[SERVICE] PlanoService - Buscando planos ordenados por valor crescente");
+        return planoRepository.findAllByOrderByValorAsc();
+    }
+
+    @Override
+    public List<Plano> findByNomeContainingIgnoreCase(String nome) {
+        // O Service repassa para o Repository
+        return planoRepository.findByNomeContainingIgnoreCase(nome);
     }
 }

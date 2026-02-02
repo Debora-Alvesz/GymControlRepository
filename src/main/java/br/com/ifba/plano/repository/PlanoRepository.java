@@ -52,4 +52,7 @@ public interface PlanoRepository extends JpaRepository<Plano, Long>{
     List<Plano> findAllByStatusTrue();
     //Procura por todos planos inativos
     List<Plano> findAllByStatusFalse();
+  
+    List<Plano> findByNomeContainingIgnoreCase(String nome);
+    
 }

@@ -231,6 +231,7 @@ public class TelaCadastroRecepcionista extends javax.swing.JFrame {
             // 6. Feedback e Limpeza
             javax.swing.JOptionPane.showMessageDialog(this, "Recepcionista cadastrada com sucesso!");
             limparCampos();
+            
 
         } catch (Exception e) {
             // Captura erros de negócio (ex: Login já existe) ou banco

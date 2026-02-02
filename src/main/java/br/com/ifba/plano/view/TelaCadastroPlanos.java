@@ -19,9 +19,10 @@ public class TelaCadastroPlanos extends javax.swing.JFrame {
     private PlanoIController planoController; // Injeta a interface do controller
 
     private Plano plano; // O objeto que será persistido
-    
+  
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastroPlanos.class.getName());
 
+    
     public TelaCadastroPlanos() {
         initComponents();
     }
@@ -218,8 +219,8 @@ public class TelaCadastroPlanos extends javax.swing.JFrame {
             // 6. Feedback e Limpeza
             javax.swing.JOptionPane.showMessageDialog(this, "Plano cadastrado com sucesso!");
             limparCampos();
-            //Fecha a tela atual para revelar a de listagem que está atrás
-            this.dispose();
+            //Fecha a tela de cadastro atual
+            this.dispose(); 
 
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, 
