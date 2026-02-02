@@ -158,14 +158,21 @@ public class TelaListagemRecepcionista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        // Esconde a tela principal
-        this.setVisible(false);
 
-        // Se você tiver um método limparCampos na tela de cadastro, chame ele aqui
-        // telaCadastroRecepcionista.limparCampos(); 
+        // Configura o comportamento para quando a tela de cadastro fechar
+    telaCadastroRecepcionista.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosed(java.awt.event.WindowEvent e) {
+            // Este método será chamado assim que você der .dispose() na outra tela
+            atualizarTabela(); 
+            
+            // Opcional: Remove o listener para não acumular na próxima vez que abrir
+            telaCadastroRecepcionista.removeWindowListener(this);
+        }
+    });
 
-        // Abre a tela de cadastro
-        telaCadastroRecepcionista.setVisible(true);
+    telaCadastroRecepcionista.setLocationRelativeTo(null);
+    telaCadastroRecepcionista.setVisible(true);
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
