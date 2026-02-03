@@ -2,6 +2,7 @@
 package br.com.ifba.recepcionista.view;
 
 import br.com.ifba.infrastructure.util.ValidadorUtil;
+import br.com.ifba.recepcionista.controller.RecepcionistaController;
 import br.com.ifba.recepcionista.controller.RecepcionistaIController;
 import br.com.ifba.recepcionista.entity.Recepcionista;
 import javax.swing.JOptionPane;
@@ -15,15 +16,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class TelaCadastroRecepcionista extends javax.swing.JFrame {
     
-    @Autowired
-    private RecepcionistaIController recepcionistaController; // Injeta a interface do controller
+    private final RecepcionistaIController recepcionistaController; // Injeta a interface do controller
 
     private Recepcionista recepcionista; // O objeto que será persistido
     
     // Logger para registrar eventos e erros
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastroRecepcionista.class.getName());
     
-    public TelaCadastroRecepcionista() {
+    public TelaCadastroRecepcionista(RecepcionistaIController controller) {
+        
+        this.recepcionistaController = controller;
         initComponents();
     }
 
@@ -204,7 +206,7 @@ public class TelaCadastroRecepcionista extends javax.swing.JFrame {
 
         if (ValidadorUtil.isCpfValido(cpf)) {
             String cpfParaBanco = cpf.replaceAll("[^0-9]", "");
-            recepcionista.setCpf(cpfParaBanco);
+            
         } else {
              javax.swing.JOptionPane.showMessageDialog(this, "CPF deve conter 11 números!");
 }

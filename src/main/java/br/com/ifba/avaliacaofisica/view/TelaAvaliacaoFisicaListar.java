@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Component;
  * @author João Victor
  */
 @Component
-@Slfj4
+@Slf4j
 public class TelaAvaliacaoFisicaListar extends javax.swing.JFrame {
     
    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaAvaliacaoFisicaListar.class.getName());

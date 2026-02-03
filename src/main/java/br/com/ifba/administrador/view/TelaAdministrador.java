@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  * @author João Victor
  */
 @Component
-@Slfj4
+@Slf4j
 public class TelaAdministrador extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaAdministrador.class.getName());

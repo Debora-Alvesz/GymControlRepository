@@ -29,6 +29,18 @@ public class TelaDeLogin extends javax.swing.JFrame {
     private ApplicationContext springContext;
     
     private final Notificacao notificacao = new Notificacao();
+    
+    @Autowired
+    private TelaMenuPrincipalAdm telaMenuPrincipalAdm;
+    
+    @Autowired 
+    private TelaMenuPrincipalInstrutor telaMenuPrincipalRecepcionista;
+    
+    @Autowired 
+    private TelaMenuPrincipalAluno telaMenuPrincipalAluno;
+    
+    @Autowired
+    private TelaMenuPrincipalInstrutor telaMenuPrincipalInstrutor;
    
     @Autowired
     public TelaDeLogin(UsuarioService usuarioService) {
@@ -47,16 +59,16 @@ public class TelaDeLogin extends javax.swing.JFrame {
     private void redirecionarParaTelaPrincipal(String perfil, Usuario usuario) {
     switch (perfil.toUpperCase()) {
         case "ADMIN":
-           new TelaMenuPrincipalAdm().setVisible(true);
+           this.telaMenuPrincipalAdm.setVisible(true);
             break;
         case "ALUNO":
-           new TelaMenuPrincipalAluno().setVisible(true);
+           this.telaMenuPrincipalAluno.setVisible(true);
             break;
         case "INSTRUTOR":
-           new TelaMenuPrincipalInstrutor().setVisible(true);
-            break;
+            this.telaMenuPrincipalInstrutor.setVisible(true);
+                    break;
         case "RECEPCIONISTA":
-           new TelaMenuPrincipalRecepcionista().setVisible(true);
+           this.telaMenuPrincipalRecepcionista.setVisible(true);
             break;
         default:
             JOptionPane.showMessageDialog(this, "Perfil desconhecido. Entre em contato com o suporte.");

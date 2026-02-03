@@ -8,9 +8,11 @@ import br.com.ifba.aluno.view.TelaListagemAlunos;
 import br.com.ifba.instrutor.view.AdicionarInstrutorView;
 import br.com.ifba.instrutor.view.ListarInstrutorView;
 import br.com.ifba.pagamento.view.TelaRelatorioFinanceiro;
+import br.com.ifba.recepcionista.controller.RecepcionistaIController;
 import br.com.ifba.recepcionista.view.TelaCadastroRecepcionista;
 import br.com.ifba.recepcionista.view.TelaListagemRecepcionista;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,7 +24,9 @@ import org.springframework.stereotype.Component;
 public class TelaMenuPrincipalAdm extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaMenuPrincipalAdm.class.getName());
-
+    @Autowired
+    private RecepcionistaIController recepcionistaController;
+    
     /**
      * Creates new form TelaMenuPrincipal
      */
@@ -165,7 +169,7 @@ public class TelaMenuPrincipalAdm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlunosActionPerformed
 
     private void btnCadRecepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadRecepActionPerformed
-        new TelaCadastroRecepcionista().setVisible(true);
+        new TelaCadastroRecepcionista(this.recepcionistaController).setVisible(true);
     }//GEN-LAST:event_btnCadRecepActionPerformed
 
     private void btnListRecepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListRecepActionPerformed

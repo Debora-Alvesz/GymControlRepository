@@ -215,7 +215,7 @@ public class TelaMatriculaAlunos extends javax.swing.JFrame {
         }
 
         // Valida o CPF usando classe ValidadorUtil 
-        if (!ValidadorUtil.isCpfValido(txtCpf.getText())) {
+        if (cpf == null) {
             javax.swing.JOptionPane.showMessageDialog(this, "CPF Inválido!");
             return; // Interrompe se o CPF estiver errado
         }
