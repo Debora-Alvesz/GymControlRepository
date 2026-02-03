@@ -36,6 +36,7 @@
                   <Component id="btnMatricularAlunos" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="btnInstrutores" min="-2" max="-2" attributes="0"/>
                   <Component id="btnListarAlunos" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnModalidades" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -60,7 +61,9 @@
               <Component id="btnListarAlunos" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnInstrutores" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="123" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="btnModalidades" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="82" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -101,6 +104,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnListarAlunosActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnModalidades">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="MODALIDADES"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModalidadesActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

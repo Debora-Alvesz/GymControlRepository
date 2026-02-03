@@ -7,6 +7,7 @@ package br.com.ifba.view;
 import br.com.ifba.aluno.view.TelaListagemAlunos;
 import br.com.ifba.aluno.view.TelaMatriculaAlunos;
 import br.com.ifba.instrutor.view.ListarInstrutorView;
+import br.com.ifba.modalidade.view.ModalidadeView;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -41,6 +42,7 @@ public class TelaMenuPrincipalRecepcionista extends javax.swing.JFrame {
         btnMatricularAlunos = new javax.swing.JButton();
         btnInstrutores = new javax.swing.JButton();
         btnListarAlunos = new javax.swing.JButton();
+        btnModalidades = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,6 +76,13 @@ public class TelaMenuPrincipalRecepcionista extends javax.swing.JFrame {
             }
         });
 
+        btnModalidades.setText("MODALIDADES");
+        btnModalidades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModalidadesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -89,7 +98,8 @@ public class TelaMenuPrincipalRecepcionista extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnMatricularAlunos)
                     .addComponent(btnInstrutores)
-                    .addComponent(btnListarAlunos))
+                    .addComponent(btnListarAlunos)
+                    .addComponent(btnModalidades))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -108,7 +118,9 @@ public class TelaMenuPrincipalRecepcionista extends javax.swing.JFrame {
                 .addComponent(btnListarAlunos)
                 .addGap(18, 18, 18)
                 .addComponent(btnInstrutores)
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnModalidades)
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         pack();
@@ -129,6 +141,10 @@ public class TelaMenuPrincipalRecepcionista extends javax.swing.JFrame {
     private void btnInstrutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInstrutoresActionPerformed
         new ListarInstrutorView().setVisible(true);
     }//GEN-LAST:event_btnInstrutoresActionPerformed
+
+    private void btnModalidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModalidadesActionPerformed
+        new ModalidadeView().setVisible(true);
+    }//GEN-LAST:event_btnModalidadesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -159,6 +175,7 @@ public class TelaMenuPrincipalRecepcionista extends javax.swing.JFrame {
     private javax.swing.JButton btnInstrutores;
     private javax.swing.JButton btnListarAlunos;
     private javax.swing.JButton btnMatricularAlunos;
+    private javax.swing.JButton btnModalidades;
     private javax.swing.JButton btnSair;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
