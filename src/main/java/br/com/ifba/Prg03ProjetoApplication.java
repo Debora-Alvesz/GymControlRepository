@@ -1,11 +1,6 @@
 package br.com.ifba;
 
-import br.com.ifba.aluno.service.AlunoService;
-import br.com.ifba.aluno.view.TelaListagemAlunos;
-import br.com.ifba.manutencao.view.TelaManutencao;
 import br.com.ifba.view.TelaDeLogin;
-import java.awt.EventQueue;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;

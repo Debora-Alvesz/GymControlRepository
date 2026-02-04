@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class RecepcionistaController implements RecepcionistaIController {
 
+    
     //Instância da camada Service
     @Autowired
     private RecepcionistaIService recepcionistaService;

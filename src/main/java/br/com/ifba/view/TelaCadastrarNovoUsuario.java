@@ -22,7 +22,7 @@ import br.com.ifba.infrastructure.util.ValidadorUtil;
 import br.com.ifba.plano.controller.PlanoIController;
 import br.com.ifba.plano.entity.Plano;
 import lombok.extern.slf4j.Slf4j;
-
+import br.com.ifba.view.ContextProvider;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -755,17 +755,18 @@ comboPerfil.addItemListener(new java.awt.event.ItemListener() {
     }//GEN-LAST:event_txtBairroActionPerformed
 
     private void bntCadastrarPlanoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntCadastrarPlanoActionPerformed
+// 1. Em vez de 'new', pedimos a tela para o ContextProvider do Spring.
+    // Isso garante que o Controller de banco de dados venha junto.
+    br.com.ifba.plano.view.TelaCadastroPlanos tela = 
+            br.com.ifba.view.ContextProvider.getBean(br.com.ifba.plano.view.TelaCadastroPlanos.class);
+    
+    // 2. Garante que os campos estejam limpos antes de abrir
+    tela.limparCampos();
 
- // cria, centraliza e exibe
-TelaCadastroPlanos tela = new TelaCadastroPlanos(null, true); 
-tela.setLocationRelativeTo(null);
-tela.setVisible(true);
+    // 3. Exibe a tela
+    // (Ela já está configurada como Modal e Centralizada no construtor novo)
+    tela.setVisible(true);
     }//GEN-LAST:event_bntCadastrarPlanoActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntCadastrarPlano;

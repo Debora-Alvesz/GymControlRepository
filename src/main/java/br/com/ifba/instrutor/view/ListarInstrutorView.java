@@ -12,20 +12,32 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import javax.swing.JOptionPane;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author angra
  */
+@Component
 public class ListarInstrutorView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListarInstrutorView.class.getName());
 
+    // INJEÇÃO DO REPOSITÓRIO (BANCO DE DADOS)
+    @Autowired
+    private InstrutorRepository instrutorRepository;
+
+    // INJEÇÃO DA TELA DE ADICIONAR (Para ela também vir com banco conectado)
+    @Autowired
+    @Lazy
+    private AdicionarInstrutorView adicionarInstrutorView;
     /**
      * Creates new form ListarInstrutor
      */
