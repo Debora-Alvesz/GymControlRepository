@@ -17,8 +17,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import br.com.ifba.endereco.entity.Endereco;
+import br.com.ifba.exception.BusinessException;
 import br.com.ifba.infrastructure.util.ValidadorUtil;
+import br.com.ifba.plano.controller.PlanoIController;
+import br.com.ifba.plano.entity.Plano;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
+import java.util.List;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import br.com.ifba.plano.view.TelaCadastroPlanos;
+import br.com.ifba.view.TelaDeLogin;
+
 
 /**
  *
@@ -40,7 +53,19 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
         this.setResizable(false);
         this.setSize(800, 1000);
         this.setLocationRelativeTo(null);
-    }
+
+comboPerfil.addItemListener(new java.awt.event.ItemListener() {
+            @Override
+            public void itemStateChanged(java.awt.event.ItemEvent e) {
+                if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+                    String selecionado = comboPerfil.getSelectedItem().toString();
+                    // Garanta que o nome do botão esteja correto (bnt ou btn)
+                    bntCadastrarPlano.setVisible(selecionado.equalsIgnoreCase("Aluno"));
+                }
+            }
+        });
+              
+}
     
    private void fecharEReabrirLogin() {
     // Pede a instância do Login ao Spring
@@ -98,6 +123,8 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        bntCadastrarPlano = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -251,19 +278,19 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("Cadastrar");
+        jLabel1.setText("Cadastrar Usuário");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(379, 379, 379)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(504, Short.MAX_VALUE))
+                .addGap(286, 286, 286)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(494, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,6 +313,13 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
 
         jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel26.setText("Instrutor");
+
+        bntCadastrarPlano.setText("Cadastrar Plano");
+        bntCadastrarPlano.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntCadastrarPlanoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -360,17 +394,24 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
                         .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtEspecialidade, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(40, 40, 40)
                                 .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(44, 44, 44)
-                                .addComponent(txtCIP, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(174, 174, 174)
+                                .addComponent(txtCIP, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtEspecialidade, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(226, 226, 226)
+                                .addComponent(bntCadastrarPlano, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(173, 173, 173)
                                 .addComponent(jLabel22)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(33, 33, 33)
                                 .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(45, 45, 45)
@@ -440,8 +481,15 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel22)
-                            .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 162, Short.MAX_VALUE)
+                            .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(83, 83, 83)
+                                .addComponent(jLabel27))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(bntCadastrarPlano, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 97, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -537,6 +585,7 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
         String cpf = txtCPF.getText().trim();
         String email = txtEmail.getText().trim();
         String telefone = txtTell.getText().trim();
+       
         
         log.debug("Dados capturados: Nome={}, CPF={}", nome, cpf);
         
@@ -580,7 +629,18 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
             case "ALUNO":
                Aluno aluno = new Aluno();
                aluno.setMatricula(txtMatricula.getText().trim());
+               aluno.setRequisitos("Nenhum");
+               var planoController = ContextProvider.getBean(br.com.ifba.plano.controller.PlanoController.class);
+               List<Plano> planos = planoController.findAll();
+               
+               if(!planos.isEmpty()){
+                   br.com.ifba.plano.entity.Plano planoEncontrado = planos.get(planos.size()- 1);
+                   aluno.setPlano(planoEncontrado);
+               }else{
+                   throw new BusinessException("Nnehum plano cadastrado");
+            }
                pessoa = aluno;
+               
                 break;
             case "RECEPCIONISTA":
                 pessoa = new Recepcionista();
@@ -694,12 +754,21 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBairroActionPerformed
 
+    private void bntCadastrarPlanoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntCadastrarPlanoActionPerformed
+
+ // cria, centraliza e exibe
+TelaCadastroPlanos tela = new TelaCadastroPlanos(null, true); 
+tela.setLocationRelativeTo(null);
+tela.setVisible(true);
+    }//GEN-LAST:event_bntCadastrarPlanoActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntCadastrarPlano;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JComboBox<String> comboPerfil;
     private javax.swing.JLabel jLabel1;
@@ -721,6 +790,7 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

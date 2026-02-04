@@ -5,9 +5,11 @@
 package br.com.ifba.modalidade.view;
 
 import br.com.ifba.modalidade.controller.ModalidadeController;
+import br.com.ifba.modalidade.controller.ModalidadeIController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import br.com.ifba.modalidade.entity.Modalidade;
+import br.com.ifba.view.ContextProvider;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -16,15 +18,13 @@ import org.springframework.context.annotation.Lazy;
  *
  * @author ketli
  */
-@Component
+
 public class ModalidadeView extends javax.swing.JFrame {
     
-    @Autowired
-    @Lazy
-    private ModalidadeCadastroView cadastroView;//faz injeção da segunda tela
+private ModalidadeIController modalidadeController = ContextProvider.getBean(ModalidadeIController.class);
     
-    @Autowired
-    private ModalidadeController modalidadeController;//Injeta automaticamente a instância do Controller para processar os dados
+    private ModalidadeCadastroView cadastroView;//faz injeção da segunda tela
+    private Long idParaEdicao = null;
 
     
     public ModalidadeView() {
@@ -35,6 +35,7 @@ public class ModalidadeView extends javax.swing.JFrame {
         this.setSize(800, 600); 
         // Garante que a tela abra no centro do monitor
         this.setLocationRelativeTo(null);
+        
     }
     
     //anotação para que rode apenas depois de fazer todas as injeções
@@ -60,6 +61,7 @@ public class ModalidadeView extends javax.swing.JFrame {
         });
     }//garante que o scroll comece do topo 
    }
+     
 
 
     @SuppressWarnings("unchecked")
@@ -88,6 +90,7 @@ public class ModalidadeView extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblModalidades = new javax.swing.JTable();
+        jButton5 = new javax.swing.JButton();
 
         jMenu1.setText("jMenu1");
 
@@ -122,14 +125,17 @@ public class ModalidadeView extends javax.swing.JFrame {
 
         jMenuItem3.setText("jMenuItem3");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setName("ModalidadeView"); // NOI18N
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setAutoscrolls(true);
-
-        jPanel2.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -175,9 +181,8 @@ public class ModalidadeView extends javax.swing.JFrame {
             }
         });
 
-        tblModalidades.setBackground(new java.awt.Color(102, 153, 255));
+        tblModalidades.setBackground(new java.awt.Color(102, 102, 102));
         tblModalidades.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        tblModalidades.setForeground(new java.awt.Color(0, 0, 0));
         tblModalidades.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -194,6 +199,13 @@ public class ModalidadeView extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblModalidades);
 
         jScrollPane3.setViewportView(jScrollPane1);
+
+        jButton5.setText("Atualizar Tabela");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -214,10 +226,12 @@ public class ModalidadeView extends javax.swing.JFrame {
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(191, 191, 191))
         );
         jPanel1Layout.setVerticalGroup(
@@ -233,7 +247,9 @@ public class ModalidadeView extends javax.swing.JFrame {
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(96, Short.MAX_VALUE))
         );
@@ -249,16 +265,31 @@ public class ModalidadeView extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+String idDigitado = javax.swing.JOptionPane.showInputDialog(this, "Digite o ID da modalidade para editar:");
+    
+    if (idDigitado != null && !idDigitado.trim().isEmpty()) {
+        try {
+            Long id = Long.parseLong(idDigitado);
+            
+            // Instancia a tela de cadastro
+            ModalidadeCadastroView telaCad = new ModalidadeCadastroView();
+            
+            telaCad.preencherParaEdicao(id);
+            
+            telaCad.setVisible(true);
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "ID inválido!");
+        }
+    }        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -266,7 +297,7 @@ public class ModalidadeView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        modalidadeController.abrirCadastro();
+    new ModalidadeCadastroView().setVisible(true);      
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -304,12 +335,27 @@ public class ModalidadeView extends javax.swing.JFrame {
       }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+                               
+    // Chama o método para preencher a JTable assim que a tela abre
+    atualizarTabela(); 
+  
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+                               
+    // Chama o método para preencher a JTable assim que a tela abre
+    atualizarTabela(); 
+     // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;

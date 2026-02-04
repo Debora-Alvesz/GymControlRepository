@@ -45,7 +45,7 @@ public class Aluno extends Pessoa{
     @Column(name = "matricula", nullable =  false, length = 20, unique = true)
     private String matricula;
 
-    @Column(name = "requisitos", nullable = false, length = 100)
+    @Column(name = "requisitos", length = 100)
     private String requisitos; 
     
     @Column(name = "status", nullable = false, length = 100)

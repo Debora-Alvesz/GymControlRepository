@@ -4,6 +4,7 @@
  */
 package br.com.ifba.view;
 
+import br.com.ifba.aluno.controller.AlunoIController;
 import br.com.ifba.aluno.view.TelaListagemAlunos;
 import br.com.ifba.instrutor.view.AdicionarInstrutorView;
 import br.com.ifba.instrutor.view.ListarInstrutorView;
@@ -14,6 +15,7 @@ import br.com.ifba.recepcionista.view.TelaListagemRecepcionista;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import br.com.ifba.aluno.view.TelaListagemAlunos;
 
 /**
  *
@@ -26,6 +28,9 @@ public class TelaMenuPrincipalAdm extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaMenuPrincipalAdm.class.getName());
     @Autowired
     private RecepcionistaIController recepcionistaController;
+    
+    @Autowired
+    private AlunoIController alunoController;
     
     /**
      * Creates new form TelaMenuPrincipal
@@ -117,25 +122,14 @@ public class TelaMenuPrincipalAdm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                         .addComponent(btnSair))
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnAlunos))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnCadRecep))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnListRecep))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnCadInst))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnListInst))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnFinanceiro)))
+                            .addComponent(btnAlunos)
+                            .addComponent(btnCadRecep)
+                            .addComponent(btnListRecep)
+                            .addComponent(btnCadInst)
+                            .addComponent(btnListInst)
+                            .addComponent(btnFinanceiro))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -165,7 +159,7 @@ public class TelaMenuPrincipalAdm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlunosActionPerformed
-        new TelaListagemAlunos().setVisible(true);
+    new TelaListagemAlunos().setVisible(true);
     }//GEN-LAST:event_btnAlunosActionPerformed
 
     private void btnCadRecepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadRecepActionPerformed

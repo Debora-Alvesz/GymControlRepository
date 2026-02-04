@@ -5,7 +5,10 @@
 package br.com.ifba.modalidade.view;
 
 import br.com.ifba.modalidade.controller.ModalidadeController;
+import br.com.ifba.modalidade.controller.ModalidadeIController;
 import br.com.ifba.modalidade.view.ModalidadeView;
+import br.com.ifba.modalidade.view.ModalidadeView;
+import br.com.ifba.view.ContextProvider;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
@@ -17,12 +20,13 @@ import org.springframework.stereotype.Component;
  *
  * @author ketli
  */
-@Component
+
 public class ModalidadeCadastroView extends javax.swing.JFrame {
 
-    @Autowired
-    @Lazy
-    private ModalidadeController modalidadeController;//Injeta automaticamente a instância do Controller para processar os dados
+   
+   private ModalidadeIController modalidadeController;
+   
+   private Long idParaEdicao = null;
     
     @Autowired
     private ModalidadeView modalidadeView; //para poder voltar para tela principal
@@ -61,6 +65,21 @@ public class ModalidadeCadastroView extends javax.swing.JFrame {
         txtDescricao.setText("");
         txtRequisitos.setText("");
     }
+    
+    public void preencherParaEdicao(Long id) {
+    this.idParaEdicao = id;
+    var controller = ContextProvider.getBean(ModalidadeIController.class);
+    
+    // Supondo que seu controller tenha o método findById
+    var m = controller.findById(id); 
+    
+    if (m != null) {
+        txtNome.setText(m.getNome());
+        txtDescricao.setText(m.getDescricao());
+        txtRequisitos.setText(m.getRequisitos());
+        comboNivel.setSelectedItem(m.getNivelDificuldade());
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -252,7 +271,7 @@ public class ModalidadeCadastroView extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        modalidadeController.voltarParaListagem();
+        this.modalidadeController = ContextProvider.getBean(ModalidadeIController.class);
         //evento de cadastro de nova modalidade
         String nome = txtNome.getText();// recebe o nome
         String requisitos = txtRequisitos.getText();//-- os requisitos
@@ -265,14 +284,23 @@ public class ModalidadeCadastroView extends javax.swing.JFrame {
         //se for nulo, a frase "não informado" fica no lugar do nivel
          nivel = "Não informado";
        }
+        try {
+        if (this.idParaEdicao == null) {
+            // Lógica de NOVO CADASTRO
+            modalidadeController.saveModalidade(nome, descricao, nivel, requisitos);
+        } else {
+            // Lógica de EDIÇÃO 
+            modalidadeController.updateModalidade(idParaEdicao, nome, descricao, nivel, requisitos);
+        }
         
-        //salva a nova modalidade
-       modalidadeController.saveModalidade(nome, descricao, nivel, requisitos);
-        //chama o método atualizar tabela
-       modalidadeView.atualizarTabela();
-        this.dispose();//fecha a tela de cadastro
-
+        javax.swing.JOptionPane.showMessageDialog(this, "Operação realizada com sucesso!");
+        this.dispose();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
         
+        //FECHA a tela
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void voltarParaPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarParaPrincipalActionPerformed

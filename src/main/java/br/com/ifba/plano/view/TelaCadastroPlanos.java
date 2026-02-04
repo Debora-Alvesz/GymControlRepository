@@ -7,15 +7,17 @@ import br.com.ifba.plano.entity.Plano;
 import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import br.com.ifba.view.ContextProvider; 
+import br.com.ifba.plano.controller.PlanoIController;
 
 /**
  *
  * @author Débora Alves
  */
-@Component
-public class TelaCadastroPlanos extends javax.swing.JFrame {
+
+public class TelaCadastroPlanos extends javax.swing.JDialog {
     
-    @Autowired
+   
     private PlanoIController planoController; // Injeta a interface do controller
 
     private Plano plano; // O objeto que será persistido
@@ -23,8 +25,10 @@ public class TelaCadastroPlanos extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastroPlanos.class.getName());
 
     
-    public TelaCadastroPlanos() {
+   public TelaCadastroPlanos(java.awt.Frame parent, boolean modal) {
+        super(parent, modal); // Isso resolve os erros de "parent is not public"
         initComponents();
+        setLocationRelativeTo(parent);
     }
 
     @SuppressWarnings("unchecked")
@@ -45,10 +49,10 @@ public class TelaCadastroPlanos extends javax.swing.JFrame {
         txtValorMatricula = new javax.swing.JTextField();
         txtBeneficios = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("Cadastrar novo Recepcionista");
+        jLabel1.setText("Cadastrar novo Plano");
 
         jPanel3.setBackground(new java.awt.Color(51, 51, 51));
         jPanel3.setForeground(new java.awt.Color(51, 51, 51));
@@ -171,7 +175,8 @@ public class TelaCadastroPlanos extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomePlanoActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-
+    
+         br.com.ifba.plano.entity.Plano novoObjetoPlano = new br.com.ifba.plano.entity.Plano();
         // 1. Captura os dados da tela
         String nome = txtNomePlano.getText();
         String duracaoStr = txtDuracao.getText();
@@ -190,6 +195,7 @@ public class TelaCadastroPlanos extends javax.swing.JFrame {
         }
 
         try {
+           
             // 3. Conversão de tipos (Tratando erro de conversão)
             // Replace "," por "." para aceitar 99,90 e 99.90
             int duracao = Integer.parseInt(duracaoStr);
@@ -202,20 +208,22 @@ public class TelaCadastroPlanos extends javax.swing.JFrame {
             }
 
             // 4. Instancia e preenche o objeto
-            this.plano = new Plano();
-            plano.setNome(nome);
-            plano.setDuracao(duracao);
-            plano.setValor(valorMensal);
-            plano.setValorMatricula(valorMatricula);
-            plano.setBeneficios(beneficios);
+    
+           novoObjetoPlano.setNome(nome);
+           novoObjetoPlano.setDuracao(duracao);
+           novoObjetoPlano.setValor(valorMensal);
+           novoObjetoPlano.setValorMatricula(valorMatricula);
+           novoObjetoPlano.setBeneficios(beneficios);
             
             // Campos automáticos
-            plano.setStatus(true); // Nasce ativo
-            plano.setDataCriacao(LocalDate.now()); // Data de hoje
+            novoObjetoPlano.setStatus(true); // Nasce ativo
+            novoObjetoPlano.setDataCriacao(LocalDate.now()); // Data de hoje
 
-            // 5. Envia para o Controller
-            planoController.save(plano);
-
+            novoObjetoPlano.setId(null);
+            
+            br.com.ifba.plano.controller.PlanoIController controller = ContextProvider.getBean(br.com.ifba.plano.controller.PlanoIController.class);
+    controller.save(novoObjetoPlano);
+           
             // 6. Feedback e Limpeza
             javax.swing.JOptionPane.showMessageDialog(this, "Plano cadastrado com sucesso!");
             limparCampos();

@@ -7,9 +7,11 @@ package br.com.ifba.view;
 import br.com.ifba.aluno.view.TelaListagemAlunos;
 import br.com.ifba.avaliacaofisica.view.TelaAvaliacaoFisicaListar;
 import br.com.ifba.exercicio.view.TelaExercicios;
+import br.com.ifba.modalidade.controller.ModalidadeIController;
 import br.com.ifba.modalidade.view.ModalidadeCadastroView;
 import br.com.ifba.modalidade.view.ModalidadeView;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,6 +24,9 @@ public class TelaMenuPrincipalInstrutor extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaMenuPrincipalInstrutor.class.getName());
 
+   @Autowired
+   private ModalidadeIController modalidadeController;
+    
     /**
      * Creates new form TelaMenuPrincipalRecInst
      */
@@ -43,7 +48,6 @@ public class TelaMenuPrincipalInstrutor extends javax.swing.JFrame {
         btnExercicios = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         btnAvaliacaoFisica = new javax.swing.JButton();
-        btnCadastrarModalidade = new javax.swing.JButton();
         btnListarModalidade = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -78,13 +82,6 @@ public class TelaMenuPrincipalInstrutor extends javax.swing.JFrame {
             }
         });
 
-        btnCadastrarModalidade.setText("CADASTRAR MODALIDADE");
-        btnCadastrarModalidade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCadastrarModalidadeActionPerformed(evt);
-            }
-        });
-
         btnListarModalidade.setText("LISTAR MODALIDADES");
         btnListarModalidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,9 +106,8 @@ public class TelaMenuPrincipalInstrutor extends javax.swing.JFrame {
                             .addComponent(btnAlunos)
                             .addComponent(btnExercicios)
                             .addComponent(btnAvaliacaoFisica)
-                            .addComponent(btnCadastrarModalidade)
                             .addComponent(btnListarModalidade))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 220, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -131,10 +127,8 @@ public class TelaMenuPrincipalInstrutor extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnAvaliacaoFisica)
                 .addGap(18, 18, 18)
-                .addComponent(btnCadastrarModalidade)
-                .addGap(18, 18, 18)
                 .addComponent(btnListarModalidade)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         pack();
@@ -156,12 +150,9 @@ public class TelaMenuPrincipalInstrutor extends javax.swing.JFrame {
         new TelaAvaliacaoFisicaListar().setVisible(true);
     }//GEN-LAST:event_btnAvaliacaoFisicaActionPerformed
 
-    private void btnCadastrarModalidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarModalidadeActionPerformed
-        new ModalidadeCadastroView().setVisible(true);
-    }//GEN-LAST:event_btnCadastrarModalidadeActionPerformed
-
     private void btnListarModalidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarModalidadeActionPerformed
-        new ModalidadeView().setVisible(true);
+       
+new ModalidadeView().setVisible(true);
     }//GEN-LAST:event_btnListarModalidadeActionPerformed
 
     /**
@@ -192,7 +183,6 @@ public class TelaMenuPrincipalInstrutor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlunos;
     private javax.swing.JButton btnAvaliacaoFisica;
-    private javax.swing.JButton btnCadastrarModalidade;
     private javax.swing.JButton btnExercicios;
     private javax.swing.JButton btnListarModalidade;
     private javax.swing.JButton btnSair;
