@@ -7,6 +7,7 @@ package br.com.ifba.view;
 import br.com.ifba.aluno.view.TelaListagemAlunos;
 import br.com.ifba.aluno.view.TelaMatriculaAlunos;
 import br.com.ifba.instrutor.view.ListarInstrutorView;
+import br.com.ifba.manutencao.view.TelaManutencao;
 import br.com.ifba.modalidade.view.ModalidadeView;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -43,6 +44,7 @@ public class TelaMenuPrincipalRecepcionista extends javax.swing.JFrame {
         btnInstrutores = new javax.swing.JButton();
         btnListarAlunos = new javax.swing.JButton();
         btnModalidades = new javax.swing.JButton();
+        btnManutencoes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,24 +85,34 @@ public class TelaMenuPrincipalRecepcionista extends javax.swing.JFrame {
             }
         });
 
+        btnManutencoes.setText("MANUTENÇÕES");
+        btnManutencoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManutencoesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(135, 135, 135)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                .addComponent(btnSair)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnMatricularAlunos)
-                    .addComponent(btnInstrutores)
-                    .addComponent(btnListarAlunos)
-                    .addComponent(btnModalidades))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(135, 135, 135)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                        .addComponent(btnSair))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnMatricularAlunos)
+                            .addComponent(btnInstrutores)
+                            .addComponent(btnListarAlunos)
+                            .addComponent(btnModalidades, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnManutencoes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,7 +132,9 @@ public class TelaMenuPrincipalRecepcionista extends javax.swing.JFrame {
                 .addComponent(btnInstrutores)
                 .addGap(18, 18, 18)
                 .addComponent(btnModalidades)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnManutencoes)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         pack();
@@ -145,6 +159,10 @@ public class TelaMenuPrincipalRecepcionista extends javax.swing.JFrame {
     private void btnModalidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModalidadesActionPerformed
         new ModalidadeView().setVisible(true);
     }//GEN-LAST:event_btnModalidadesActionPerformed
+
+    private void btnManutencoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManutencoesActionPerformed
+        new TelaManutencao().setVisible(true);
+    }//GEN-LAST:event_btnManutencoesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -174,6 +192,7 @@ public class TelaMenuPrincipalRecepcionista extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInstrutores;
     private javax.swing.JButton btnListarAlunos;
+    private javax.swing.JButton btnManutencoes;
     private javax.swing.JButton btnMatricularAlunos;
     private javax.swing.JButton btnModalidades;
     private javax.swing.JButton btnSair;
