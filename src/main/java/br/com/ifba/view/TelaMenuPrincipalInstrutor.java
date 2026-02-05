@@ -26,6 +26,10 @@ public class TelaMenuPrincipalInstrutor extends javax.swing.JFrame {
 
    @Autowired
    private ModalidadeIController modalidadeController;
+   
+   @Autowired
+   private TelaExercicios telaExercicios;
+   
     
     /**
      * Creates new form TelaMenuPrincipalRecInst
@@ -139,11 +143,11 @@ public class TelaMenuPrincipalInstrutor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlunosActionPerformed
-        new TelaListagemAlunos().setVisible(true);
+         new TelaListagemAlunos().setVisible(true);
     }//GEN-LAST:event_btnAlunosActionPerformed
 
     private void btnExerciciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExerciciosActionPerformed
-        new TelaExercicios().setVisible(true);
+        telaExercicios.setVisible(true);
     }//GEN-LAST:event_btnExerciciosActionPerformed
 
     private void btnAvaliacaoFisicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvaliacaoFisicaActionPerformed

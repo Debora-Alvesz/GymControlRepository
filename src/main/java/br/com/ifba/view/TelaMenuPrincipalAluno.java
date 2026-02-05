@@ -7,6 +7,7 @@ package br.com.ifba.view;
 import br.com.ifba.avaliacaofisica.view.TelaAvaliacaoFisicaListar;
 import br.com.ifba.exercicio.view.TelaExercicios;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,6 +20,8 @@ public class TelaMenuPrincipalAluno extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaMenuPrincipalAluno.class.getName());
 
+    @Autowired
+    private TelaExercicios telaExercicios;
     /**
      * Creates new form TelaMenuPrincipalAluno
      */
@@ -107,7 +110,7 @@ public class TelaMenuPrincipalAluno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExercicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExercicioActionPerformed
-        new TelaExercicios().setVisible(true);
+        telaExercicios.setVisible(true);
     }//GEN-LAST:event_btnExercicioActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed

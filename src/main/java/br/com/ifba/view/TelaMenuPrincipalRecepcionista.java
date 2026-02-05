@@ -10,6 +10,7 @@ import br.com.ifba.instrutor.view.ListarInstrutorView;
 import br.com.ifba.manutencao.view.TelaManutencao;
 import br.com.ifba.modalidade.view.ModalidadeView;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,6 +23,8 @@ public class TelaMenuPrincipalRecepcionista extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaMenuPrincipalRecepcionista.class.getName());
 
+    @Autowired
+    private TelaManutencao telaManutencao;
     /**
      * Creates new form TelaMenuPrincipalRecepcionista
      */
@@ -161,7 +164,7 @@ public class TelaMenuPrincipalRecepcionista extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModalidadesActionPerformed
 
     private void btnManutencoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManutencoesActionPerformed
-        new TelaManutencao().setVisible(true);
+        telaManutencao.setVisible(true);
     }//GEN-LAST:event_btnManutencoesActionPerformed
 
     /**
