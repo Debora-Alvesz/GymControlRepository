@@ -8,7 +8,6 @@ import br.com.ifba.plano.controller.PlanoController;
 import br.com.ifba.plano.entity.Plano;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 
@@ -17,38 +16,32 @@ import org.springframework.stereotype.Component;
  * @author Débora Alves
  */
 
-@Component
-@Lazy
-public class TelaMatriculaAlunos extends javax.swing.JFrame {
+@Component // Permite que o Spring gerencie esta tela
 
-    @Autowired
-    private AlunoController alunoController;
+public class TelaMatriculaAlunos extends javax.swing.JFrame {
     
     @Autowired
-    private PlanoController planoController;
+    private AlunoController alunoController; // Injeta o controller
+
+   
+    private Aluno aluno; // O Spring cria e gerencia o objeto Aluno 
     
-    private Aluno aluno;
+    @Autowired
+    private PlanoController planoController; // Injeta o controller de planos
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaMatriculaAlunos.class.getName());
 
     public TelaMatriculaAlunos() {
         initComponents();
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE); // Fecha só a janela, não o app
     }
 
-    @PostConstruct
+    @PostConstruct // Isso diz ao Spring: "Rode isso logo depois de injetar tudo"
     public void init() {
-        carregarPlanos();
+        carregarPlanos(); // Agora sim o controller vai existir!
+        
     }
-    
-    // Método para atualizar sempre que abrir a janela
-    @Override
-    public void setVisible(boolean b) {
-        if(b) {
-            carregarPlanos();
-            limparCampos();
-        }
-        super.setVisible(b);
-    }
+
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -194,68 +187,67 @@ public class TelaMatriculaAlunos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMatricularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatricularActionPerformed
-       // 1. CAPTURA DOS DADOS (Isso estava faltando ou fora de escopo)
-    String nome = txtNomeAluno.getText();
-    String cpf = txtCpf.getText();
-    String telefone = txtTelefone.getText();
-    String email = txtEmail.getText();
-
-    // 2. VALIDAÇÕES
-    if (ValidadorUtil.isNullOrEmpty(nome) || ValidadorUtil.isNullOrEmpty(cpf) || ValidadorUtil.isNullOrEmpty(email)) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Nome, CPF e E-mail são campos obrigatórios!");
-        return;
-    }
+        
+        // 1. Captura os dados da tela (incluindo o novo campo de e-mail)
+        String nome = txtNomeAluno.getText();
+        String cpf = txtCpf.getText();
+        String telefone = txtTelefone.getText();
+        String email = txtEmail.getText();
     
-    if (!ValidadorUtil.isAlphabetic(nome)) {
-        javax.swing.JOptionPane.showMessageDialog(this, "O Nome deve conter apenas letras!");
-        return;
-    }
-    
-    // 3. TENTATIVA DE SALVAR
-    try {
-        // Valida se tem plano selecionado
-        if (cbPlanos.getSelectedItem() == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Selecione um Plano para o aluno!");
+        //Validação: Campos obrigatórios (usando isNullOrEmpty)
+        if (ValidadorUtil.isNullOrEmpty(nome) || ValidadorUtil.isNullOrEmpty(cpf) || ValidadorUtil.isNullOrEmpty(email)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Nome, CPF e E-mail são campos obrigatórios!");
+            return;
+        }
+        // 3. Validação: Nome deve ter apenas letras (isAlphabetic) e tamanho mínimo
+        if (!ValidadorUtil.isAlphabetic(nome)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "O Nome deve conter apenas letras!");
+            return;
+        }
+        if (!ValidadorUtil.hasMinLength(nome, 3)){
+            javax.swing.JOptionPane.showMessageDialog(this, "O Nome deve ter no mínimo 3 caracteres!");
+            return;
+        }
+        // 5. Validação: Telefone deve conter apenas números (isNumeric)
+        if (!ValidadorUtil.isNullOrEmpty(telefone) && !ValidadorUtil.isNumeric(telefone)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "O Telefone deve conter apenas números!");
             return;
         }
 
-        this.aluno = new br.com.ifba.aluno.entity.Aluno();
-        aluno.setNome(nome);
-        aluno.setCpf(cpf);
-        aluno.setTelefone(telefone);
-        aluno.setEmail(email);
-        
-        // --- CORREÇÃO AQUI ---
-        // O banco de dados exige esse campo preenchido. 
-        // Como não tem campo na tela pra isso, vamos colocar um padrão:
-        aluno.setRequisitos("Nenhum"); 
-        
-        // Gerar matrícula
-        String geradorMatricula = String.valueOf(System.currentTimeMillis());
-        aluno.setMatricula(geradorMatricula);
-
-        // Associar Plano
-        String nomePlanoSelecionado = cbPlanos.getSelectedItem().toString();
-        br.com.ifba.plano.entity.Plano planoEncontrado = planoController.findByNome(nomePlanoSelecionado);
-        
-        if (planoEncontrado == null) {
-             javax.swing.JOptionPane.showMessageDialog(this, "Erro: Plano não encontrado no banco.");
-             return;
+        // Valida o CPF usando classe ValidadorUtil 
+        if (cpf == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "CPF Inválido!");
+            return; // Interrompe se o CPF estiver errado
+        }
+            //Validação de E-mail na tela
+        if (!ValidadorUtil.isValidEmail(email)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "E-mail Inválido! Verifique o formato (ex: nome@email.com).");
+            txtEmail.requestFocus(); // Foca no campo de e-mail para o usuário corrigir
+            return;
         }
 
-        aluno.setPlano(planoEncontrado);
+        try {
+            // Cria uma nova instância de Aluno (uma ficha em branco)
+            //  entidades de dados precisam ser instanciadas para não sobrescrever o anterior.
+            this.aluno = new Aluno();
+            aluno.setNome(txtNomeAluno.getText());
+            aluno.setCpf(txtCpf.getText());
+            aluno.setTelefone(txtTelefone.getText());
+            aluno.setEmail(email);
 
-        // Salva
-        alunoController.save(aluno);
+            // aqui futuramente pega o plano selecionado no ComboBox quando tiver planos cadastrados lá
+          
+            // Envia o objeto preenchido para o Controller
+            alunoController.save(aluno);
 
-        javax.swing.JOptionPane.showMessageDialog(this, "Aluno matriculado com sucesso! Matrícula: " + geradorMatricula);
-        limparCampos();
-        this.dispose();
+            // Feedback de sucesso para o usuário
+            javax.swing.JOptionPane.showMessageDialog(this, "Aluno matriculado com sucesso!");
+            limparCampos(); // Método para limpar os campos da tela
 
-    } catch (Exception e) {
-        e.printStackTrace();
-        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao salvar: " + e.getMessage());
-    }
+        } catch (Exception e) {
+            // Mostra o erro caso a matrícula ou CPF já existam no banco
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnMatricularActionPerformed
 
     private void txtNomeAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeAlunoActionPerformed
@@ -278,29 +270,37 @@ public class TelaMatriculaAlunos extends javax.swing.JFrame {
     private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 
+    // Método auxiliar para limpar a tela
 private void limparCampos() {
-        txtNomeAluno.setText("");
-        txtCpf.setText("");
-        txtTelefone.setText("");
-        txtEmail.setText("");
-        if(cbPlanos.getItemCount() > 0) cbPlanos.setSelectedIndex(0);
+    txtNomeAluno.setText("");
+    txtCpf.setText("");
+    txtTelefone.setText("");
+    txtEmail.setText("");
+    cbPlanos.setSelectedIndex(0);
     }
 
-    private void carregarPlanos() {
-        try {
-            cbPlanos.removeAllItems();
-            java.util.List<Plano> planos = planoController.findAll();
-            
-            if (planos != null && !planos.isEmpty()) {
-                for (Plano plano : planos) {
-                    cbPlanos.addItem(plano.getNome());
-                }
-            } else {
-                cbPlanos.addItem("Nenhum plano cadastrado");
+private void carregarPlanos() {
+    try {
+        // Busca a lista de planos através do controller
+        java.util.List<Plano> planos = planoController.findAll();
+
+        // Limpa o ComboBox para não duplicar itens
+        cbPlanos.removeAllItems();
+
+        // Verifica se a lista não está vazia
+        if (planos != null && !planos.isEmpty()) {
+            // Percorre a lista de planos vinda do banco
+            for (Plano plano : planos) {
+                // Adiciona o nome do plano no ComboBox da tela
+                cbPlanos.addItem(plano.getNome());
             }
-        } catch (Exception e) {
-             // Caso a tabela de planos ainda não exista ou esteja vazia
-             cbPlanos.addItem("Erro ao carregar planos");
+        } else {
+            // Se não tiver planos, coloca um aviso opcional
+            cbPlanos.addItem("Nenhum plano cadastrado");
         }
+    } catch (Exception e) {
+        // Se der erro (ex: banco desligado), loga o erro mas não trava a tela
+        logger.log(java.util.logging.Level.SEVERE, "Erro ao carregar planos", e);
+     }
     }
 }

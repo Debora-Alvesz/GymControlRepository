@@ -5,10 +5,8 @@
 package br.com.ifba.pagamento.view;
 
 import br.com.ifba.dto.DadosFinanceiro;
-import br.com.ifba.pagamento.controller.PagamentoController;
 import br.com.ifba.pagamento.service.PagamentoService;
 import javax.swing.JOptionPane;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
@@ -18,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class telaPagamento extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(telaPagamento.class.getName());
-    
+
     private final PagamentoService pagamentoService = new PagamentoService();
     
     /**

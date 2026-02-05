@@ -11,54 +11,40 @@ import br.com.ifba.aluno.entity.Aluno;
 import br.com.ifba.aluno.repository.AlunoRepository;
 import br.com.ifba.aluno.service.AlunoService;
 import br.com.ifba.plano.repository.PlanoRepository;
-import jakarta.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.stereotype.Component;
 
 /**
  *
  * @author ETM-00168
  */
-@Component // <--- OBRIGATÓRIO PARA O MENU FUNCIONAR
 public class TelaListagemAlunos extends javax.swing.JFrame {
     
-    // Injeção de dependência do Controller
-    @Autowired
-    private AlunoController alunoController;
-    
-    // Injeção de dependência da PRÓXIMA tela (para não usar 'new')
-    @Autowired
-    private TelaMatriculaAlunos telaMatriculaAlunos;
-
-    private List<Aluno> alunosFiltrados = new ArrayList<>();
-    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaListagemAlunos.class.getName());
+   
+  private final AlunoController alunoController;
+  private List<Aluno> listaCompleta;
+  private List<Aluno> listaFiltrada; 
+  private List<Aluno> alunosFiltrados = new ArrayList<>();
+  
+    /**
+     * Creates new form TelaListagemAlunos
+     * 
+     */
     public TelaListagemAlunos() {
         initComponents();
-        // Não carregamos o contexto manualmente aqui. O Spring faz isso sozinho.
-    }
-
-    // Esse método roda automaticamente logo após o Spring criar a tela
-    @PostConstruct
-    public void carregarDadosIniciais() {
+            ApplicationContext context =
+            new AnnotationConfigApplicationContext(Prg03ProjetoApplication.class);
+         alunoController = context.getBean(AlunoController.class);
         CarregarTabela();
     }
 
-    // Este método permite atualizar a tabela quando voltar da tela de cadastro
-    @Override
-    public void setVisible(boolean b) {
-        if (b) {
-            CarregarTabela(); // Recarrega sempre que a tela for exibida
-        }
-        super.setVisible(b);
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -203,108 +189,143 @@ public class TelaListagemAlunos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void CarregarTabela() {
-        if (alunoController == null) return; // Segurança
-        try {
-            List<Aluno> alunos = alunoController.findAll();
-            CarregarAlunos(alunos);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao carregar alunos: " + e.getMessage());
-        }
-    }
+    List<Aluno> alunos = alunoController.findAll();
+    CarregarAlunos(alunos);
+}
 
     private void CarregarAlunos(List<Aluno> alunos) {
-        DefaultTableModel model = (DefaultTableModel) tblAlunos.getModel();
-        model.setRowCount(0); // limpa a tabela antes de carregar
+   
 
-        for (Aluno aluno : alunos) {
-            model.addRow(new Object[]{
-                aluno.getNome(),
-                aluno.getCpf(),
-                aluno.isStatus() ? "Ativo" : "Inativo",
-                alunoController.getDataVencimento(aluno)
-            });
-        }
-        lblTotal.setText("Total de Alunos listados: " + alunos.size());
+   DefaultTableModel model = (DefaultTableModel) tblAlunos.getModel();
+    model.setRowCount(0); // limpa a tabela antes de carregar
+
+    for (Aluno aluno : alunos) {
+         model.addRow(new Object[]{
+            aluno.getNome(),
+            aluno.getCpf(),
+            aluno.isStatus() ? "Ativo" : "Inativo",
+            alunoController.getDataVencimento(aluno)
+           
+        });
     }
+    lblTotal.setText("Total de Alunos listados: " + alunos.size());
+}
+private void aplicarFiltro() {
 
-    private void aplicarFiltro() {
-        String opcao = cmbFiltro.getSelectedItem().toString();
-        List<Aluno> alunos = alunoController.findAll();
-        List<Aluno> filtrados = new ArrayList<>();
-        Date hoje = new Date();
+    String opcao = cmbFiltro.getSelectedItem().toString();
 
-        for (Aluno aluno : alunos) {
-            Date vencimento = alunoController.getDataVencimento(aluno);
-            switch (opcao) {
-                case "Todos" -> filtrados.add(aluno);
-                case "Ativos" -> {
-                    if (aluno.isStatus()) filtrados.add(aluno);
+    List<Aluno> alunos = alunoController.findAll();
+    List<Aluno> filtrados = new ArrayList<>();
+
+    Date hoje = new Date();
+
+    for (Aluno aluno : alunos) {
+
+        Date vencimento = alunoController.getDataVencimento(aluno);
+
+        switch (opcao) {
+
+            case "Todos" -> filtrados.add(aluno);
+
+            case "Ativos" -> {
+                if (aluno.isStatus()) {
+                    filtrados.add(aluno);
                 }
-                case "Vencidos" -> {
-                    if (vencimento != null && vencimento.before(hoje)) filtrados.add(aluno);
+            }
+
+            case "Vencidos" -> {
+                if (vencimento != null && vencimento.before(hoje)) {
+                    filtrados.add(aluno);
                 }
-                case "Inativos/Trancados" -> { // Ajuste o texto conforme o item do ComboBox
-                     if (!aluno.isStatus()) filtrados.add(aluno);
-                }
-                 // Caso "Inativos" simples:
-                case "Inativos" -> {
-                     if (!aluno.isStatus()) filtrados.add(aluno);
+            }
+
+            case "Inativos/Trancados" -> {
+                if (!aluno.isStatus()) {
+                    filtrados.add(aluno);
                 }
             }
         }
-        alunosFiltrados = filtrados;
-        CarregarAlunos(filtrados);
-        btnNotificar.setEnabled("Vencidos".equals(opcao));
-    }  
+    }
+    //  guarda a lista filtrada para o botão usar
+    alunosFiltrados = filtrados;
+    //  atualiza a tabela
+    CarregarAlunos(filtrados);
+    //  habilita o botão SOMENTE se for "Vencidos"
+    btnNotificar.setEnabled("Vencidos".equals(opcao));
+}
+  
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        
+        //pega uma linha selecionada
         int linhaSelecionada = tblAlunos.getSelectedRow();
-        if (linhaSelecionada == -1) {
-            JOptionPane.showMessageDialog(null, "Selecione um aluno para editar!");
+        
+        if(linhaSelecionada == -1){
+            JOptionPane.showMessageDialog(null, 
+                    "Selecione um aluno para editar!");
             return;
         }
-        
-        // Exemplo simplificado. O ideal seria pegar o Objeto Aluno pelo ID ou CPF.
-        // Aqui mantive sua lógica original de editar pela tabela
+        //pega os valores atuais
         String nomeAtual = tblAlunos.getValueAt(linhaSelecionada, 0).toString();
+        String cpfAtual = tblAlunos.getValueAt(linhaSelecionada, 1).toString();
+        String statusAtual = tblAlunos.getValueAt(linhaSelecionada, 2).toString();
         
-        // ... Lógica de edição ...
-        JOptionPane.showMessageDialog(this, "Funcionalidade de edição precisa ser implementada no Controller!");
+        //Editando nome
+        String novoNome = JOptionPane.showInputDialog(null, "editar Nome", nomeAtual);
+        if (novoNome != null){
+            tblAlunos.setValueAt(novoNome, linhaSelecionada, 0);
+        }
+        
+        //Editando cpf
+        String novoCpf = JOptionPane.showInputDialog(null, "editar cpf", cpfAtual);
+        if (novoCpf != null){
+            tblAlunos.setValueAt(novoCpf, linhaSelecionada, 1);   
+        }
+        
+        //Editando Status
+        String novoStatus = JOptionPane.showInputDialog(null, "editar status", statusAtual);
+        if (novoStatus != null){
+            tblAlunos.setValueAt(novoStatus, linhaSelecionada, 2);
+        }
         
         CarregarTabela();
-    
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-       // CORREÇÃO CRUCIAL:
-        // Não damos 'new TelaMatriculaAlunos()'. Usamos a injetada.
-        if (this.telaMatriculaAlunos != null) {
-            this.telaMatriculaAlunos.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(this, "Erro: Tela de Matrícula não foi injetada!");
-        }
+        // TODO add your handling code here:
+        
+        //Chama a tela de matricula
+        TelaMatriculaAlunos telaMatricula = new TelaMatriculaAlunos();
+        telaMatricula.setVisible(true);
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        // TODO add your handling code here:
+        
+        //pega a linha seleionada
         int linhaSelecionada = tblAlunos.getSelectedRow();
+        //caso nao selecionou nehuma linha, aparece a mensagem
         if (linhaSelecionada == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione um aluno para excluir");
-            return;
+        JOptionPane.showMessageDialog(this, "Selecione um aluno para excluir");
+        return;
         }
+        //pega o cpf do aluno da linha selecionada
         String cpfAluno = (String) tblAlunos.getValueAt(linhaSelecionada, 1);
-        int confirmacao = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir este aluno?", "Confirmação", JOptionPane.YES_NO_OPTION);
-
-        if (confirmacao == JOptionPane.YES_OPTION) {
-            try {
-                alunoController.delete(cpfAluno);
-                CarregarTabela();
-                JOptionPane.showMessageDialog(this, "Aluno excluído com sucesso!");
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Erro ao excluir: " + e.getMessage());
-            }
-        }
-
+        
+        //confirma se realmente deseja excluir
+        int confirmacao = JOptionPane.showConfirmDialog(this,
+        "Deseja realmente excluir este aluno?",
+        "Confirmação",
+        JOptionPane.YES_NO_OPTION
+);
+//se for confirmado e tudo der certo, exclui e aparece a mensagem de secesso
+if (confirmacao == JOptionPane.YES_OPTION) {
+    
+        alunoController.delete(cpfAluno);
+        CarregarTabela();
+        JOptionPane.showMessageDialog(this, "Aluno excluído com sucesso!");
     }//GEN-LAST:event_btnDeletarActionPerformed
-
+    }
     
     private void cmbFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFiltroActionPerformed
         // TODO add your handling code here:

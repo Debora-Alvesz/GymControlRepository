@@ -14,31 +14,23 @@ import br.com.ifba.plano.controller.PlanoIController;
  *
  * @author Débora Alves
  */
-@Component
+
 public class TelaCadastroPlanos extends javax.swing.JDialog {
     
-   @Autowired
-    private PlanoIController planoController; // Injeção direta pelo Spring
+   
+    private PlanoIController planoController; // Injeta a interface do controller
 
+    private Plano plano; // O objeto que será persistido
+  
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastroPlanos.class.getName());
 
-    // Construtor sem argumentos para o Spring
-    public TelaCadastroPlanos() {
-        // Define null como parent e true para modal (bloqueia a janela de trás)
-        super((java.awt.Frame) null, true); 
+    
+   public TelaCadastroPlanos(java.awt.Frame parent, boolean modal) {
+        super(parent, modal); // Isso resolve os erros de "parent is not public"
         initComponents();
-        setLocationRelativeTo(null); // Centraliza na tela
+        setLocationRelativeTo(parent);
     }
 
-    // Método publico para limpar campos ao abrir a tela novamente
-    public void limparCampos() {
-        txtNomePlano.setText("");
-        txtDuracao.setText("");
-        txtValorMensal.setText("");
-        txtValorMatricula.setText("");
-        txtBeneficios.setText("");
-        txtNomePlano.requestFocus();
-    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -183,16 +175,17 @@ public class TelaCadastroPlanos extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNomePlanoActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-    br.com.ifba.plano.entity.Plano novoObjetoPlano = new br.com.ifba.plano.entity.Plano();
-        
-        // 1. Captura os dados
+    
+         br.com.ifba.plano.entity.Plano novoObjetoPlano = new br.com.ifba.plano.entity.Plano();
+        // 1. Captura os dados da tela
         String nome = txtNomePlano.getText();
         String duracaoStr = txtDuracao.getText();
         String valorMensalStr = txtValorMensal.getText();
         String valorMatriculaStr = txtValorMatricula.getText();
         String beneficios = txtBeneficios.getText();
 
-        // 2. Validação básica
+        // 2. Validação: Campos obrigatórios (usando ValidadorUtil)
+        // O valorMatricula e Beneficios deixei como opcionais na validação visual, mas se quiser pode adicionar.
         if (ValidadorUtil.isNullOrEmpty(nome) || 
             ValidadorUtil.isNullOrEmpty(duracaoStr) || 
             ValidadorUtil.isNullOrEmpty(valorMensalStr)) {
@@ -202,34 +195,39 @@ public class TelaCadastroPlanos extends javax.swing.JDialog {
         }
 
         try {
-            // 3. Conversão de tipos
+           
+            // 3. Conversão de tipos (Tratando erro de conversão)
+            // Replace "," por "." para aceitar 99,90 e 99.90
             int duracao = Integer.parseInt(duracaoStr);
             double valorMensal = Double.parseDouble(valorMensalStr.replace(",", "."));
             float valorMatricula = 0;
             
+            // Se o usuário digitou matrícula, converte. Se deixou vazio, fica 0.
             if (!ValidadorUtil.isNullOrEmpty(valorMatriculaStr)) {
                 valorMatricula = Float.parseFloat(valorMatriculaStr.replace(",", "."));
             }
 
-            // 4. Preenche objeto
-            novoObjetoPlano.setNome(nome);
-            novoObjetoPlano.setDuracao(duracao);
-            novoObjetoPlano.setValor(valorMensal);
-            novoObjetoPlano.setValorMatricula(valorMatricula);
-            novoObjetoPlano.setBeneficios(beneficios);
+            // 4. Instancia e preenche o objeto
+    
+           novoObjetoPlano.setNome(nome);
+           novoObjetoPlano.setDuracao(duracao);
+           novoObjetoPlano.setValor(valorMensal);
+           novoObjetoPlano.setValorMatricula(valorMatricula);
+           novoObjetoPlano.setBeneficios(beneficios);
             
             // Campos automáticos
-            novoObjetoPlano.setStatus(true);
-            novoObjetoPlano.setDataCriacao(LocalDate.now());
+            novoObjetoPlano.setStatus(true); // Nasce ativo
+            novoObjetoPlano.setDataCriacao(LocalDate.now()); // Data de hoje
+
             novoObjetoPlano.setId(null);
             
-            // 5. Salva usando o Controller injetado
-            this.planoController.save(novoObjetoPlano);
-            
+            br.com.ifba.plano.controller.PlanoIController controller = ContextProvider.getBean(br.com.ifba.plano.controller.PlanoIController.class);
+    controller.save(novoObjetoPlano);
+           
+            // 6. Feedback e Limpeza
             javax.swing.JOptionPane.showMessageDialog(this, "Plano cadastrado com sucesso!");
-            
-            // 6. Limpa e fecha
             limparCampos();
+            //Fecha a tela de cadastro atual
             this.dispose(); 
 
         } catch (NumberFormatException e) {
@@ -238,6 +236,7 @@ public class TelaCadastroPlanos extends javax.swing.JDialog {
                 "Erro de Formato", 
                 javax.swing.JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
+            // Captura erros de negócio ou banco
             logger.log(java.util.logging.Level.SEVERE, "Erro ao salvar plano", e);
             javax.swing.JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
         }
@@ -259,4 +258,15 @@ public class TelaCadastroPlanos extends javax.swing.JDialog {
     private javax.swing.JTextField txtValorMatricula;
     private javax.swing.JTextField txtValorMensal;
     // End of variables declaration//GEN-END:variables
+
+// Método auxiliar para limpar a tela
+    private void limparCampos() {
+        txtNomePlano.setText("");
+        txtDuracao.setText("");
+        txtValorMensal.setText("");
+        txtValorMatricula.setText("");
+        txtBeneficios.setText("");
+        // Focar no primeiro campo
+        txtNomePlano.requestFocus();
+    }
 }
