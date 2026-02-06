@@ -4,13 +4,10 @@
  */
 package br.com.ifba.turma.view;
 
-import org.springframework.stereotype.Component;
-
 /**
  *
  * @author angra
  */
-@Component
 public class TurmaAdicionarView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TurmaAdicionarView.class.getName());
@@ -20,6 +17,8 @@ public class TurmaAdicionarView extends javax.swing.JFrame {
      */
     public TurmaAdicionarView() {
         initComponents();
+         // Importante: Não matar o app ao fechar esta janela
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**

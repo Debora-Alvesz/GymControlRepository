@@ -13,6 +13,7 @@ import br.com.ifba.view.ContextProvider;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 /**
  *
@@ -20,7 +21,8 @@ import org.springframework.context.annotation.Lazy;
  */
 
 @Component
-@Lazy
+@Lazy // Adicionado para evitar travamentos na inicialização
+@Slf4j
 public class ModalidadeView extends javax.swing.JFrame {
     
     @Autowired
@@ -37,6 +39,8 @@ public class ModalidadeView extends javax.swing.JFrame {
         this.setSize(800, 600); 
         // Garante que a tela abra no centro do monitor
         this.setLocationRelativeTo(null);
+         // Importante: Não matar o app ao fechar esta janela
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         
     }
     

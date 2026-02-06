@@ -6,7 +6,11 @@ import br.com.ifba.aluno.entity.Aluno;
 import br.com.ifba.infrastructure.util.ValidadorUtil;
 import br.com.ifba.plano.controller.PlanoController;
 import br.com.ifba.plano.entity.Plano;
+import br.com.ifba.view.ContextProvider;
 import jakarta.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -17,38 +21,84 @@ import org.springframework.stereotype.Component;
  * @author Débora Alves
  */
 
-@Component
-@Lazy
+@Component // Permite que o Spring gerencie esta tela
 public class TelaMatriculaAlunos extends javax.swing.JFrame {
 
     @Autowired
     private AlunoController alunoController;
-    
     @Autowired
     private PlanoController planoController;
     
     private Aluno aluno;
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaMatriculaAlunos.class.getName());
 
+    // CONSTRUTOR: Agora exige que quem criar a tela passe os controllers
     public TelaMatriculaAlunos() {
+        
         initComponents();
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE); // Fecha só a janela, não o app
+      
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        this.setLocationRelativeTo(null); // Centraliza
     }
 
     @PostConstruct
     public void init() {
         carregarPlanos();
     }
-    
-    // Método para atualizar sempre que abrir a janela
     @Override
     public void setVisible(boolean b) {
-        if(b) {
-            carregarPlanos();
-            limparCampos();
+        if (b) { // Se estiver abrindo a janela (b == true)
+            atualizarListaDePlanos(); // <--- CHAMA A ATUALIZAÇÃO AQUI
         }
-        super.setVisible(b);
+        super.setVisible(b); // Continua o fluxo normal de abrir a tela
+}
+private void carregarPlanos() {
+    try {
+        // Limpa o combobox
+        cbPlanos.removeAllItems();
+        
+        // Busca do banco
+        java.util.List<br.com.ifba.plano.entity.Plano> lista = planoController.findAll();
+        
+        // Preenche o combobox
+        for (br.com.ifba.plano.entity.Plano p : lista) {
+            cbPlanos.addItem(p.getNome()); // Adiciona só o nome (ex: "Anual")
+        }
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao buscar planos: " + e.getMessage());
     }
+}
+
+    private void limparCampos() {
+        txtNomeAluno.setText("");
+        txtCpf.setText("");
+        txtTelefone.setText("");
+        txtEmail.setText("");
+        if(cbPlanos.getItemCount() > 0 && cbPlanos.isEnabled()) {
+             cbPlanos.setSelectedIndex(0);
+        }
+    }
+    private void atualizarListaDePlanos() {
+    try {
+        // 1. Limpa o combobox para não duplicar os itens
+        cbPlanos.removeAllItems(); 
+        
+        // 2. Busca a lista atualizada do banco (via controller ou service)
+        // Certifique-se de que você tem o planoController ou planoService injetado nesta tela
+        List<Plano> planos = planoController.findAll(); // ou planoService.buscarTodos()
+        
+        // 3. Adiciona item padrão (opcional)
+        cbPlanos.addItem("Selecione um plano...");
+        
+        // 4. Preenche com os novos dados
+        for (Plano p : planos) {
+            // Aqui você pode adicionar o Objeto Plano direto se tiver configurado o toString()
+            // Ou adicionar apenas o nome (String)
+            cbPlanos.addItem(p.getNome()); 
+        }
+    } catch (Exception e) {
+        System.out.println("Erro ao atualizar planos: " + e.getMessage());
+    }
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -97,7 +147,7 @@ public class TelaMatriculaAlunos extends javax.swing.JFrame {
             }
         });
 
-        cbPlanos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mensal", "Anual", "Semestral" }));
+        cbPlanos.setEditable(true);
 
         btnMatricular.setText("Matricular");
         btnMatricular.addActionListener(new java.awt.event.ActionListener() {
@@ -137,12 +187,12 @@ public class TelaMatriculaAlunos extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(281, 281, 281)
                         .addComponent(btnMatricular, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(288, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(37, 37, 37)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -158,7 +208,7 @@ public class TelaMatriculaAlunos extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblPlano, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbPlanos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -194,68 +244,59 @@ public class TelaMatriculaAlunos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMatricularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatricularActionPerformed
-       // 1. CAPTURA DOS DADOS (Isso estava faltando ou fora de escopo)
-    String nome = txtNomeAluno.getText();
-    String cpf = txtCpf.getText();
-    String telefone = txtTelefone.getText();
-    String email = txtEmail.getText();
+      String nome = txtNomeAluno.getText();
+        String cpf = txtCpf.getText();
+        String telefone = txtTelefone.getText();
+        String email = txtEmail.getText();
 
-    // 2. VALIDAÇÕES
-    if (ValidadorUtil.isNullOrEmpty(nome) || ValidadorUtil.isNullOrEmpty(cpf) || ValidadorUtil.isNullOrEmpty(email)) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Nome, CPF e E-mail são campos obrigatórios!");
-        return;
-    }
-    
-    if (!ValidadorUtil.isAlphabetic(nome)) {
-        javax.swing.JOptionPane.showMessageDialog(this, "O Nome deve conter apenas letras!");
-        return;
-    }
-    
-    // 3. TENTATIVA DE SALVAR
-    try {
-        // Valida se tem plano selecionado
-        if (cbPlanos.getSelectedItem() == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Selecione um Plano para o aluno!");
+        // Validações
+        if (ValidadorUtil.isNullOrEmpty(nome) || ValidadorUtil.isNullOrEmpty(cpf) || ValidadorUtil.isNullOrEmpty(email)) {
+            JOptionPane.showMessageDialog(this, "Preencha Nome, CPF e Email!");
             return;
         }
 
-        this.aluno = new br.com.ifba.aluno.entity.Aluno();
-        aluno.setNome(nome);
-        aluno.setCpf(cpf);
-        aluno.setTelefone(telefone);
-        aluno.setEmail(email);
-        
-        // --- CORREÇÃO AQUI ---
-        // O banco de dados exige esse campo preenchido. 
-        // Como não tem campo na tela pra isso, vamos colocar um padrão:
-        aluno.setRequisitos("Nenhum"); 
-        
-        // Gerar matrícula
-        String geradorMatricula = String.valueOf(System.currentTimeMillis());
-        aluno.setMatricula(geradorMatricula);
+        try {
+            // Verifica se tem plano válido selecionado
+            if (!cbPlanos.isEnabled() || cbPlanos.getSelectedItem() == null) {
+                JOptionPane.showMessageDialog(this, "É necessário selecionar um plano válido!");
+                return;
+            }
 
-        // Associar Plano
-        String nomePlanoSelecionado = cbPlanos.getSelectedItem().toString();
-        br.com.ifba.plano.entity.Plano planoEncontrado = planoController.findByNome(nomePlanoSelecionado);
-        
-        if (planoEncontrado == null) {
-             javax.swing.JOptionPane.showMessageDialog(this, "Erro: Plano não encontrado no banco.");
-             return;
+            // Cria o objeto Aluno
+            this.aluno = new Aluno();
+            aluno.setNome(nome);
+            aluno.setCpf(cpf);
+            aluno.setTelefone(telefone);
+            aluno.setEmail(email);
+            aluno.setMatricula(String.valueOf(System.currentTimeMillis())); // Gera matrícula simples
+            aluno.setRequisitos("Nenhum");
+            aluno.setStatus(true);
+ 
+            // BUSCAR O OBJETO PLANO PELO NOME QUE ESTÁ NO COMBOBOX
+            String nomePlano = cbPlanos.getSelectedItem().toString();
+            
+            // ATENÇÃO: Seu controller PRECISA ter esse método 'findByNome'
+            // Se não tiver, me avise que fazemos de outro jeito.
+            Plano planoSelecionado = planoController.findByNome(nomePlano);
+            
+            if (planoSelecionado == null) {
+                JOptionPane.showMessageDialog(this, "Erro: O plano selecionado não foi encontrado no banco.");
+                return;
+            }
+
+            aluno.setPlano(planoSelecionado);
+
+            // Salva no banco
+            alunoController.save(aluno);
+
+            JOptionPane.showMessageDialog(this, "Aluno matriculado com sucesso!");
+            limparCampos();
+            this.dispose(); // Fecha a tela
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao salvar: " + e.getMessage());
+            e.printStackTrace();
         }
-
-        aluno.setPlano(planoEncontrado);
-
-        // Salva
-        alunoController.save(aluno);
-
-        javax.swing.JOptionPane.showMessageDialog(this, "Aluno matriculado com sucesso! Matrícula: " + geradorMatricula);
-        limparCampos();
-        this.dispose();
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao salvar: " + e.getMessage());
-    }
     }//GEN-LAST:event_btnMatricularActionPerformed
 
     private void txtNomeAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeAlunoActionPerformed
@@ -277,30 +318,4 @@ public class TelaMatriculaAlunos extends javax.swing.JFrame {
     private javax.swing.JTextField txtNomeAluno;
     private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
-
-private void limparCampos() {
-        txtNomeAluno.setText("");
-        txtCpf.setText("");
-        txtTelefone.setText("");
-        txtEmail.setText("");
-        if(cbPlanos.getItemCount() > 0) cbPlanos.setSelectedIndex(0);
-    }
-
-    private void carregarPlanos() {
-        try {
-            cbPlanos.removeAllItems();
-            java.util.List<Plano> planos = planoController.findAll();
-            
-            if (planos != null && !planos.isEmpty()) {
-                for (Plano plano : planos) {
-                    cbPlanos.addItem(plano.getNome());
-                }
-            } else {
-                cbPlanos.addItem("Nenhum plano cadastrado");
-            }
-        } catch (Exception e) {
-             // Caso a tabela de planos ainda não exista ou esteja vazia
-             cbPlanos.addItem("Erro ao carregar planos");
-        }
-    }
 }

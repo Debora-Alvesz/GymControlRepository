@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import javax.swing.JOptionPane;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -26,24 +26,20 @@ import org.springframework.stereotype.Component;
  * @author angra
  */
 @Component
+@Lazy // Adicionado para evitar travamentos na inicialização
+@Slf4j
 public class ListarInstrutorView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListarInstrutorView.class.getName());
 
-    // INJEÇÃO DO REPOSITÓRIO (BANCO DE DADOS)
-    @Autowired
-    private InstrutorRepository instrutorRepository;
-
-    // INJEÇÃO DA TELA DE ADICIONAR (Para ela também vir com banco conectado)
-    @Autowired
-    @Lazy
-    private AdicionarInstrutorView adicionarInstrutorView;
     /**
      * Creates new form ListarInstrutor
      */
     public ListarInstrutorView() {
         initComponents();
         //carregarInstrutor();
+         // Importante: Não matar o app ao fechar esta janela
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**

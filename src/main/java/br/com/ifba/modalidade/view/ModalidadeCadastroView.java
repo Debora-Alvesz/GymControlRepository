@@ -12,6 +12,7 @@ import br.com.ifba.view.ContextProvider;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -20,8 +21,10 @@ import org.springframework.stereotype.Component;
  *
  * @author ketli
  */
-
 @Component
+@Lazy // Adicionado para evitar travamentos na inicialização
+@Slf4j
+
 public class ModalidadeCadastroView extends javax.swing.JFrame {
 
    @Autowired
@@ -56,7 +59,7 @@ public class ModalidadeCadastroView extends javax.swing.JFrame {
     public void voltarParaTelaInicial(){
         this.dispose(); // Fecha esta tela
        // modalidadeView.atualizarTabela(); // Atualiza a lista antes de mostrar
-        modalidadeView.setVisible(true);//torna  a tela principal visivel 
+        ContextProvider.getBean(ModalidadeView.class).setVisible(true);//torna  a tela principal visivel 
     
     }
     

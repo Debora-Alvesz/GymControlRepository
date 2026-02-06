@@ -1,6 +1,8 @@
 
 package br.com.ifba.exercicio.view;
 
+import br.com.ifba.view.ContextProvider;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Component;
  * @author Débora Alves
  */
 @Component
+@Lazy
 public class TelaExercicios extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaExercicios.class.getName());
@@ -19,7 +22,7 @@ public class TelaExercicios extends javax.swing.JFrame {
     
     @Autowired
     @Lazy
-     TelaExercicioCadastro telaExercicioCadastro;
+     private TelaExercicioCadastro telaExercicioCadastro;
 
     private javax.swing.table.DefaultTableModel modeloTabela;
     
@@ -27,7 +30,15 @@ public class TelaExercicios extends javax.swing.JFrame {
         initComponents();
         modeloTabela = (javax.swing.table.DefaultTableModel) tblExercicios.getModel();
         tblExercicios.setEnabled(true); // Permite selecionar a linha
+         // Importante: Não matar o app ao fechar esta janela
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         
+        
+    }
+    // Este método será executado pelo Spring logo após a injeção de dependências
+    @PostConstruct
+    public void init() {
+        atualizarTabela();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -179,6 +190,9 @@ public class TelaExercicios extends javax.swing.JFrame {
         
         // Esconde a tela principal
         this.setVisible(false);
+        
+        TelaExercicioCadastro tela =
+        ContextProvider.getBean(TelaExercicioCadastro.class);
 
         // Prepara a tela de cadastro (limpa campos)
         telaExercicioCadastro.prepararParaNovo();

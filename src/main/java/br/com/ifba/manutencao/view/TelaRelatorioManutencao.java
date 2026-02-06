@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
  * @author ricle
  */
 @Component
+@Lazy
 public class TelaRelatorioManutencao extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaRelatorioManutencao.class.getName());
@@ -36,6 +37,16 @@ public class TelaRelatorioManutencao extends javax.swing.JFrame {
         this.setSize(750, 500);
         this.setLocationRelativeTo(null);
         
+        // Fecha SOMENTE essa tela (não encerra o sistema)
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        // Ao clicar no X, volta automaticamente para a TelaManutencao
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                telaManutencao.setVisible(true);
+            }
+        });
         
     }
 
@@ -51,7 +62,7 @@ public class TelaRelatorioManutencao extends javax.swing.JFrame {
 
         for (Manutencao m : manutencoes) {
             // Só mostra manutenções que foram concluídas
-            if ("Concluída".equalsIgnoreCase(m.getStatus())) {
+            if ("CONCLUÍDA".equalsIgnoreCase(m.getStatus())) {
 
                 // Protege custo nulo
                 double valorCusto = m.getCusto() != null ? m.getCusto() : 0.0;

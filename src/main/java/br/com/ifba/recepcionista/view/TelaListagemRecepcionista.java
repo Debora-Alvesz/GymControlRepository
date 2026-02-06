@@ -34,6 +34,8 @@ public class TelaListagemRecepcionista extends javax.swing.JFrame {
         // Configura o modelo da tabela para podermos adicionar linhas
         modeloTabela = (DefaultTableModel) tblRecepcionistas.getModel();
         tblRecepcionistas.setEnabled(true); // Permite clicar na linha para selecionar
+         // Importante: Não matar o app ao fechar esta janela
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
     // IMPORTANTE: Toda vez que a tela ficar visível, recarrega os dados do banco
     @Override

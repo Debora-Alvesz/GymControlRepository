@@ -27,6 +27,8 @@ public class TelaCadastroRecepcionista extends javax.swing.JFrame {
         
         this.recepcionistaController = controller;
         initComponents();
+         // Importante: Não matar o app ao fechar esta janela
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
   
