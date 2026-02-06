@@ -4,7 +4,10 @@
  */
 package br.com.ifba.avaliacaofisica.view;
 
+import br.com.ifba.aluno.controller.AlunoIController;
+import br.com.ifba.avaliacaofisica.controller.AvaliacaoFisicaIController;
 import br.com.ifba.avaliacaofisica.entity.AvaliacaoFisica;
+import br.com.ifba.view.ContextProvider;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
@@ -13,6 +16,8 @@ import java.time.format.DateTimeParseException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,16 +25,17 @@ import org.springframework.stereotype.Component;
  * @author João Victor
  */
 @Component
+@Lazy
 @Slf4j
 public class TelaAvaliacaoFisicaListar extends javax.swing.JFrame {
     
    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaAvaliacaoFisicaListar.class.getName());
     
-    @org.springframework.beans.factory.annotation.Autowired
-    private br.com.ifba.avaliacaofisica.controller.AvaliacaoFisicaController avaliacaoFisicaController;
+    @Autowired
+    private AvaliacaoFisicaIController avaliacaoFisicaController;
     
-    @org.springframework.beans.factory.annotation.Autowired
-    private br.com.ifba.aluno.controller.AlunoController alunoController;
+    @Autowired
+    private AlunoIController alunoController;
 
     private javax.swing.table.DefaultTableModel modeloTabela;
     
@@ -691,7 +697,7 @@ public class TelaAvaliacaoFisicaListar extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new TelaAvaliacaoFisicaListar().setVisible(true);
+            ContextProvider.getBean(TelaAvaliacaoFisicaListar.class).setVisible(true);
         });
     }
     /**
