@@ -35,6 +35,8 @@ private ModalidadeIController modalidadeController = ContextProvider.getBean(Mod
         this.setSize(800, 600); 
         // Garante que a tela abra no centro do monitor
         this.setLocationRelativeTo(null);
+         // Importante: Não matar o app ao fechar esta janela
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         
     }
     

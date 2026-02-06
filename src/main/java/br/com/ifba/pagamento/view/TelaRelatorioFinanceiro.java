@@ -23,6 +23,8 @@ public class TelaRelatorioFinanceiro extends javax.swing.JFrame {
      */
     public TelaRelatorioFinanceiro() {
         initComponents();
+         // Importante: Não matar o app ao fechar esta janela
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         
         ApplicationContext context =
             new AnnotationConfigApplicationContext(Prg03ProjetoApplication.class);

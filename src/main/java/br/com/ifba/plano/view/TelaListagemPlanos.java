@@ -17,7 +17,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class TelaListagemPlanos extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaListagemPlanos.class.getName());
+    // Logger para debug
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TelaListagemPlanos.class);
 
     @Autowired
     private PlanoIController planoController;
@@ -34,8 +35,11 @@ public class TelaListagemPlanos extends javax.swing.JFrame {
         // Pega o modelo da tabela para manipular as linhas
         modeloTabela = (DefaultTableModel) tblPlanos.getModel();
         tblPlanos.setEnabled(true); // Permite selecionar a linha
+         // Importante: Não matar o app ao fechar esta janela
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
-    // Recarrega a tabela sempre que a tela abrir
+    
+    // Recarrega a tabela sempre que a tela abrir/ficar visível
     @Override
     public void setVisible(boolean b) {
         super.setVisible(b);
@@ -43,7 +47,6 @@ public class TelaListagemPlanos extends javax.swing.JFrame {
             atualizarTabela();
         }
     }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -160,7 +163,7 @@ public class TelaListagemPlanos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        // 1. Adiciona um Listener na tela de cadastro
+       // 1. Adiciona um Listener na tela de cadastro
         // Isso diz: "Quando a janela telaCadastro fechar (CLOSED), execute o código abaixo"
         telaCadastroPlanos.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -169,14 +172,12 @@ public class TelaListagemPlanos extends javax.swing.JFrame {
                 atualizarTabela(); 
             }
         });
-
         // 2. Abre a tela de cadastro
         telaCadastroPlanos.setVisible(true);
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-
-        // 1. Verifica seleção
+// 1. Verifica seleção
         int linhaSelecionada = tblPlanos.getSelectedRow();
         
         if (linhaSelecionada == -1) {
@@ -184,7 +185,7 @@ public class TelaListagemPlanos extends javax.swing.JFrame {
             return;
         }
 
-        // 2. Pega o ID (coluna 0)
+        // 2. Pega o ID da linha selecionada (coluna 0)
         Long id = (Long) modeloTabela.getValueAt(linhaSelecionada, 0);
 
         // 3. Confirmação
@@ -192,18 +193,20 @@ public class TelaListagemPlanos extends javax.swing.JFrame {
         
         if (resposta == JOptionPane.YES_OPTION) {
             try {
-                Plano plano = new Plano();
-                plano.setId(id);
+                // CORREÇÃO: Criamos o objeto Plano e definimos o ID
+                Plano planoParaExcluir = new Plano();
+                planoParaExcluir.setId(id);
 
-                planoController.delete(plano);
+                // Agora passamos o objeto inteiro, conforme seu controller exige
+                planoController.delete(planoParaExcluir); 
                 
                 JOptionPane.showMessageDialog(this, "Plano excluído com sucesso!");
                 atualizarTabela();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Erro ao excluir: " + e.getMessage());
+                e.printStackTrace();
             }
         }
-    
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -247,8 +250,7 @@ public class TelaListagemPlanos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-
-        // 1. Verifica se tem linha selecionada
+// 1. Verifica se tem linha selecionada
         int linhaSelecionada = tblPlanos.getSelectedRow();
         if (linhaSelecionada == -1) {
             JOptionPane.showMessageDialog(this, "Selecione um plano para editar.");
@@ -348,7 +350,6 @@ public void atualizarTabela() {
     try {
         // --- MUDANÇA AQUI: Chama o método que já traz ordenado do banco ---
         List<Plano> lista = planoController.findAllByOrderByValorAsc();
-        // -----------------------------------------------------------------
 
         for (Plano p : lista) {
             modeloTabela.addRow(new Object[]{
@@ -359,7 +360,7 @@ public void atualizarTabela() {
                 p.getValorMatricula(),
                 p.isStatus() ? "Ativo" : "Inativo",
                 p.getBeneficios() // Não esqueça o benefício!
-            });
+            }); 
         }
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, "Erro ao carregar planos: " + e.getMessage());

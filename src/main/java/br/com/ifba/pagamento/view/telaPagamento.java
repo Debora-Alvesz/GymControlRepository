@@ -24,6 +24,8 @@ public class telaPagamento extends javax.swing.JFrame {
      */
     public telaPagamento() {
         initComponents();
+         // Importante: Não matar o app ao fechar esta janela
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**

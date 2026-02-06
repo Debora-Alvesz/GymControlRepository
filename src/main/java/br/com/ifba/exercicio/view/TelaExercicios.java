@@ -27,6 +27,8 @@ public class TelaExercicios extends javax.swing.JFrame {
         initComponents();
         modeloTabela = (javax.swing.table.DefaultTableModel) tblExercicios.getModel();
         tblExercicios.setEnabled(true); // Permite selecionar a linha
+         // Importante: Não matar o app ao fechar esta janela
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         
     }
     @SuppressWarnings("unchecked")

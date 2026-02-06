@@ -11,37 +11,49 @@ import br.com.ifba.aluno.entity.Aluno;
 import br.com.ifba.aluno.repository.AlunoRepository;
 import br.com.ifba.aluno.service.AlunoService;
 import br.com.ifba.plano.repository.PlanoRepository;
+import br.com.ifba.view.ContextProvider;
+import jakarta.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author ETM-00168
  */
+@Component
+@Lazy
 public class TelaListagemAlunos extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaListagemAlunos.class.getName());
-   
-  private final AlunoController alunoController;
-  private List<Aluno> listaCompleta;
-  private List<Aluno> listaFiltrada; 
-  private List<Aluno> alunosFiltrados = new ArrayList<>();
+ @Autowired  
+    private AlunoController alunoController;
+    
+    private List<Aluno> alunosFiltrados = new ArrayList<>();
   
     /**
      * Creates new form TelaListagemAlunos
-     * 
      */
     public TelaListagemAlunos() {
         initComponents();
-            ApplicationContext context =
-            new AnnotationConfigApplicationContext(Prg03ProjetoApplication.class);
-         alunoController = context.getBean(AlunoController.class);
+        // REMOVIDO: A criação manual do contexto. O Spring já injeta o controller sozinho.
+        
+        // Configurações da janela
+        this.setLocationRelativeTo(null); // Centraliza a tela
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE); // Não fecha o app todo
+    }
+
+    // ADICIONADO: Este método roda sozinho DEPOIS que a tela é criada e o controller injetado
+    @PostConstruct
+    public void iniciar() {
         CarregarTabela();
     }
 
@@ -292,11 +304,8 @@ private void aplicarFiltro() {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        // TODO add your handling code here:
-        
-        //Chama a tela de matricula
-        TelaMatriculaAlunos telaMatricula = new TelaMatriculaAlunos();
-        telaMatricula.setVisible(true);
+        TelaMatriculaAlunos tela = ContextProvider.getBean(TelaMatriculaAlunos.class);
+        tela.setVisible(true);
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
@@ -348,12 +357,6 @@ if (confirmacao == JOptionPane.YES_OPTION) {
         alunoController.enviarEmail(aluno);
     }
     }//GEN-LAST:event_btnNotificarActionPerformed
-
-   
-    /**
-     * @param args the command line arguments
-     */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;

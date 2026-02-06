@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package br.com.ifba.view;
 
 import br.com.ifba.exception.BusinessException;
@@ -43,13 +40,13 @@ public class TelaDeLogin extends javax.swing.JFrame {
     private TelaMenuPrincipalAdm telaMenuPrincipalAdm;
     
     @Autowired 
-    private TelaMenuPrincipalInstrutor telaMenuPrincipalRecepcionista;
+    private TelaMenuPrincipalInstrutor telaMenuPrincipalInstrutor;
     
     @Autowired 
     private TelaMenuPrincipalAluno telaMenuPrincipalAluno;
     
     @Autowired
-    private TelaMenuPrincipalInstrutor telaMenuPrincipalInstrutor;
+    private TelaMenuPrincipalRecepcionista telaMenuPrincipalRecepcionista;
    
     @Autowired
     public TelaDeLogin(UsuarioService usuarioService) {
@@ -253,7 +250,7 @@ public class TelaDeLogin extends javax.swing.JFrame {
         redirecionarParaTelaPrincipal(perfil, userLogado);
          log.info("Usuário {} logado com sucesso!", login);
          notificacao.enviarEmail(login, "Alerta de Segurança", "Login realizado, se nao foi voce, entre em contato com o suporte.");
-         this.dispose();;
+         this.dispose();
       
     }catch(BusinessException ex){
         //captura o erro de "Usuario nao encontrado" ou "senha invalida"

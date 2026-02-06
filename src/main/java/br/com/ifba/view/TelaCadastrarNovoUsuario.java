@@ -53,18 +53,8 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
         this.setResizable(false);
         this.setSize(800, 1000);
         this.setLocationRelativeTo(null);
-
-comboPerfil.addItemListener(new java.awt.event.ItemListener() {
-            @Override
-            public void itemStateChanged(java.awt.event.ItemEvent e) {
-                if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
-                    String selecionado = comboPerfil.getSelectedItem().toString();
-                    // Garanta que o nome do botão esteja correto (bnt ou btn)
-                    bntCadastrarPlano.setVisible(selecionado.equalsIgnoreCase("Aluno"));
-                }
-            }
-        });
-              
+         // Importante: Não matar o app ao fechar esta janela
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);   
 }
     
    private void fecharEReabrirLogin() {
@@ -124,7 +114,6 @@ comboPerfil.addItemListener(new java.awt.event.ItemListener() {
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        bntCadastrarPlano = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -314,13 +303,6 @@ comboPerfil.addItemListener(new java.awt.event.ItemListener() {
         jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel26.setText("Instrutor");
 
-        bntCadastrarPlano.setText("Cadastrar Plano");
-        bntCadastrarPlano.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntCadastrarPlanoActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -404,9 +386,7 @@ comboPerfil.addItemListener(new java.awt.event.ItemListener() {
                                 .addComponent(txtEspecialidade, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(226, 226, 226)
-                                .addComponent(bntCadastrarPlano, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(385, 385, 385)
                                 .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(173, 173, 173)
@@ -435,7 +415,7 @@ comboPerfil.addItemListener(new java.awt.event.ItemListener() {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(252, 252, 252)
                         .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(43, 43, 43)
@@ -482,14 +462,9 @@ comboPerfil.addItemListener(new java.awt.event.ItemListener() {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel22)
                             .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(83, 83, 83)
-                                .addComponent(jLabel27))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(31, 31, 31)
-                                .addComponent(bntCadastrarPlano, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 97, Short.MAX_VALUE)
+                        .addGap(83, 83, 83)
+                        .addComponent(jLabel27)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 124, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -754,21 +729,8 @@ comboPerfil.addItemListener(new java.awt.event.ItemListener() {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBairroActionPerformed
 
-    private void bntCadastrarPlanoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntCadastrarPlanoActionPerformed
-
- // cria, centraliza e exibe
-TelaCadastroPlanos tela = new TelaCadastroPlanos(null, true); 
-tela.setLocationRelativeTo(null);
-tela.setVisible(true);
-    }//GEN-LAST:event_bntCadastrarPlanoActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bntCadastrarPlano;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JComboBox<String> comboPerfil;
     private javax.swing.JLabel jLabel1;
