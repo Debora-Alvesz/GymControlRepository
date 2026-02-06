@@ -46,19 +46,19 @@ public class Plano {
     @Column(name = "nome", nullable =  false, length = 100)
     private String nome;
 
-    @Column(name = "duração", nullable = false)
+    @Column(name = "duracao", nullable = false)
     private int duracao;
     
     @Column(name = "valor", nullable = false)
     private double valor;
     
-    @Column(name = "benefícios", length = 100)
+    @Column(name = "beneficios", length = 100)
     private String beneficios;
 
     @Column(name = "valor_matricula", nullable = false)
     private float valorMatricula;
     
-    @Column(name = "data_criação", updatable = false)
+    @Column(name = "data_criacao", updatable = false)
     private LocalDate dataCriacao;
     
     @Column(name = "status", nullable = false)
@@ -67,4 +67,5 @@ public class Plano {
     //Relacionamento com Aluno
     @OneToMany(mappedBy = "plano")
     private List<Aluno> aluno;
+    
 }

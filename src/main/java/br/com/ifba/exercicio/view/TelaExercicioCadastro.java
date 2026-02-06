@@ -36,7 +36,8 @@ public class TelaExercicioCadastro extends javax.swing.JFrame {
      */
     public TelaExercicioCadastro() {
         initComponents();
-        
+         // Importante: Não matar o app ao fechar esta janela
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.pack();

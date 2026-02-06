@@ -17,6 +17,8 @@ public class EditarInstrutorView extends javax.swing.JFrame {
      */
     public EditarInstrutorView(ListarInstrutorView aThis, Long id) {
         initComponents();
+         // Importante: Não matar o app ao fechar esta janela
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**

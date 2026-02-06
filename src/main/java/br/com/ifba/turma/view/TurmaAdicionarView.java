@@ -17,6 +17,8 @@ public class TurmaAdicionarView extends javax.swing.JFrame {
      */
     public TurmaAdicionarView() {
         initComponents();
+         // Importante: Não matar o app ao fechar esta janela
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**
