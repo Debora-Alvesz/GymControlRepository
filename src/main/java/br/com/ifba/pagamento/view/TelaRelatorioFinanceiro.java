@@ -7,13 +7,19 @@ package br.com.ifba.pagamento.view;
 import br.com.ifba.Prg03ProjetoApplication;
 import br.com.ifba.pagamento.controller.PagamentoController;
 import java.time.LocalDate;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author ETM-00168
  */
+@Component
+@Lazy // Adicionado para evitar travamentos na inicialização
+@Slf4j
 public class TelaRelatorioFinanceiro extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaRelatorioFinanceiro.class.getName());

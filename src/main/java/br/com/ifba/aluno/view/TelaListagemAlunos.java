@@ -105,19 +105,27 @@ public class TelaListagemAlunos extends javax.swing.JFrame {
 
         tblAlunos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nome", "CPF", "Status", "Data Vencimento"
+                "Nome", "CPF", "Status", "Data Vencimento", "Matricula"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblAlunos);
 
         cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Ativos", "Vencidos", "Inativos" }));
@@ -216,7 +224,8 @@ private void CarregarTabela() {
             aluno.getNome(),
             aluno.getCpf(),
             aluno.isStatus() ? "Ativo" : "Inativo",
-            alunoController.getDataVencimento(aluno)
+            alunoController.getDataVencimento(aluno),
+            aluno.getMatricula()
            
         });
     }

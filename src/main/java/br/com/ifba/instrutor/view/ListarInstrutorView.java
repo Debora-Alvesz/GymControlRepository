@@ -12,16 +12,22 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import javax.swing.JOptionPane;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author angra
  */
+@Component
+@Lazy // Adicionado para evitar travamentos na inicialização
+@Slf4j
 public class ListarInstrutorView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListarInstrutorView.class.getName());

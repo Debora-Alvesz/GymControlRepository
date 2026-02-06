@@ -7,12 +7,18 @@ package br.com.ifba.pagamento.view;
 import br.com.ifba.dto.DadosFinanceiro;
 import br.com.ifba.pagamento.service.PagamentoService;
 import javax.swing.JOptionPane;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 
 /**
  *
  * @author ETM-00168
  */
+@Component
+@Lazy // Adicionado para evitar travamentos na inicialização
+@Slf4j
 public class telaPagamento extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(telaPagamento.class.getName());

@@ -4,10 +4,17 @@
  */
 package br.com.ifba.instrutor.view;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+
 /**
  *
  * @author angra
  */
+@Component
+@Lazy // Adicionado para evitar travamentos na inicialização
+@Slf4j
 public class EditarInstrutorView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditarInstrutorView.class.getName());

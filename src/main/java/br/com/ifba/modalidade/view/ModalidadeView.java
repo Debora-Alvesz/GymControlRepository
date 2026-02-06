@@ -13,12 +13,15 @@ import br.com.ifba.view.ContextProvider;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 /**
  *
  * @author ketli
  */
-
+@Component
+@Lazy // Adicionado para evitar travamentos na inicialização
+@Slf4j
 public class ModalidadeView extends javax.swing.JFrame {
     
 private ModalidadeIController modalidadeController = ContextProvider.getBean(ModalidadeIController.class);
