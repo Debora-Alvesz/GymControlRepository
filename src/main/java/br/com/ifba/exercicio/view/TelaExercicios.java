@@ -2,6 +2,7 @@
 package br.com.ifba.exercicio.view;
 
 import br.com.ifba.view.ContextProvider;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -33,6 +34,11 @@ public class TelaExercicios extends javax.swing.JFrame {
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         
         
+    }
+    // Este método será executado pelo Spring logo após a injeção de dependências
+    @PostConstruct
+    public void init() {
+        atualizarTabela();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
