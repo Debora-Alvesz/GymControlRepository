@@ -21,9 +21,10 @@ import org.springframework.stereotype.Component;
  * @author ketli
  */
 
+@Component
 public class ModalidadeCadastroView extends javax.swing.JFrame {
 
-   
+   @Autowired
    private ModalidadeIController modalidadeController;
    
    private Long idParaEdicao = null;

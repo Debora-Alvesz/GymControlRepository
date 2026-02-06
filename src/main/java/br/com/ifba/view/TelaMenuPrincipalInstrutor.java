@@ -136,6 +136,7 @@ public class TelaMenuPrincipalInstrutor extends javax.swing.JFrame {
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         new TelaDeLogin().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlunosActionPerformed
@@ -152,7 +153,7 @@ public class TelaMenuPrincipalInstrutor extends javax.swing.JFrame {
 
     private void btnListarModalidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarModalidadeActionPerformed
        
-new ModalidadeView().setVisible(true);
+  ContextProvider.getBean(ModalidadeView.class).setVisible(true);
     }//GEN-LAST:event_btnListarModalidadeActionPerformed
 
     /**
