@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
  * @author ricley
  */
 @Component
+@Lazy
 public class TelaExercicioCadastro extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaExercicioCadastro.class.getName());
@@ -250,7 +251,8 @@ public class TelaExercicioCadastro extends javax.swing.JFrame {
     // Pós-salvamento
     exercicioView.atualizarTabela();
     prepararParaNovo();
-    this.dispose();
+    exercicioView.setVisible(true);
+    this.setVisible(false);
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

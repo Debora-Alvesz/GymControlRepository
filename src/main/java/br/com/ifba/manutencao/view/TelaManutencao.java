@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
  * @author ricley
  */
 @Component
+@Lazy
 public class TelaManutencao extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaManutencao.class.getName());
@@ -25,7 +26,6 @@ public class TelaManutencao extends javax.swing.JFrame {
     @Autowired
     private ManutencaoController manutencaoController;
     @Autowired
-    @Lazy
     private TelaRelatorioManutencao telaRelatorio;
     
     public TelaManutencao() {
