@@ -24,9 +24,10 @@ import org.springframework.stereotype.Component;
 @Component
 @Lazy // Adicionado para evitar travamentos na inicialização
 @Slf4j
+
 public class ModalidadeCadastroView extends javax.swing.JFrame {
 
-   
+   @Autowired
    private ModalidadeIController modalidadeController;
    
    private Long idParaEdicao = null;

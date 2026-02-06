@@ -270,7 +270,8 @@ private void carregarPlanos() {
             aluno.setEmail(email);
             aluno.setMatricula(String.valueOf(System.currentTimeMillis())); // Gera matrícula simples
             aluno.setRequisitos("Nenhum");
-
+            aluno.setStatus(true);
+ 
             // BUSCAR O OBJETO PLANO PELO NOME QUE ESTÁ NO COMBOBOX
             String nomePlano = cbPlanos.getSelectedItem().toString();
             

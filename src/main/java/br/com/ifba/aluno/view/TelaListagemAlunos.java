@@ -213,20 +213,26 @@ private void CarregarTabela() {
     CarregarAlunos(alunos);
 }
 
-    private void CarregarAlunos(List<Aluno> alunos) {
-   
+private void CarregarAlunos(List<Aluno> alunos) {
+    DefaultTableModel model = (DefaultTableModel) tblAlunos.getModel();
+    model.setRowCount(0); 
 
-   DefaultTableModel model = (DefaultTableModel) tblAlunos.getModel();
-    model.setRowCount(0); // limpa a tabela antes de carregar
+    // Para deixar a data bonita (ex: 10/05/2024)
+    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
 
     for (Aluno aluno : alunos) {
-         model.addRow(new Object[]{
+        Date vencimento = alunoController.getDataVencimento(aluno);
+        String dataStr = (vencimento != null) ? sdf.format(vencimento) : "N/A";
+
+        model.addRow(new Object[]{
             aluno.getNome(),
             aluno.getCpf(),
             aluno.isStatus() ? "Ativo" : "Inativo",
             alunoController.getDataVencimento(aluno),
-            aluno.getMatricula()
+            aluno.getMatricula(),
            
+            aluno.isStatus() ? "Ativo" : "Inativo", // Aqui o boolean vira texto
+            dataStr
         });
     }
     lblTotal.setText("Total de Alunos listados: " + alunos.size());

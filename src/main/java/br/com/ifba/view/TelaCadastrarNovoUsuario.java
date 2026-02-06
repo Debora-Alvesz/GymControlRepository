@@ -614,35 +614,38 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
                }else{
                    throw new BusinessException("Nnehum plano cadastrado");
             }
-               pessoa = aluno;
-               
+               pessoa = aluno;            
                 break;
+                
             case "RECEPCIONISTA":
                 pessoa = new Recepcionista();
                 break;
+                
             case "INSTRUTOR":
                Instrutor instrutor = new Instrutor();
                 
                 String cip = txtCIP.getText().trim();
-                if (cip.isEmpty()) {
+                    if (cip.isEmpty()) {
                      JOptionPane.showMessageDialog(this, "O campo CIP é obrigatório para Instrutores!");
                      log.warn("erro ao cadastrar com o campo CIP de Instrutor vazio");
-                return;
+                     return;
                 }
                 instrutor.setCip(cip); 
                 
                 String especialidade = txtEspecialidade.getText().trim();
-                 if (especialidade.isEmpty()) {
+                     if (especialidade.isEmpty()) {
                      JOptionPane.showMessageDialog(this, "O campo Especialidade é obrigatório para Instrutores!");
                      log.warn("Erro ao cadastrar com o campo Especialidade de Instrutores vazio");
-                return;
+                     return;
                 }
                  instrutor.setEspecialidade(especialidade);    
                 pessoa = instrutor;
                 break;
+                
             case "ADMIN":
                 pessoa = new Administrador();
                 break;
+                
             default:
                 throw new IllegalArgumentException("Perfil inválido selecionado.");
         }
@@ -671,8 +674,8 @@ public class TelaCadastrarNovoUsuario extends javax.swing.JFrame {
          // Volta para o login
          fecharEReabrirLogin();
       }catch(Exception e){
-          JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
-           log.warn("Erro inesperado ao finalizar cadastro", e.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
+            log.warn("Erro inesperado ao finalizar cadastro", e.getMessage());
       }
  
     }//GEN-LAST:event_btnCadastrarActionPerformed
